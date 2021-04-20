@@ -1,8 +1,5 @@
 <style>
-.lookbook {
-  display: flex;
-  flex-flow: row wrap;
-}
+.lookbook img { width: 300px; height: auto;
 
 .lookbook article {
   flex: 0 0 12.5%;
@@ -16,8 +13,7 @@
       <header> {{ shoe.model_name }} </header>
       <img src="{{ shoe.image.url }}">
       <dl>
-        <dt> Size: </dt>
-        <dd> {{ shoe.size }} </dd>
+        <dd> Size: {{ shoe.size }} </dd>
       </dl>
     </article>
     {% endfor %}
