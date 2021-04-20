@@ -1,2 +1,24 @@
-<h1> Shoes </h1>
-{% for shoe in object_list %}  {{ shoe.model_name }} {% endfor %}
+<style>
+.lookbook {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.lookbook article {
+  flex: 0 0 12.5%;
+  padding: 0.5rem;
+}
+</style>
+
+<section class="lookbook">
+    {% for shoe in object_list %}
+    <article>
+      <header> {{ shoe.model_name }} </header>
+      <img src="{{ shoe.image.url }}">
+      <dl>
+        <dt> Size: </dt>
+        <dd> {{ shoe.size }} </dd>
+      </dl>
+    </article>
+    {% endfor %}
+  </section>
