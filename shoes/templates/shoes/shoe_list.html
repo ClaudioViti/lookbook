@@ -1,113 +1,119 @@
-{% load static %}
-<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
-<style>
-.lookbook img { width: 300px; height: auto; } 
-
-.lookbook {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  background-color: rgb(255, 255, 255);
-}
-
-.lookbook article {
-  flex: 0 0 12.5%;
-  padding: 0.5rem;
-}
-dd {
-  display: block;
-  margin-top: 0em;
-  margin-bottom: 0.5em;
-  margin-left: 0;
-  margin-right: 0;
-}
-dl {
-  display: block;
-  margin-top: 0em;
-  margin-bottom: 0em;
-  margin-left: 0;
-  margin-right: 0;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-li {
-  float: left;
-}
-
-li a, .dropbtn {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-li.dropdown {
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f1;}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-</style>
-
-<ul>
-  <li><a href="#home">Home</a></li>
-  <li><a href="/admin/shoes/shoe/">Manage Items</a></li>
-  <li class="dropdown">
-    <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
-    <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
-    </div>
-  </li>
-</ul>
-
-<section class="lookbook">
+<!doctype html>{% load static %}
+<html>
+<head>
+  <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+  <style>
+    .lookbook img { width: 300px; height: auto; } 
+    
+    .lookbook {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      background-color: rgb(255, 255, 255);
+    }
+    
+    .lookbook article {
+      flex: 0 0 12.5%;
+      padding: 0.5rem;
+    }
+    dd {
+      display: block;
+      margin-top: 0em;
+      margin-bottom: 0.5em;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    dl {
+      display: block;
+      margin-top: 0em;
+      margin-bottom: 0em;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a, .dropbtn {
+      display: inline-block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover, .dropdown:hover .dropbtn {
+      background-color: red;
+    }
+    
+    li.dropdown {
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+    
+    .dropdown-content a:hover {background-color: #f1f1f1;}
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="/admin/shoes/shoe/">Manage Items</a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
+      <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </li>
+  </ul>
+  
+  <section class="lookbook">
     {% for shoe in object_list %}
     <article>
-      <img src="{{ shoe.image.url }}">
-      <dd>
-      <header> {{ shoe.model_name }} </header>
-      </dd>
-        Brand: {{ shoe.brand }}
-        <dl>
-        Size: {{ shoe.size }} EU
-      </dl>  <dl>
-        Heel: {{ shoe.heel_height }} cm
-      </dl>  <dl>
-       __________________________________
-      </dl>
+      <figure>
+        <img src="{{ shoe.image.url }}">
+        <figcaption>
+          <header> {{ shoe.model_name }} </header>
+          <ul>
+            <li> Brand: {{ shoe.brand }} </li>
+            <li> Size: {{ shoe.size }} EU </li>
+            <li> Heel: {{ shoe.heel_height }} cm </li>
+          </ul>
+        </figcaption>
+      </figure>
     </article>
     {% endfor %}
   </section>
+  
+</body>
+</html>
