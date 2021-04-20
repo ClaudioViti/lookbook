@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <style>
 .lookbook img { width: 300px; height: auto; } 
 
@@ -15,10 +17,16 @@
 <section class="lookbook">
     {% for shoe in object_list %}
     <article>
-      <header> {{ shoe.model_name }} </header>
       <img src="{{ shoe.image.url }}">
+      <header> {{ shoe.model_name }} </header>
       <dl>
-        <dd> Size: {{ shoe.size }} </dd>
+        Brand: {{ shoe.model_name }}
+      </dl>  <dl>
+        Size: {{ shoe.size }}
+      </dl>  <dl>
+        Heel: {{ shoe.heel_height }}
+      </dl>  <dl>
+       _____________
       </dl>
     </article>
     {% endfor %}
