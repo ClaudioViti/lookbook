@@ -12,21 +12,36 @@
   flex: 0 0 12.5%;
   padding: 0.5rem;
 }
+dd {
+  display: block;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+  margin-left: 0;
+  margin-right: 0;
+}
+dl {
+  display: block;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 0;
+  margin-right: 0;
+}
 </style>
 
 <section class="lookbook">
     {% for shoe in object_list %}
     <article>
       <img src="{{ shoe.image.url }}">
+      <dd>
       <header> {{ shoe.model_name }} </header>
-      <dl>
-        Brand: {{ shoe.model_name }}
+      </dd>
+        Brand: {{ shoe.brand }}
+        <dl>
+        Size: {{ shoe.size }} EU
       </dl>  <dl>
-        Size: {{ shoe.size }}
+        Heel: {{ shoe.heel_height }} cm
       </dl>  <dl>
-        Heel: {{ shoe.heel_height }}
-      </dl>  <dl>
-       _____________
+       ____________________________________
       </dl>
     </article>
     {% endfor %}
