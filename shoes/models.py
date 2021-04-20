@@ -3,9 +3,10 @@ from django.db import models
 # Create your models here.
 
 class Shoe(models.Model):
-    model_id = models.ForeignKey(ID, on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    model_id = models.CharField(max_length=10)
     model_name = models.CharField(max_length=200)
-    brand = models.IntegerField(default=0)
+    brand = models.CharField()
     size = models.IntegerField(default=0)
-    heelHeight = models.IntegerField(default=0)
-    imageURL = models.URL()
+    heel_height = models.IntegerField(default=0)
+    image = models.ImageField()
