@@ -4,7 +4,6 @@ from django.db import models
 
 class Shoe(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    model_id = models.CharField(max_length=10)
     model_name = models.CharField(max_length=200)
     brand = models.CharField()
     size = models.IntegerField(default=0)
