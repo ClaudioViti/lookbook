@@ -3,7 +3,14 @@
 <head>
   <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
   <style>
-    .lookbook img { width: 300px; height: auto; } 
+    .lookbook img {
+      height: 100px;
+      float: left;
+      filter: grayscale(0%);
+      transition: all 0.2s;
+      width: 300px;
+      height: auto;
+      } 
     
     .lookbook {
       display: flex;
@@ -11,11 +18,27 @@
       justify-content:  center;
       background-color: rgb(255, 255, 255);
     }
+    .lookbook img:hover {
+      filter: grayscale(100%);
+     -webkit-filter: grayscale(0%);
+     -moz-filter: grayscale(100%);
+      transform: scale(1.1);
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+    }
+    .lookbook details:hover {
+      width:auto;
+      height:auto;
+      background:rgb(255, 255, 255);
+      overflow:hidden;
+    }
+    .lookbook details:focus { width:auto; }
     
     .lookbook article {
       flex: 0 0 12.5%;
       padding: 0.5rem;
     }
+    
     dd {
       display: block;
       margin-top: 0em;
@@ -91,7 +114,7 @@
 <body>
   
   <ul>
-    <li><a href="#home">Home</a></li>
+    <li><a href="/">Fold details</a></li>
     <li><a href="/admin/shoes/shoe/">Manage Items</a></li>
     <li class="dropdown">
       <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
@@ -110,15 +133,16 @@
         <img src="{{ shoe.image.url }}">
         <figcaption>
           <header> Id: {{ shoe.pk }} </header>
+          <details>
           <dt>
             <dl> Model: {{ shoe.model }} </dl>
             <dl> Style: {{ shoe.style }} </dl>
             <dl> Brand: {{ shoe.brand }} </dl>
             <dl> Color: {{ shoe.color }} </dl>
             <dl> Size: {{ shoe.size }} EU </dl>
-            <dl> Heel: {{ shoe.heel_height }} cm </dl>
-            <dl> Plateau: {{ shoe.plateau_height }} cm </dl>
-            <dl> Real heel: {{ shoe.real_heel }} cm </dl>
+            <dl> Heel: {{ shoe.heel_height }} mm </dl>
+            <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
+            <dl> Real heel: {{ shoe.real_heel }} mm </dl>
             <dl> Hell kind: {{ shoe.heel_kind }} </dl>
             <dl> Material: {{ shoe.material }} </dl>
             <dl> Year: {{ shoe.year }} </dl>
@@ -126,7 +150,10 @@
             <dl> Comfort: {{ shoe.comfort }} </dl>
             <dl> State: {{ shoe.state }} </dl>
             <dl> Available: {{ shoe.available }} </dl>
+            <dl> Info: {{ shoe.info }} </dl>
+            <dl> Price: {{ shoe.price }} € </dl>
           </dt>
+        </details>
         </figcaption>
       </figure>
     </article>
