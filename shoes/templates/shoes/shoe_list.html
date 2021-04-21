@@ -8,7 +8,7 @@
     .lookbook {
       display: flex;
       flex-flow: row wrap;
-      justify-content: center;
+      justify-content:  center;
       background-color: rgb(255, 255, 255);
     }
     
@@ -30,12 +30,15 @@
       margin-left: 0;
       margin-right: 0;
     }
+    dt {
+      border-bottom: solid black 1px;
+    }
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #333;
+      background-color: rgb(80, 77, 77);
     }
     
     li {
@@ -80,6 +83,9 @@
     .dropdown:hover .dropdown-content {
       display: block;
     }
+    body{
+ margin: 0px;
+}
   </style>
 </head>
 <body>
@@ -104,11 +110,11 @@
         <img src="{{ shoe.image.url }}">
         <figcaption>
           <header> {{ shoe.model_name }} </header>
-          <ul>
-            <li> Brand: {{ shoe.brand }} </li>
-            <li> Size: {{ shoe.size }} EU </li>
-            <li> Heel: {{ shoe.heel_height }} cm </li>
-          </ul>
+          <dt>
+            <dl> Brand: {{ shoe.brand }} </dl>
+            <dl> Size: {{ shoe.size }} EU </dl>
+            <dl> Heel: {{ shoe.heel_height }} cm </dl>
+          </dt>
         </figcaption>
       </figure>
     </article>
