@@ -111,12 +111,21 @@
         <figcaption>
           <header> Id: {{ shoe.pk }} </header>
           <dt>
+            <dl> Model: {{ shoe.model }} </dl>
             <dl> Style: {{ shoe.style }} </dl>
             <dl> Brand: {{ shoe.brand }} </dl>
+            <dl> Color: {{ shoe.color }} </dl>
             <dl> Size: {{ shoe.size }} EU </dl>
             <dl> Heel: {{ shoe.heel_height }} cm </dl>
             <dl> Plateau: {{ shoe.plateau_height }} cm </dl>
-            <dl> Real Heel: {{ shoe.total }} cm </dl>
+            <dl> Real heel: {{ shoe.real_heel }} cm </dl>
+            <dl> Hell kind: {{ shoe.heel_kind }} </dl>
+            <dl> Material: {{ shoe.material }} </dl>
+            <dl> Year: {{ shoe.year }} </dl>
+            <dl> Season: {{ shoe.season }} </dl>
+            <dl> Comfort: {{ shoe.comfort }} </dl>
+            <dl> State: {{ shoe.state }} </dl>
+            <dl> Available: {{ shoe.available }} </dl>
           </dt>
         </figcaption>
       </figure>
