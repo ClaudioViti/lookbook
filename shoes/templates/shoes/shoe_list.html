@@ -109,11 +109,14 @@
       <figure>
         <img src="{{ shoe.image.url }}">
         <figcaption>
-          <header> {{ shoe.model_name }} </header>
+          <header> Id: {{ shoe.pk }} </header>
           <dt>
+            <dl> Style: {{ shoe.style }} </dl>
             <dl> Brand: {{ shoe.brand }} </dl>
             <dl> Size: {{ shoe.size }} EU </dl>
             <dl> Heel: {{ shoe.heel_height }} cm </dl>
+            <dl> Plateau: {{ shoe.plateau_height }} cm </dl>
+            <dl> Real Heel: {{ shoe.total }} cm </dl>
           </dt>
         </figcaption>
       </figure>
