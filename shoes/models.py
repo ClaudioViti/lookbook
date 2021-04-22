@@ -9,7 +9,6 @@ class Shoe(models.Model):
     )
     MODEL_CHOICES = (
     ("Décolleté", "Décolleté"),
-    ("Décolleté Slingback", "Décolleté Slingback"),
     ("Mules", "Mules"),
     ("Sabot", "Sabot"),
     ("Open Toe", "Open Toe"),
@@ -61,7 +60,8 @@ class Shoe(models.Model):
     
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
-    peep_toe= models.BooleanField(default=False)
+    peep_toe = models.BooleanField(default=False)
+    slingback = models.BooleanField(default=False)
     style = models.CharField(max_length=200, choices=STYLE_CHOICES, blank=True, null=True)
     brand = models.CharField(max_length=200, blank=True, null=True)
     SKU = models.CharField(max_length=200, blank=True, null=True)
