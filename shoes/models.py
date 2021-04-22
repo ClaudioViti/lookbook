@@ -4,18 +4,23 @@ from django.db import models
 
 class Shoe(models.Model):
     SEAS_CHOICES = (
-    ("AW", "AW"),
-    ("SS", "SS"),
+    ("AW", "Autumn Winter"),
+    ("SS", "Spring Summer"),
     )
     MODEL_CHOICES = (
     ("Décolleté", "Décolleté"),
     ("Mules", "Mules"),
     ("Sabot", "Sabot"),
+    ("Clogs", "Clogs"),
+    ("Mocassins", "Mocassins"),
+    ("Brogues", "Brogues"),
     ("Open Toe", "Open Toe"),
     ("Sandals", "Sandals"),
     ("Wedges", "Wedges"),
     ("Platform", "Platform"),
     ("Ankle Boots", "Ankle Boots"),
+    ("Lace-up", "Lace-up"),
+    ("Gladiators", "Gladiators"),
     ("Boots", "Boots"),
     ("Sneakers", "Sneakers"),
     ("Pumps", "Pumps"),
@@ -26,9 +31,11 @@ class Shoe(models.Model):
     STYLE_CHOICES = (
     ("Casual", "Casual"),
     ("Sport", "Sport"),
+    ("Tennis", "Tennis"),
     ("Elegant", "Elegant"),
     ("Cerimony", "Cerimony"),
     ("Wedding", "Wedding"),
+    ("Sea", "Sea"),
     )
     SIZE_CHOICES = (
     ("30", "30"), ("30.5", "30.5"), ("31", "31"), ("31.5", "31.5"), ("32", "32"), ("32.5", "32.5"), ("33", "33"), ("33.5", "33.5"), ("34", "34"), ("34.5", "34.5"),
