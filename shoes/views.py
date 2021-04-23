@@ -13,7 +13,8 @@ class ShoeListView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        color = self.request.GET.get('color')
-        if color:
-            qs = qs.filter(color=color)
+        x = self.request.GET.get(field)
+        if x:
+            qs = qs.filter(color=x)
+            qs = qs.filter(model=x)
         return qs
