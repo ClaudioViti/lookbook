@@ -122,6 +122,7 @@
         <a href="#">Link 1</a>
         <a href="#">Link 2</a>
         <a href="#">Link 3</a>
+        <li style="float:right"><a class="active" href="#about">About</a></li>
       </div>
     </li>
   </ul>
@@ -136,7 +137,7 @@
           <details>
           <dt>
             <dl> Model: {{ shoe.model }} </dl>
-            <dl> Peeop Toe: {{ shoe.peep_toe }} </dl>
+            <dl> Peep Toe: {{ shoe.peep_toe }} </dl>
             <dl> Slingback: {{ shoe.slingback }} </dl>
             <dl> Style: {{ shoe.style }} </dl>
             <dl> Brand: {{ shoe.brand }} </dl>
@@ -146,7 +147,9 @@
             <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
             <dl> Real heel: {{ shoe.real_heel }} mm </dl>
             <dl> Hell kind: {{ shoe.heel_kind }} </dl>
-            <dl> Material: {{ shoe.material }} </dl>
+            <dl> Sole material: {{ shoe.sole_material }} </dl>
+            <dl> Lining material: {{ shoe.lining_material }} </dl>
+            <dl> Upper material: {{ shoe.upper_material }} </dl>
             <dl> Year: {{ shoe.year }} </dl>
             <dl> Season: {{ shoe.season }} </dl>
             <dl> Comfort: {{ shoe.comfort }}/5 </dl>

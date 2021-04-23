@@ -18,8 +18,10 @@ from django.urls import include, path
 from shoes.views import ShoeListView
 from django.conf import settings
 from django.conf.urls.static import static
+from shoes.views import ColorView
 
 urlpatterns = [
     path('', ShoeListView.as_view()),
+    path('shoes/<color>/', ColorView.as_view()
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,8 +4,8 @@ from django.db import models
 
 class Shoe(models.Model):
     SEAS_CHOICES = (
-    ("AW", "Autumn Winter"),
-    ("SS", "Spring Summer"),
+    ("Autumn Winter", "Autumn Winter"),
+    ("Spring Summer", "Spring Summer"),
     )
     MODEL_CHOICES = (
     ("Décolleté", "Décolleté"),
@@ -25,7 +25,7 @@ class Shoe(models.Model):
     ("Sneakers", "Sneakers"),
     ("Pumps", "Pumps"),
     ("T-Strap", "T-Strap"),
-    ("Ankle-Stra", "Ankle-Strap"),
+    ("Ankle-Strap", "Ankle-Strap"),
     ("Texas", "Texas"),
     )
     STYLE_CHOICES = (
@@ -35,18 +35,21 @@ class Shoe(models.Model):
     ("Elegant", "Elegant"),
     ("Cerimony", "Cerimony"),
     ("Wedding", "Wedding"),
+    ("Office", "Office"),
+    ("Evening", "Evening"),
     ("Sea", "Sea"),
     )
     SIZE_CHOICES = (
     ("30", "30"), ("30.5", "30.5"), ("31", "31"), ("31.5", "31.5"), ("32", "32"), ("32.5", "32.5"), ("33", "33"), ("33.5", "33.5"), ("34", "34"), ("34.5", "34.5"),
-    ("35", "35"), ("35.5", "35.5"), ("36", "36"), ("36.5", "36.5"), ("37", "37"), ("37.5", "37.5"), ("38", "30"), ("38.5", "38.5"), ("39", "39"), ("39.5", "39.5"),
+    ("35", "35"), ("35.5", "35.5"), ("36", "36"), ("36.5", "36.5"), ("37", "37"), ("37.5", "37.5"), ("38", "38"), ("38.5", "38.5"), ("39", "39"), ("39.5", "39.5"),
     ("40", "40"), ("40.5", "40.5"), ("41", "41"), ("41.5", "41.5"), ("42", "42"), ("42.5", "42.5"), ("43", "43"), ("43.5", "43.5"), ("44", "44"), ("44.5", "44.5"), ("45", "45"),
     )
     COLOR_CHOICES = (
     ("Black", "Black"),
     ("Grey", "Grey"),
     ("White", "White"),
-    ("Brown", "Bwoen"),
+    ("Brown", "Brown"),
+    ("Beige", "Beige"),
     ("Red", "Red"),
     ("Gold", "Gold"),
     ("Yellow", "Yellow"),
@@ -60,9 +63,22 @@ class Shoe(models.Model):
     ("Large", "Large"),
     ("Wedge", "Wedge"),
     ("Stiletto", "Stiletto"),
-    ("Brown", "Bwoen"),
+    ("Cone", "Cone"),
+    ("Blade", "Blade"),
     )
-
+    STATE_CHOICES = (
+    ("New", "New"),
+    ("Good conditions", "Good conditions"),
+    ("To be cleaned", "To be cleaned"),
+    ("Need service", "Need service"),
+    )
+    MATERIAL_CHOICES = (
+    ("Leather", "Leather"),
+    ("Rubber", "Rubber"),
+    ("Fabric", "Fabric"),
+    ("Microfibra", "Microfibra"),
+    ("Other", "Other"),
+    )
     COMFORT_CHOICES = [(i, i) for i in range(1,6)]
     
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -77,11 +93,13 @@ class Shoe(models.Model):
     heel_height = models.IntegerField(default=0, blank=True, null=True)
     heel_kind = models.CharField(max_length=20, choices= HEEL_KIND_CHOICES, blank=True, null=True)
     plateau_height = models.IntegerField(default=0, blank=True, null=True)
-    material = models.CharField(max_length=200, blank=True, null=True)
-    season = models.CharField(max_length=10, choices=SEAS_CHOICES, blank=True, null=True)
+    sole_material = models.CharField(max_length=30, choices=MATERIAL_CHOICES, blank=True, null=True)
+    lining_material = models.CharField(max_length=30, choices=MATERIAL_CHOICES, blank=True, null=True)
+    upper_material = models.CharField(max_length=30, choices=MATERIAL_CHOICES, blank=True, null=True)
+    season = models.CharField(max_length=20, choices=SEAS_CHOICES, blank=True, null=True)
     year = models.IntegerField(default=0)
     comfort = models.IntegerField(choices=COMFORT_CHOICES, blank=True, null=True)
-    state = models.CharField(max_length=200, default="New", blank=True, null=True)
+    state = models.CharField(max_length=30, choices=STATE_CHOICES, blank=True, null=True)
     available = models.BooleanField(default=True)
     info = models.CharField(max_length=200, blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
