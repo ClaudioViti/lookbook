@@ -8,7 +8,7 @@ from django.views.generic import ListView
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
-from shoes.models import Shoe, Color
+from shoes.models import Shoe
 
 class ShoeListView(ListView):
 
@@ -19,5 +19,10 @@ class ColorView(ListView):
     template_name = 'shoes/shoes_list.html'
 
     def get_queryset(self):
-        self.shoes = get_object_or_404(Shoes, name=self.kwargs['Black'])
-        return Shoes.objects.filter(shoes=self.shoes)
+        qs = super().get_queryset()
+
+        color = self.request.GET.get('color')
+        if color:
+            qs = qs.filter(color=color)
+​
+        return qs
