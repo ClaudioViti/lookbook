@@ -13,9 +13,6 @@ from shoes.models import Shoe
 class ShoeListView(ListView):
 
     model = models.Shoe
-
-class ColorView(ListView):
-
     template_name = 'shoes/shoes_list.html'
 
     def get_queryset(self):
