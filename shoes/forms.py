@@ -2,7 +2,7 @@
 >>> from shoes.models import Shoe
 
 # Create the form class.
->>> class ShoesForm(ModelForm):
-...     class Meta:
-...         model = Shoes
-...         fields = ['Color', 'Size', 'Model', 'Style']
+class ShoesForm(ModelForm):
+     class Meta:
+         model = Shoes
+         fields = ['color', 'size', 'model', 'style']
