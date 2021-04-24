@@ -1,5 +1,8 @@
-from django import forms
+>>> from django.forms import ModelForm
+>>> from shoes.models import Shoe
 
-class Shoes(forms.Form):
-    color = forms.CharField(max_length=100)
-    size = forms.CharField(max_length=100)
+# Create the form class.
+>>> class ShoesForm(ModelForm):
+...     class Meta:
+...         model = Shoes
+...         fields = ['Color', 'Size', 'Model', 'Style']
