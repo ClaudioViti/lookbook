@@ -16,11 +16,12 @@ class ShoeListView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        for field in FILTER_FIELDS:
-            value = self.request.GET.get(field)
-            if value:
-                qs = qs.filter(**{field: value})
 
+        self.form.is_valid()
+        
+        for field, value in self.form.cleaned_data.items():
+            qs = qs.filter(**{field: value})
+            
         return qs
 
     def dispatch(self, request, *args, **kwargs):
