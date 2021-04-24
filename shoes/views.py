@@ -24,5 +24,5 @@ class ShoeListView(ListView):
         return qs
 
     def dispatch(self, request, *args, **kwargs):
-    self.form = ShoesForm(request.GET)
-    return super().dispatch(request, *args, **kwargs)
+        self.form = ShoesForm(request.GET)
+        return super().dispatch(request, *args, **kwargs)
