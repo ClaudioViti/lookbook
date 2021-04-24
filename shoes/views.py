@@ -6,7 +6,7 @@ from . import models
 
 from django.views.generic import ListView
 
-FILTER_FIELDS = ['color', 'size', 'model']
+FILTER_FIELDS = ['color', 'size', 'model', 'slingback', 'brand', 'heel_height']
 
 class ShoeListView(ListView):
 
@@ -19,5 +19,5 @@ class ShoeListView(ListView):
             value = self.request.GET.get(field)
             if value:
                 qs = qs.filter(**{field: value})
-                
+
         return qs
