@@ -38,7 +38,13 @@
       flex: 0 0 12.5%;
       padding: 0.5rem;
     }
-    
+    al {
+      margin-top: 100px;
+      margin-bottom: 100px;
+      margin-right: 100px;
+      margin-left: 100px;
+      
+    }
     dd {
       display: block;
       margin-top: 0em;
@@ -112,19 +118,31 @@
   </style>
 </head>
 <body>
+
+</form>
   
   <ul>
-    <li><a href="/">Fold details</a></li>
+    <li><a href="/">Reset</a></li>
     <li><a href="/admin/shoes/shoe/" target="_blank">Manage Items</a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">Filter</a>
+      <div class="dropdown-content">
+      <al>
+        <form action="/" method="get">
+        {{ form }}
+        <input type="submit" value="Submit">
+      </al>
+    </li>
     <li class="dropdown">
       <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
       <div class="dropdown-content">
         <a href="#">Link 1</a>
         <a href="#">Link 2</a>
         <a href="#">Link 3</a>
-        <li style="float:right"><a class="active" href="#about">About</a></li>
+        
       </div>
     </li>
+    <li style="float:right"><a class="active" href="#about">About</a></li>
   </ul>
   
   <section class="lookbook">

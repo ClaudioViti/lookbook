@@ -20,10 +20,14 @@ class ShoeListView(ListView):
         self.form.is_valid()
         
         for field, value in self.form.cleaned_data.items():
-            qs = qs.filter(**{field: value})
+            if value:
+                qs = qs.filter(**{field: value})
             
         return qs
 
     def dispatch(self, request, *args, **kwargs):
         self.form = ShoesForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(form=self.form, **kwargs)
