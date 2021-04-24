@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from shoes.forms import ShoesForm
 
 # Create your views here.
 
@@ -21,3 +22,7 @@ class ShoeListView(ListView):
                 qs = qs.filter(**{field: value})
 
         return qs
+
+    def dispatch(self, request, *args, **kwargs):
+    self.form = ShoesForm(request.GET)
+    return super().dispatch(request, *args, **kwargs)

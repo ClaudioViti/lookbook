@@ -1,8 +1,8 @@
->>> from django.forms import ModelForm
->>> from shoes.models import Shoe
+from django.forms import ModelForm
+from shoes.models import Shoe
 
 # Create the form class.
 class ShoesForm(ModelForm):
      class Meta:
-         model = Shoes
+         model = Shoe
          fields = ['color', 'size', 'model', 'style']
