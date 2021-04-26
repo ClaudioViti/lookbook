@@ -9,23 +9,37 @@ class Shoe(models.Model):
     )
     MODEL_CHOICES = (
     ("Décolleté", "Décolleté"),
+    ("D'Orsay", "D'Orsay"),
+    ("V-neck", "V-neck"),
     ("Mules", "Mules"),
     ("Sabot", "Sabot"),
     ("Clogs", "Clogs"),
     ("Mocassins", "Mocassins"),
     ("Brogues", "Brogues"),
-    ("Open Toe", "Open Toe"),
     ("Sandals", "Sandals"),
-    ("Wedges", "Wedges"),
     ("Ankle Boots", "Ankle Boots"),
     ("Lace-up", "Lace-up"),
     ("Gladiators", "Gladiators"),
     ("Boots", "Boots"),
+    ("Ankle Boots", "Ankle Boots"),
+    ("Sock Boots", "Sock Boots"),
+    ("Cuissardes", "Cuissardes"),
     ("Sneakers", "Sneakers"),
     ("Pumps", "Pumps"),
     ("T-Strap", "T-Strap"),
+    ("Cross-Strap", "Cross-Strap"),
+    ("Diagonal-Strap", "Diagonal-Strap"),
     ("Ankle-Strap", "Ankle-Strap"),
     ("Texas", "Texas"),
+    ("Beatles", "Beatles"),
+    ("Bikers", "Bikers"),
+    ("Mary Jane", "Mary Jane"),
+    ("Ballet Flats", "Ballets Flats"),
+    ("Ballroom Dance Shoes", "Ballroom Dance Shoes"),
+    ("Espadrille", "Espadrille"),
+    ("Fantasy", "Fantasy"),
+    ("Corset", "Corset"),
+    ("Cut Out", "Cut Out"),
     )
     STYLE_CHOICES = (
     ("Casual", "Casual"),
@@ -37,6 +51,7 @@ class Shoe(models.Model):
     ("Office", "Office"),
     ("Evening", "Evening"),
     ("Sea", "Sea"),
+    ("Home", "Home"),
     )
     SIZE_CHOICES = (
     ("30", "30"), ("30.5", "30.5"), ("31", "31"), ("31.5", "31.5"), ("32", "32"), ("32.5", "32.5"), ("33", "33"), ("33.5", "33.5"), ("34", "34"), ("34.5", "34.5"),
@@ -64,6 +79,8 @@ class Shoe(models.Model):
     ("Stiletto", "Stiletto"),
     ("Cone", "Cone"),
     ("Blade", "Blade"),
+    ("Kitten", "Kitten"),
+    ("Spool", "Spool"),
     )
     STATE_CHOICES = (
     ("New", "New"),
@@ -74,15 +91,18 @@ class Shoe(models.Model):
     MATERIAL_CHOICES = (
     ("Leather", "Leather"),
     ("Patent leather", "Patent leather"),
+    ("Suede leather", "Suede leather"),
     ("Rubber", "Rubber"),
     ("Fabric", "Fabric"),
-    ("Microfibra", "Microfibra"),
     ("Wood", "Wood"),
     ("Cork", "Cork"),
+    ("Synthetics", "Synthetics"),
+    ("Microfiber", "Microfiber"),
     ("Other", "Other"),
     )
     TOE_CHOICES = (
     ("Peep", "Peep"),
+    ("Open", "Open"),
     ("Rounded", "Rounded"),
     ("Pointed", "Pointed"),
     ("Square", "Square"),
