@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView
+from shoes.views import ShoeListView, FavouriteUpdateView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', ShoeListView.as_view()),
+    path('shoes/<int:pk>/favourite/', FavouriteUpdateView.as_view(), name='shoe-favourite'),
     path('shoes/<color>/', ShoeListView.as_view()),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

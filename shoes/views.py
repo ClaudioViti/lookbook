@@ -36,6 +36,6 @@ from django.views.generic.edit import UpdateView
 from myapp.models import Author
 
 class FavouriteUpdateView(UpdateView):
-    model = shoe
+    model = models.Shoe
     fields = ['favourite']
     template_name_suffix = '_update_form'
