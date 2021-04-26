@@ -6,7 +6,6 @@ from shoes.forms import ShoesForm
 from . import models
 
 from django.views.generic import ListView, UpdateView
-from shoes.models import favourite
 
 FILTER_FIELDS = ['color', 'size', 'model', 'slingback', 'brand', 'heel_height', 'toe']
 
@@ -37,6 +36,6 @@ from django.views.generic.edit import UpdateView
 from myapp.models import Author
 
 class FavouriteUpdateView(UpdateView):
-    model = favourite
+    model = shoe
     fields = ['favourite']
     template_name_suffix = '_update_form'
