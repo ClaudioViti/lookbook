@@ -60,7 +60,7 @@ class Shoe(models.Model):
     )
     COLOR_CHOICES = (
     ("Black", "Black"),
-    ("Grey", "Grey"),
+    ("Gray", "Gray"),
     ("White", "White"),
     ("Brown", "Brown"),
     ("Beige", "Beige"),
@@ -70,8 +70,12 @@ class Shoe(models.Model):
     ("Pink", "Pink"),
     ("Green", "Green"),
     ("Orange", "Orange"),
-    ("Fuxia", "Fuxia"),
+    ("Fuchsia", "Fuchsia"),
     ("Blue", "Blue"),
+    ("Azure", "Azure"),
+    ("Silver", "Silver"),
+    ("Purple", "Purple"),
+    ("Wheat", "Wheat"),
     )
     HEEL_KIND_CHOICES = (
     ("Large", "Large"),
@@ -133,6 +137,8 @@ class Shoe(models.Model):
     available = models.BooleanField(default=True)
     info = models.CharField(max_length=200, blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
+    favourite = models.BooleanField(default=False)
+    ordered = models.BooleanField(default=False)
     def real_heel(self):
         return self.heel_height - self.plateau_height
 
