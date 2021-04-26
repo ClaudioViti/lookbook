@@ -7,7 +7,7 @@ from . import models
 
 from django.views.generic import ListView
 
-FILTER_FIELDS = ['color', 'size', 'model', 'slingback', 'brand', 'heel_height']
+FILTER_FIELDS = ['color', 'size', 'model', 'slingback', 'brand', 'heel_height', 'toe']
 
 class ShoeListView(ListView):
 

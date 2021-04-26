@@ -17,7 +17,6 @@ class Shoe(models.Model):
     ("Open Toe", "Open Toe"),
     ("Sandals", "Sandals"),
     ("Wedges", "Wedges"),
-    ("Platform", "Platform"),
     ("Ankle Boots", "Ankle Boots"),
     ("Lace-up", "Lace-up"),
     ("Gladiators", "Gladiators"),
@@ -74,17 +73,28 @@ class Shoe(models.Model):
     )
     MATERIAL_CHOICES = (
     ("Leather", "Leather"),
+    ("Patent leather", "Patent leather"),
     ("Rubber", "Rubber"),
     ("Fabric", "Fabric"),
     ("Microfibra", "Microfibra"),
+    ("Wood", "Wood"),
+    ("Cork", "Cork"),
     ("Other", "Other"),
+    )
+    TOE_CHOICES = (
+    ("Peep", "Peep"),
+    ("Rounded", "Rounded"),
+    ("Pointed", "Pointed"),
+    ("Square", "Square"),
+    ("Almond", "Almond"),
     )
     COMFORT_CHOICES = [(i, i) for i in range(1,6)]
     
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
-    peep_toe = models.BooleanField(default=False)
+    platform = models.BooleanField(default=False)
     slingback = models.BooleanField(default=False)
+    toe = models.CharField(max_length=20, choices=TOE_CHOICES, blank=True, null=True)
     style = models.CharField(max_length=200, choices=STYLE_CHOICES, blank=True, null=True)
     brand = models.CharField(max_length=200, blank=True, null=True)
     SKU = models.CharField(max_length=200, blank=True, null=True)
