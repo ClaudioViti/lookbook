@@ -9,7 +9,7 @@
       const pk = el.dataset.id;
       const state = el.checked;
       
-      const data = new FormData().
+      const data = new FormData();
       data.append('favourite', state);
       
       const url = `/shoes/${pk}/favourite`;
@@ -19,7 +19,7 @@
       const defaults = {
         method: 'POST',
       };
-      const opts = Options.assign({}, defaults, options);
+      const opts = Object.assign({}, defaults, options);
       return fetch(url, opts);
   }
         </script>
