@@ -13,16 +13,17 @@
       data.append('favourite', state);
       
       const url = `/shoes/${pk}/favourite`;
-      return function post (/shoes/data-pk/favourite/, options) {
-    const defaults = {
-      method: 'POST',
-    };
-​
-    const opts = Options.assign({}, defaults, options);
-​
-    return fetch(url, opts);
-  }
+
     })
+    return function post (/shoes/data-pk/favourite/, options) {
+      const defaults = {
+        method: 'POST',
+      };
+​
+      const opts = Options.assign({}, defaults, options);
+​
+      return fetch(url, opts);
+  }
         </script>
 <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
