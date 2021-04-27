@@ -15,7 +15,7 @@
       const url = `/shoes/${pk}/favourite`;
       post(url, { body: data });
     })
-    return function post (url, options) {
+    function post (url, options) {
       const defaults = {
         method: 'POST',
       };
