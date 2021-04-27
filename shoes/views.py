@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from shoes.forms import ShoesForm
 from django.http import JsonResponse
+from django.conf import settings
 
 # Create your views here.
 
@@ -29,6 +30,8 @@ class ShoeListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         return super().get_context_data(form=self.form, **kwargs)
 
 class FavouriteUpdateView(UpdateView):
