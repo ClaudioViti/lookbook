@@ -4,7 +4,7 @@
 
 <head>
   <script type="module">
-    document.querySelector('#item-list').addEventListener('change', ev => {
+    document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
       const pk = el.dataset.id;
       const state = el.checked;
@@ -19,9 +19,7 @@
       const defaults = {
         method: 'POST',
       };
-​
       const opts = Options.assign({}, defaults, options);
-​
       return fetch(url, opts);
   }
         </script>
