@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', ShoeListView.as_view()),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
     path('admin/', admin.site.urls),

@@ -103,6 +103,7 @@ class Shoe(models.Model):
     ("Cork", "Cork"),
     ("Synthetics", "Synthetics"),
     ("Microfiber", "Microfiber"),
+    ("Plastic", "Plastic"),
     ("Other", "Other"),
     )
     TOE_CHOICES = (
