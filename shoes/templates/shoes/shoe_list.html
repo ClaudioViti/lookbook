@@ -1,7 +1,20 @@
 
 <!DOCTYPE html>{% load static %}
 <html>
+
 <head>
+  <script type="module">
+    document.querySelector('#item-list').addEventListener('change', ev => {
+      const el = ev.target;
+      const pk = el.dataset.id;
+      const state = el.checked;
+      
+      const data = new FormData().
+      data.append('favourite', state);
+      
+      const url = `/shoes/${pk}/favourite`;
+    })
+        </script>
 <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -190,12 +203,7 @@ function myFunction() {
   }
 }
 </script>
-<script type="module">
-  document.querySelector('#item-list').addEventListener('change', ev => {
-    const el = ev.target;
-    console.log(el.checked);
-  })
-  </script>
+
 <section class="lookbook">
   {% for shoe in object_list %}
   <article>
