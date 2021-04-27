@@ -218,8 +218,9 @@ function myFunction() {
     <figure>
       <img src="{{ shoe.image.url }}">
       <figcaption>
-        <header> data-id: {{ shoe.pk }} </header>
+        <header> Id: {{ shoe.pk }} </header>
         <input type="checkbox">
+        <input type="checkbox" data-id="{{ shoe.id }}" >
         <details>
         <dt>
           <dl> Model: {{ shoe.model }} </dl>
