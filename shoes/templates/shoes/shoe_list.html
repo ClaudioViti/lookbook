@@ -120,6 +120,7 @@ body {margin:0;font-family:Arial}
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  pointer-events:none;
 }
 
 .dropdown-content {
@@ -150,7 +151,7 @@ body {margin:0;font-family:Arial}
   color: black;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:focus-within .dropdown-content {
   display: block;
 }
 
@@ -191,7 +192,7 @@ body {margin:0;font-family:Arial}
 <div class="topnav" id="myTopnav">
   <a href="/" class="active">Reset</a>
   <a href="/admin/" target="_blank">Manage</a>
-  <div class="dropdown">
+  <div class="dropdown" tabindex="0">
     <button class="dropbtn">Filter 
       <i class="fa fa-caret-down"></i>
     </button>
