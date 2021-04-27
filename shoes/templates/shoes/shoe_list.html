@@ -66,6 +66,16 @@
       margin-right: 100%;
       margin-left: 100%;
     }
+    dl {
+      display: block;
+      margin-top: 0em;
+      margin-bottom: 0em;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    dt {
+      border-bottom: solid black 1px;
+    }
 body {margin:0;font-family:Arial}
 
 .topnav {
@@ -218,7 +228,7 @@ function myFunction() {
       <img src="{{ shoe.image.url }}">
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
-        Wishlist: <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+        Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
         <details>
         <dt>
           <dl> Model: {{ shoe.model }} </dl>

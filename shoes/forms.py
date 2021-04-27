@@ -5,4 +5,4 @@ from shoes.models import Shoe
 class ShoesForm(ModelForm):
      class Meta:
          model = Shoe
-         fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform']
+         fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']

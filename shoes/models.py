@@ -76,6 +76,7 @@ class Shoe(models.Model):
     ("Silver", "Silver"),
     ("Purple", "Purple"),
     ("Wheat", "Wheat"),
+    ("Glitter", "Glitter"),
     )
     HEEL_KIND_CHOICES = (
     ("Large", "Large"),
