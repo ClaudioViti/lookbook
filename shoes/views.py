@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from shoes.forms import ShoesForm
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -36,3 +37,5 @@ class FavouriteUpdateView(UpdateView):
     model = models.Shoe
     fields = ['favourite']
     template_name_suffix = '_update_form'
+    def form_valid(self, form): self.object = form.save()
+        return JsonResponse({ 'favourite': self.object.favourite })

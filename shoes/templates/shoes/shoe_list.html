@@ -12,7 +12,7 @@
       const data = new FormData();
       data.append('favourite', state);
       
-      const url = `/shoes/${pk}/favourite`;
+      const url = `/shoes/${pk}/favourite/`;
       post(url, { body: data });
     })
     function post (url, options) {
