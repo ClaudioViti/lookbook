@@ -220,6 +220,7 @@ function myFunction() {
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
         <input type="checkbox" data-id="{{ shoe.id }}" >
+        {{ shoe.favourite|yesno:"checked," }}
         <details>
         <dt>
           <dl> Model: {{ shoe.model }} </dl>
