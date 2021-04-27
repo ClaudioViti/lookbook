@@ -33,7 +33,6 @@ class ShoeListView(ListView):
         return super().get_context_data(form=self.form, **kwargs)
 
 from django.views.generic.edit import UpdateView
-from myapp.models import Author
 
 class FavouriteUpdateView(UpdateView):
     model = models.Shoe

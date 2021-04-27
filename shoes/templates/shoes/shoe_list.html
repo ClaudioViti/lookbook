@@ -2,6 +2,7 @@
 <!DOCTYPE html>{% load static %}
 <html>
 <head>
+<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -189,6 +190,12 @@ function myFunction() {
   }
 }
 </script>
+<script type="module">
+  document.querySelector('#item-list').addEventListener('change', ev => {
+    const el = ev.target;
+    console.log(el.checked);
+  })
+  </script>
 <section class="lookbook">
   {% for shoe in object_list %}
   <article>
@@ -196,6 +203,7 @@ function myFunction() {
       <img src="{{ shoe.image.url }}">
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
+        <input type="checkbox">
         <details>
         <dt>
           <dl> Model: {{ shoe.model }} </dl>
