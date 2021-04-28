@@ -145,3 +145,8 @@ class Shoe(models.Model):
         return self.heel_height - self.plateau_height
 
     image = models.ImageField()
+
+
+class Shoe(models.Model):
+
+    image = models.ImageField()
