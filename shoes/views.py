@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from shoes.forms import ShoesForm
 from django.http import JsonResponse
-from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -9,7 +9,10 @@ from . import models
 
 from django.views.generic import ListView, UpdateView
 
-class ShoeListView(ListView):
+class ShoeListView(LoginRequiredMixin, ListView):
+    
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
@@ -30,8 +33,6 @@ class ShoeListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         return super().get_context_data(form=self.form, **kwargs)
 
 class FavouriteUpdateView(UpdateView):
@@ -41,3 +42,6 @@ class FavouriteUpdateView(UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         return JsonResponse({ 'favourite': self.object.favourite })
+
+
+
