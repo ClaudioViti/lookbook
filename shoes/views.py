@@ -11,9 +11,6 @@ from django.views.generic import ListView, UpdateView
 
 class ShoeListView(LoginRequiredMixin, ListView):
     
-    login_url = '/login/'
-    redirect_field_name = 'redirect_to'
-
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
 

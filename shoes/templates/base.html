@@ -1,10 +1,20 @@
 {% load static %}
 <html>
+<style>
+head,
+body {
+  text-align: center;
+}
+
+table {
+  margin: 0 auto;
+}
+</style>
 <head>
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <img src="{% static 'images/sitelogo.png' %}" alt="Logo">
+    <img src="{% static 'favicon.png' %}" alt="Logo">
     {% block content %}{% endblock %}
 </body>
 </html>
