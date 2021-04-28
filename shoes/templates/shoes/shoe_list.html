@@ -247,50 +247,48 @@ function myFunction() {
 </script>
 
 <section class="lookbook">
-  {% if object_list %}
-    {% for shoe in object_list %}
-    <article>
-      <figure>
-        <img src="{{ shoe.image.url }}">
-        <figcaption>
-          <header> Id: {{ shoe.pk }} </header>
-          Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
-          <details>
-          <dt>
-            <dl> Model: {{ shoe.model }} </dl>
-            <dl> SKU: {{ shoe.sku }} </dl>
-            <dl> Toe: {{ shoe.toe }} </dl>
-            <dl> Slingback: {{ shoe.slingback }} </dl>
-            <dl> Platform: {{ shoe.platform }} </dl>
-            <dl> Style: {{ shoe.style }} </dl>
-            <dl> Brand: {{ shoe.brand }} </dl>
-            <dl> Color: {{ shoe.color }} </dl>
-            <dl> Size: {{ shoe.size }} EU </dl>
-            <dl> Heel: {{ shoe.heel_height }} mm </dl>
-            <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
-            <dl> Real heel: {{ shoe.real_heel }} mm </dl>
-            <dl> Hell kind: {{ shoe.heel_kind }} </dl>
-            <dl> Sole material: {{ shoe.sole_material }} </dl>
-            <dl> Lining material: {{ shoe.lining_material }} </dl>
-            <dl> Upper material: {{ shoe.upper_material }} </dl>
-            <dl> Year: {{ shoe.year }} </dl>
-            <dl> Season: {{ shoe.season }} </dl>
-            <dl> Comfort: {{ shoe.comfort }}/5 </dl>
-            <dl> State: {{ shoe.state }} </dl>
-            <dl> Available: {{ shoe.available }} </dl>
-            <dl> Info: {{ shoe.info }} </dl>
-            <dl> Price: {{ shoe.price }} € </dl>
-            <dl> Favourite: {{ shoe.favourite }} </dl>
-            <dl> Ordered: {{ shoe.ordered }} </dl>
-          </dt>
-        </details>
-        </figcaption>
-      </figure>
-    </article>
-    {% endfor %}
-  {% else %}
+  {% for shoe in object_list %}
+  <article>
+    <figure>
+      <img src="{{ shoe.image.url }}">
+      <figcaption>
+        <header> Id: {{ shoe.pk }} </header>
+        Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+        <details>
+        <dt>
+          <dl> Model: {{ shoe.model }} </dl>
+          <dl> SKU: {{ shoe.sku }} </dl>
+          <dl> Toe: {{ shoe.toe }} </dl>
+          <dl> Slingback: {{ shoe.slingback }} </dl>
+          <dl> Platform: {{ shoe.platform }} </dl>
+          <dl> Style: {{ shoe.style }} </dl>
+          <dl> Brand: {{ shoe.brand }} </dl>
+          <dl> Color: {{ shoe.color }} </dl>
+          <dl> Size: {{ shoe.size }} EU </dl>
+          <dl> Heel: {{ shoe.heel_height }} mm </dl>
+          <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
+          <dl> Real heel: {{ shoe.real_heel }} mm </dl>
+          <dl> Hell kind: {{ shoe.heel_kind }} </dl>
+          <dl> Sole material: {{ shoe.sole_material }} </dl>
+          <dl> Lining material: {{ shoe.lining_material }} </dl>
+          <dl> Upper material: {{ shoe.upper_material }} </dl>
+          <dl> Year: {{ shoe.year }} </dl>
+          <dl> Season: {{ shoe.season }} </dl>
+          <dl> Comfort: {{ shoe.comfort }}/5 </dl>
+          <dl> State: {{ shoe.state }} </dl>
+          <dl> Available: {{ shoe.available }} </dl>
+          <dl> Info: {{ shoe.info }} </dl>
+          <dl> Price: {{ shoe.price }} € </dl>
+          <dl> Favourite: {{ shoe.favourite }} </dl>
+          <dl> Ordered: {{ shoe.ordered }} </dl>
+        </dt>
+      </details>
+      </figcaption>
+    </figure>
+  </article>
+  {% empty %}
     <li>No matches found</li>
-  {% endif %}
+  {% endfor %}
 </section>
 </body>
 </html>
