@@ -3,9 +3,13 @@
 
 <head>
   <script type="module">
-    const btn = document.querySelector('button');
-    btn.onclick = function() {
+    const btn_close = document.querySelector('#btn_close');
+    const btn_open = document.querySelector('#btn_open');
+    btn_close.onclick = function() {
       document.querySelectorAll('details').forEach(el => el.open = false);
+    }
+    btn_open.onclick = function() {
+      document.querySelectorAll('details').forEach(el => el.open = true);
     }
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
@@ -26,7 +30,7 @@
       return fetch(url, opts);
   }
         </script>
-<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">y
+<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -112,7 +116,7 @@ button {
   font-size: 17px;
   z-index: 1;
   border: none;
-
+  cursor: pointer;
 }
 
 .active {
@@ -210,7 +214,8 @@ button {
 <div class="topnav" id="myTopnav">
   <a href="/" class="active">Reset</a>
   <a href="/admin/" target="_blank">Manage</a>
-  <button>fold</button>
+  <button id="btn_close">Fold</button>
+  <button id="btn_open">Unfold</button>
   <div class="dropdown" tabindex="0">
     <button class="dropbtn">Filter 
       <i class="fa fa-caret-down"></i>
@@ -242,46 +247,50 @@ function myFunction() {
 </script>
 
 <section class="lookbook">
-  {% for shoe in object_list %}
-  <article>
-    <figure>
-      <img src="{{ shoe.image.url }}">
-      <figcaption>
-        <header> Id: {{ shoe.pk }} </header>
-        Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
-        <details>
-        <dt>
-          <dl> Model: {{ shoe.model }} </dl>
-          <dl> SKU: {{ shoe.sku }} </dl>
-          <dl> Toe: {{ shoe.toe }} </dl>
-          <dl> Slingback: {{ shoe.slingback }} </dl>
-          <dl> Platform: {{ shoe.platform }} </dl>
-          <dl> Style: {{ shoe.style }} </dl>
-          <dl> Brand: {{ shoe.brand }} </dl>
-          <dl> Color: {{ shoe.color }} </dl>
-          <dl> Size: {{ shoe.size }} EU </dl>
-          <dl> Heel: {{ shoe.heel_height }} mm </dl>
-          <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
-          <dl> Real heel: {{ shoe.real_heel }} mm </dl>
-          <dl> Hell kind: {{ shoe.heel_kind }} </dl>
-          <dl> Sole material: {{ shoe.sole_material }} </dl>
-          <dl> Lining material: {{ shoe.lining_material }} </dl>
-          <dl> Upper material: {{ shoe.upper_material }} </dl>
-          <dl> Year: {{ shoe.year }} </dl>
-          <dl> Season: {{ shoe.season }} </dl>
-          <dl> Comfort: {{ shoe.comfort }}/5 </dl>
-          <dl> State: {{ shoe.state }} </dl>
-          <dl> Available: {{ shoe.available }} </dl>
-          <dl> Info: {{ shoe.info }} </dl>
-          <dl> Price: {{ shoe.price }} € </dl>
-          <dl> Favourite: {{ shoe.favourite }} </dl>
-          <dl> Ordered: {{ shoe.ordered }} </dl>
-        </dt>
-      </details>
-      </figcaption>
-    </figure>
-  </article>
-  {% endfor %}
+  {% if object_list %}
+    {% for shoe in object_list %}
+    <article>
+      <figure>
+        <img src="{{ shoe.image.url }}">
+        <figcaption>
+          <header> Id: {{ shoe.pk }} </header>
+          Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+          <details>
+          <dt>
+            <dl> Model: {{ shoe.model }} </dl>
+            <dl> SKU: {{ shoe.sku }} </dl>
+            <dl> Toe: {{ shoe.toe }} </dl>
+            <dl> Slingback: {{ shoe.slingback }} </dl>
+            <dl> Platform: {{ shoe.platform }} </dl>
+            <dl> Style: {{ shoe.style }} </dl>
+            <dl> Brand: {{ shoe.brand }} </dl>
+            <dl> Color: {{ shoe.color }} </dl>
+            <dl> Size: {{ shoe.size }} EU </dl>
+            <dl> Heel: {{ shoe.heel_height }} mm </dl>
+            <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
+            <dl> Real heel: {{ shoe.real_heel }} mm </dl>
+            <dl> Hell kind: {{ shoe.heel_kind }} </dl>
+            <dl> Sole material: {{ shoe.sole_material }} </dl>
+            <dl> Lining material: {{ shoe.lining_material }} </dl>
+            <dl> Upper material: {{ shoe.upper_material }} </dl>
+            <dl> Year: {{ shoe.year }} </dl>
+            <dl> Season: {{ shoe.season }} </dl>
+            <dl> Comfort: {{ shoe.comfort }}/5 </dl>
+            <dl> State: {{ shoe.state }} </dl>
+            <dl> Available: {{ shoe.available }} </dl>
+            <dl> Info: {{ shoe.info }} </dl>
+            <dl> Price: {{ shoe.price }} € </dl>
+            <dl> Favourite: {{ shoe.favourite }} </dl>
+            <dl> Ordered: {{ shoe.ordered }} </dl>
+          </dt>
+        </details>
+        </figcaption>
+      </figure>
+    </article>
+    {% endfor %}
+  {% else %}
+    <li>No matches found</li>
+  {% endif %}
 </section>
 </body>
 </html>
