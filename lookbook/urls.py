@@ -25,4 +25,5 @@ urlpatterns = [
     path('', ShoeListView.as_view()),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
     path('admin/', admin.site.urls),
+    path('logout/', auth_views.PasswordChangeView.as_view(template_name='logout.html')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
