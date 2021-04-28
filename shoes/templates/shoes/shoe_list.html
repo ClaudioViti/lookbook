@@ -105,7 +105,7 @@ body {margin:0;font-family:Arial}
   font-size: 17px;
 }
 
-button {
+btn {
   background-color: #333;
   float: left;
   display: block;
@@ -213,15 +213,26 @@ p {
     margin-bottom: 15%;
 }
 
+header {
+  
+  background-color: rgb(255, 255, 255);
+  color: rgb(5, 3, 3);
+}
+
+main {
+  flex: 1;
+  background-color: lightblue;
+}
+
 </style>
 </head>
 <body>
-
+<header>
 <div class="topnav" id="myTopnav">
   <a href="/" class="active">Reset</a>
   <a href="/admin/" target="_blank">Manage</a>
-  <button id="btn_close">Fold</button>
-  <button id="btn_open">Unfold</button>
+  <a id="btn_close">Fold</a>
+  <a id="btn_open">Unfold</a>
   <div class="dropdown" tabindex="0">
     <button class="dropbtn">Filter 
       <i class="fa fa-caret-down"></i>
@@ -238,7 +249,7 @@ p {
   <a href="{% url 'logout' %}">Logout</a>
   <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
 </div>
-
+</header>
 
 
 <script>
@@ -251,7 +262,7 @@ function myFunction() {
   }
 }
 </script>
-
+<main>
 <section class="lookbook">
   {% for shoe in object_list %}
   <article>
@@ -296,6 +307,7 @@ function myFunction() {
     <p>No matches found</p>
   {% endfor %}
 </section>
+</main>
 </body>
 </html>
 
