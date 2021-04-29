@@ -5,12 +5,19 @@
   <script type="module">
     const btn_close = document.querySelector('#btn_close');
     const btn_open = document.querySelector('#btn_open');
-    btn_close.onclick = function() {
-      document.querySelectorAll('details').forEach(el => el.open = false);
-    }
-    btn_open.onclick = function() {
-      document.querySelectorAll('details').forEach(el => el.open = true);
-    }
+      
+    addEventListener( 'load', ()=>{
+    document.querySelector('#btn_close').addEventListener('click', ev => {
+    document.querySelectorAll('.modal').forEach(el => el.classList.remove('show'))
+    });
+  })
+
+    addEventListener( 'load', ()=>{
+    document.querySelector('#btn_open').addEventListener('click', ev => {
+    document.querySelectorAll('.modal').forEach(el => el.classList.add('show'))
+    });
+  })
+    
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
       const pk = el.dataset.id;
@@ -29,8 +36,7 @@
       const opts = Object.assign({}, defaults, options);
       return fetch(url, opts);
   }
-        </script>
-        <script>
+        
           document.querySelector('.lookbook').addEventListener('click', ev => {
         	if(!ev.target.matches('button.show')) return;
           ev.target.parentNode.querySelector('.modal').classList.toggle('show');
@@ -43,14 +49,16 @@
 
 
     .lookbook figcaption {
-      position: relative;
+      position: static;
     }
 
     .modal {
+      transition: all 0.2s;
       display: none;
-      position: absolute;
+      position: relative;
       top: 100%;
       left: 0;
+      
     }
 
     .modal.show {
@@ -102,6 +110,7 @@
       margin-bottom: 0em;
       margin-left: 0;
       margin-right: 0;
+      font-size: 80%;
     }
     dt {
       border-bottom: solid black 1px;
@@ -142,7 +151,7 @@ btn {
 }
 
 .active {
-  background-color: #4CAF50;
+  background-color: #dccf1b;
   color: white;
 }
 
@@ -211,7 +220,9 @@ btn {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {position: fixed;
+    top: 0px;
+    width: 100%;}
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
@@ -247,10 +258,6 @@ main {
   background-color: lightblue;
 }
 
-details: {
-  transition: all 0.2s;
-}
-
 .flip img:nth-of-type(2) {
   display: none;
 }
@@ -261,6 +268,7 @@ details: {
 .flip:hover img:nth-of-type(2) {
   display: inline;
 }
+
 
 
 </style>
@@ -279,7 +287,39 @@ details: {
     <div class="dropdown-content">
       <al>
         <form action="/" method="get">
-        {{ form }}
+          
+<div class="fieldWrapper">
+    <dl>Color</dl><label for="{{ form.color.id_for_label }}"></label>
+    {{ form.color }}
+</div>
+<div class="fieldWrapper">
+  <dl>Size</dl><label for="{{ form.size.id_for_label }}"></label>
+    {{ form.size }}
+</div>
+<div class="fieldWrapper">
+  <dl>Model</dl><label for="{{ form.model.id_for_label }}"></label>
+    {{ form.model }}
+</div>
+<div class="fieldWrapper">
+  <dl>Style</dl><label for="{{ form.style.id_for_label }}"></label>
+    {{ form.style }}
+</div>
+<div class="fieldWrapper">
+  <dl>Toe</dl><label for="{{ form.toe.id_for_label }}"></label>
+  {{ form.toe }}
+</div>
+<div class="fieldWrapper">
+  <dl>Slingback</dl><label for="{{ form.slingback.id_for_label }}"></label>
+  {{ form.slingback }}
+</div>
+<div class="fieldWrapper">
+  <dl>Platform</dl><label for="{{ form.platform.id_for_label }}"></label>
+  {{ form.platform }}
+</div>
+<div class="fieldWrapper">
+  <dl>Wishlist</dl><label for="{{ form.favourite.id_for_label }}"></label>
+  {{ form.favourite }}
+</div>
         <input type="submit" value="Submit">
       </form>
       </al>
@@ -348,7 +388,6 @@ function myFunction() {
           <dl> Ordered: {{ shoe.ordered }} </dl>
         </dt>
         </div>
-      </details>
       </figcaption>
     </figure>
   </article>
