@@ -30,10 +30,32 @@
       return fetch(url, opts);
   }
         </script>
+        <script>
+          document.querySelector('.lookbook').addEventListener('click', ev => {
+        	if(!ev.target.matches('button.show')) return;
+          ev.target.parentNode.querySelector('.modal').classList.toggle('show');
+          });
+        </script>
 <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+
+
+    .lookbook figcaption {
+      position: relative;
+    }
+
+    .modal {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+
+    .modal.show {
+      display: initial;
+    }
    .lookbook img {
       height: 100px;
       float: left;
@@ -225,6 +247,10 @@ main {
   background-color: lightblue;
 }
 
+details: {
+  transition: all 0.2s;
+}
+
 .flip img:nth-of-type(2) {
   display: none;
 }
@@ -281,16 +307,19 @@ function myFunction() {
   <article>
     <figure>
       {% for shoe_second_image in shoe.shoe_second_image_set.all %}
-      <div class="{{ shoe_second_image.image.url|yesno:'flip,' }}">
+        <div class="flip">
+          <img src="{{ shoe.image.url }}">
+          <img src="{{ shoe_second_image.image.url }}">
+        </div>
+      {% empty %}
         <img src="{{ shoe.image.url }}">
-        {% if shoe_second_image.image.url %}<img src="{{ shoe_second_image.image.url }}">{% endif %}
-      </div>
       {% endfor %}
 
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
-        <details>
+        <button class="show">Details</button>
+        <div class="modal">
         <dt>
           <dl> Model: {{ shoe.model }} </dl>
           <dl> SKU: {{ shoe.sku }} </dl>
@@ -318,6 +347,7 @@ function myFunction() {
           <dl> Favourite: {{ shoe.favourite }} </dl>
           <dl> Ordered: {{ shoe.ordered }} </dl>
         </dt>
+        </div>
       </details>
       </figcaption>
     </figure>
