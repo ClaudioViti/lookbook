@@ -280,12 +280,13 @@ function myFunction() {
   {% for shoe in object_list %}
   <article>
     <figure>
-      <div class="flip">
+      {% for shoe_second_image in shoe.shoe_second_image_set.all %}
+      <div class="{{ shoe_second_image.image.url|yesno:'flip,' }}">
         <img src="{{ shoe.image.url }}">
-        {% for shoe_second_image in shoe.shoe_second_image_set.all %}
-        <img src="{{ shoe_second_image.image.url }}">
-        {% endfor %}
+        {% if shoe_second_image.image.url %}<img src="{{ shoe_second_image.image.url }}">{% endif %}
       </div>
+      {% endfor %}
+
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
