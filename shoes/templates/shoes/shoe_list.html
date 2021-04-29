@@ -33,8 +33,7 @@
 <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-{% for shoe_second_image in shoe.shoe_second_image_set.all %}
-<style> 
+<style>
    .lookbook img {
       height: 100px;
       float: left;
@@ -50,10 +49,7 @@
       justify-content:  center;
       background-color: rgb(255, 255, 255);
     }
-   
     .lookbook img:hover {
-    
-      background-image: url("{{ shoe_second_image.image.url }}");
       filter: grayscale(100%);
      -webkit-filter: grayscale(0%);
      -moz-filter: grayscale(100%);
@@ -61,7 +57,6 @@
      -webkit-transform: scale(1.1);
      -moz-transform: scale(1.1);
     }
-    
     .lookbook details:hover {
       width:auto;
       height:auto;
@@ -230,8 +225,19 @@ main {
   background-color: lightblue;
 }
 
+.flip img:nth-of-type(2) {
+  display: none;
+}
+
+.flip:hover img:nth-of-type(1) {
+  display: none;
+}
+.flip:hover img:nth-of-type(2) {
+  display: inline;
+}
+
+
 </style>
-{% endfor %}
 </head>
 <body>
 <header>
@@ -274,7 +280,12 @@ function myFunction() {
   {% for shoe in object_list %}
   <article>
     <figure>
-      <img src="{{ shoe.image.url }}">
+      <div class="flip">
+        <img src="{{ shoe.image.url }}">
+        {% for shoe_second_image in shoe.shoe_second_image_set.all %}
+        <img src="{{ shoe_second_image.image.url }}">
+        {% endfor %}
+      </div>
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
