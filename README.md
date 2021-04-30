@@ -13,5 +13,6 @@ and
   
   python.exe manage.py migrate
   
-NOTE2: if something goes on during migrate, you can try deleting last migration file placed in shoes/migrations/
+NOTE1: if something goes on during migrate, you can try deleting last migration file placed in shoes/migrations/
+
 NOTE2: an edit to templates (.html) doesn't need to run the commands upon.
