@@ -1,0 +1,7 @@
+<ul>
+    {% for shoe in object_list %}
+    <dl> Id: {{ shoe.pk }} </dl>
+    <img src="{{ shoe.image.url }}">
+    {% endfor %}
+
+</ul>
