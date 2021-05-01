@@ -1,7 +1,7 @@
 <ul>
     {% for shoe in object_list %}
     <dl> Id: {{ shoe.pk }} </dl>
-    <img src="{{ shoe.image.url }}">
+    <img src="{{ shoe.image.url }}" style="width:100px;height:100px;">
     {% endfor %}
 
 </ul>

@@ -44,7 +44,7 @@ class FavouriteUpdateView(UpdateView):
 class minicartView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
-    template_name = 'shoes/shoes_list.html'
+    template_name = 'shoes/minicartView_list.html'
     queryset = model.objects.filter(favourite=True)
         
 
