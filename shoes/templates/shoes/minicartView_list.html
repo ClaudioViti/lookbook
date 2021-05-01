@@ -1,7 +1,11 @@
+<style>
+span, img { vertical-align:middle; }
+</style>
+
 <ul>
     {% for shoe in object_list %}
     <li>
-    <p> Id: {{ shoe.pk }} </p>
+    <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="{{ shoe.image.url }}" style="width:100px;height:100px;">
     </li>
     {% endfor %}
