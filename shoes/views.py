@@ -41,4 +41,17 @@ class FavouriteUpdateView(UpdateView):
         return JsonResponse({ 'favourite': self.object.favourite })
 
 
+class minicartView(LoginRequiredMixin, LisView):
+
+     def get_queryset(self):
+    queryset = Shoes.objects.filter(favourite=True)
+        self.form.is_valid()
+        
+        for field, value in self.form.cleaned_data.items():
+            if value:
+                qs = qs.filter(**{field: value})
+            
+        return qs
+
+
 
