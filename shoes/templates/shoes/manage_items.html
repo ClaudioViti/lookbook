@@ -1,0 +1,11 @@
+{% extends 'shoes/base.html' %}
+
+
+    {% for shoe in object_list %}
+         <div>
+             
+                <img src="{{ shoe.image.url }}">
+             
+         </div>
+     {% endfor %}
+ 
