@@ -59,12 +59,14 @@ class ShoeCreateView(LoginRequiredMixin, CreateView):
     
 
 class ShoeUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'shoes/manage/shoe_list.html'
+    
     fields = '__all__'
     model = models.Shoe
 
 
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
+
+    template_name = 'shoes/manage/shoe_list.html'
     model = models.Shoe
     
 
