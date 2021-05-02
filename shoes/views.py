@@ -48,6 +48,8 @@ class minicartView(LoginRequiredMixin, ListView):
     queryset = model.objects.filter(favourite=True)
         
 class ShoeCreateView(LoginRequiredMixin, CreateView):
+
+    template_name = 'shoes/manage_items.html'
     model = models.Shoe
     
 
