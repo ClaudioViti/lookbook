@@ -1,12 +1,11 @@
-{% extends 'shoes/manage/shoe_update.html' %}
 
 {% block content %}
-    {% for shoe in object_list %}
-         <div>
-             
-        
-                
-             
-         </div>
-     {% endfor %}
+    
+    <form method="post"> 
+        {% csrf_token %} 
+        {{ form.as_p }} 
+        <input type="submit" value="Save"> 
+    </form> 
+     
  {% endblock %}
+
