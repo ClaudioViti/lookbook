@@ -2,6 +2,7 @@ from django.shortcuts import render
 from shoes.forms import ShoesForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -51,12 +52,13 @@ class minicartView(LoginRequiredMixin, ListView):
 class ShoeManageView(LoginRequiredMixin, ListView):
 
 
-    template_name = 'shoes/manage/shoe_list.html'
+    template_name = 'shoes/manage/manage_items.html'
     model = models.Shoe
         
 class ShoeCreateView(LoginRequiredMixin, CreateView):
 
-    
+    fields = '__all__'
+    template_name = 'shoes/manage/shoe_form.html'
     model = models.Shoe
     
 
@@ -69,6 +71,7 @@ class ShoeUpdateView(LoginRequiredMixin, UpdateView):
 
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
+    template_name = 'shoes/manage/delete_item.html'
     model = models.Shoe
     
 
