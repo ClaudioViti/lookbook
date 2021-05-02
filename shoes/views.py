@@ -65,9 +65,7 @@ class ShoeUpdateView(LoginRequiredMixin, UpdateView):
     fields = '__all__'
     template_name = 'shoes/manage/shoe_form.html'
     model = models.Shoe
-    def get_success_url(self):
-        
-        return reverse_lazy( { 'manage' )
+    success_url = reverse_lazy('manage')
 
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
