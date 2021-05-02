@@ -26,7 +26,7 @@ urlpatterns = [
     path('minicart/', minicartView.as_view()),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
     path('admin/', admin.site.urls),
-    path('manage/add/', ShoeCreateView.as_view()),
-    path('manage/<int:pk>/', ShoeUpdateView.as_view()),
-    path('manage/<int:pk>/delete/', ShoeDeleteView.as_view()),
+    path('manage/add/', ShoeCreateView.as_view(), name='add'),
+    path('manage/<int:pk>/', ShoeUpdateView.as_view(), name='edit'),
+    path('manage/<int:pk>/delete/', ShoeDeleteView.as_view(), name='delete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

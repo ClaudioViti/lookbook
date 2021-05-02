@@ -5,8 +5,8 @@
          <div>
              
                 <img src="{{ shoe.image.url }}">
-                <a href="{% url 'logout' %}">Logout</a>
-                <a href="/manage/<int:pk>/" class="active">edit</a>
+                <a href="{% url 'edit' %}">Edit</a>
+                
              
          </div>
      {% endfor %}
