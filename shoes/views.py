@@ -50,6 +50,8 @@ class minicartView(LoginRequiredMixin, ListView):
 
 class ShoeManageView(LoginRequiredMixin, ListView):
 
+
+    template_name = 'shoes/manage/shoe_list.html'
     model = models.Shoe
         
 class ShoeCreateView(LoginRequiredMixin, CreateView):
@@ -66,7 +68,6 @@ class ShoeUpdateView(LoginRequiredMixin, UpdateView):
 
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
-    template_name = 'shoes/manage/shoe_list.html'
     model = models.Shoe
     
 
