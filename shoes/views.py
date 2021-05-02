@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from . import models
 
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
 class ShoeListView(LoginRequiredMixin, ListView):
     
@@ -46,14 +46,21 @@ class minicartView(LoginRequiredMixin, ListView):
     model = models.Shoe
     template_name = 'shoes/minicartView_list.html'
     queryset = model.objects.filter(favourite=True)
+
+
+class ShoeManageView(LoginRequiredMixin, ListView):
+
+    model = models.Shoe
         
 class ShoeCreateView(LoginRequiredMixin, CreateView):
 
-    template_name = 'shoes/manage_items.html'
+    
     model = models.Shoe
     
 
 class ShoeUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'shoes/manage/shoe_list.html'
+    fields = '__all__'
     model = models.Shoe
 
 
