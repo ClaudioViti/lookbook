@@ -4,7 +4,6 @@
     {% for shoe in object_list %}
          <div>
              
-                <img src="{{ shoe.image.url }}">
                 <a href="{% url 'edit' pk=shoe.pk %}">Edit</a>
                 <a href="{% url 'delete' pk=shoe.pk %}">Delete</a>
             
