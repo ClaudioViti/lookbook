@@ -361,6 +361,7 @@ function myFunction() {
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
         <button class="show">Details</button>
+        {% block content %}{% endblock %}
         <div class="modal">
         <dt>
           <dl> Model: {{ shoe.model }} </dl>
