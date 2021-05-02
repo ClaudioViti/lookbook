@@ -1,6 +1,6 @@
 {% extends 'shoes/base.html' %}
 
-
+{% block content %}
     {% for shoe in object_list %}
          <div>
              
@@ -8,4 +8,4 @@
              
          </div>
      {% endfor %}
- 
+ {% endblock %}
