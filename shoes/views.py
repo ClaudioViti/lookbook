@@ -1,13 +1,8 @@
 from django.shortcuts import render
-from shoes.forms import ShoesForm, ImageForm
+from shoes.forms import ShoesForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.forms import modelformset_factory
-from shoes.models import ShoeImages
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 
 # Create your views here.
 
@@ -59,39 +54,6 @@ class ShoeManageView(LoginRequiredMixin, ListView):
 
     template_name = 'shoes/manage/manage_items.html'
     model = models.Shoe
-    ImageFormSet = modelformset_factory(Images,
-                                        form=ImageForm, extra=3)
-    #'extra' means the number of photos that you can upload   ^
-    if request.method == 'POST':
-    
-        form = ImageForm(request.POST)
-        formset = ImageFormSet(request.POST, request.FILES,
-                               queryset=Images.objects.none())
-    
-    
-        if ImageForm.is_valid() and formset.is_valid():
-            image_form = imageForm.save(commit=False)
-            image_form.user = request.user
-            image_form.save()
-    
-            for form in formset.cleaned_data:
-                #this helps to not crash if the user   
-                #do not upload all the photos
-                if form:
-                    image = form['image']
-                    photo = Images(image=Image_form, image=image)
-                    photo.save()
-            # use django messages framework
-            messages.success(request, "Yeeew, check it out on the home page!")
-            return HttpResponseRedirect("/")
-        else:
-            print(postForm.errors, formset.errors)
-    else:
-        ImageForm = ImageForm()
-        formset = ImageFormSet(queryset=Images.objects.none())
-    return render(request, 'index.html',
-                  {'ImageForm': ImageForm, 'formset': formset})
-
         
 class ShoeCreateView(LoginRequiredMixin, CreateView):
 
