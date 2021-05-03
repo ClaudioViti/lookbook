@@ -146,10 +146,14 @@ class Shoe(models.Model):
     def real_heel(self):
         return self.heel_height - self.plateau_height
 
+    def get_image_filename(instance, filename):
+        title = instance.post.title
+        slug = slugify(title)
+        return "post_images/%s-%s" % (slug, filename)  
+    
 
 
 
 class ShoeImages(models.Model):
 
-    image = models.ForeignKey(Shoe, on_delete=models.CASCADE)
-    
+    post = models.ForeignKey(Shoe, on_delete=models.CASCADE)
