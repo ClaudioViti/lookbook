@@ -61,7 +61,6 @@ class ShoeCreateView(LoginRequiredMixin, CreateView):
     template_name = 'shoes/manage/shoe_form.html'
     model = models.Shoe
     
-
 class ShoeUpdateView(LoginRequiredMixin, UpdateView):
     
     fields = '__all__'
