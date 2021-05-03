@@ -3,12 +3,12 @@
 {% block content %}
     {% for shoe in object_list %}
          <div>
-             
-                <a href="{% url 'edit' pk=shoe.pk %}">Edit</a>
-                <a href="{% url 'delete' pk=shoe.pk %}">Delete</a>
-            
-                
-             
+            <form action="{% url 'edit' pk=shoe.pk %}">
+                <input type="submit" value="Edit" />
+              </form>
+              <form action="{% url 'delete' pk=shoe.pk %}">
+                <input type="submit" value="Delete" />
+              </form>
          </div>
      {% endfor %}
  {% endblock %}
