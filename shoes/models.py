@@ -157,3 +157,10 @@ class Shoe(models.Model):
 class ShoeImages(models.Model):
 
     post = models.ForeignKey(Shoe, on_delete=models.CASCADE)
+
+
+class ImageForm(forms.ModelForm):
+    image = forms.ImageField(label='Image')    
+    class Meta:
+        model = Images
+        fields = ('image', )

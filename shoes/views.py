@@ -64,7 +64,7 @@ class ShoeManageView(LoginRequiredMixin, ListView):
     #'extra' means the number of photos that you can upload   ^
     if request.method == 'POST':
     
-        ImageForm = ImageForm(request.POST)
+        form = ImageForm(request.POST)
         formset = ImageFormSet(request.POST, request.FILES,
                                queryset=Images.objects.none())
     
