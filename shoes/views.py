@@ -41,7 +41,6 @@ class FavouriteUpdateView(UpdateView):
         self.object = form.save()
         return JsonResponse({ 'favourite': self.object.favourite })
 
-
 class minicartView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
@@ -60,7 +59,10 @@ class ShoeCreateView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name = 'shoes/manage/shoe_form.html'
     model = models.Shoe
-    
+    def form_valid(self, form):
+        self.object = form.save()
+        return JsonResponse({ 'image': self.object.image })
+
 class ShoeUpdateView(LoginRequiredMixin, UpdateView):
     
     fields = '__all__'

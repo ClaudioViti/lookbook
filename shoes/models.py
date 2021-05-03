@@ -146,7 +146,6 @@ class Shoe(models.Model):
     def real_heel(self):
         return self.heel_height - self.plateau_height
 
-    image = models.ImageField()
 
 
 
