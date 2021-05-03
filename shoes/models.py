@@ -145,11 +145,11 @@ class Shoe(models.Model):
     ordered = models.BooleanField(default=False)
     def real_heel(self):
         return self.heel_height - self.plateau_height
-    image = models.ImageField()
+   
 
 
 
 
-class Shoe_second_image(models.Model):
+class ShoeImage(models.Model):
     shoe = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
     image = models.ImageField()
