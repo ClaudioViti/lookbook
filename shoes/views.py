@@ -75,5 +75,6 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'shoes/manage/delete_item.html'
     model = models.Shoe
     
+def create_shoe(request):
 
-
+     return render(request, "shoes/manage/shoe_form.html")
