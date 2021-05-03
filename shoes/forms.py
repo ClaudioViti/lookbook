@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from shoes.models import Shoe
+from django import forms
 
 # Create the form class.
 class ShoesForm(ModelForm):
