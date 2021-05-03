@@ -7,3 +7,4 @@ class ShoesForm(ModelForm):
          model = Shoe
          fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']
 
+
