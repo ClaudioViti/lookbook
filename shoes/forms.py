@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from shoes.models import Shoe
+from shoes.models import Shoe, ShoeImage
 from django import forms
 
 # Create the form class.
@@ -11,4 +11,4 @@ class SearchForm(ModelForm):
 class ShoeForm(ModelForm):
     class Meta:
          model = ShoeImage
-         field = ['image']
+         fields = '__all__'

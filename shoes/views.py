@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoesForm
+from shoes.forms import ShoeForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -27,7 +27,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
         return qs
 
     def dispatch(self, request, *args, **kwargs):
-        self.form = ShoesForm(request.GET)
+        self.form = ShoeForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
