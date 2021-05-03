@@ -145,6 +145,7 @@ class Shoe(models.Model):
     ordered = models.BooleanField(default=False)
     def real_heel(self):
         return self.heel_height - self.plateau_height
+    image = models.ImageField()
 
 
 
