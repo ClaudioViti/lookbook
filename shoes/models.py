@@ -146,10 +146,10 @@ class Shoe(models.Model):
     def real_heel(self):
         return self.heel_height - self.plateau_height
 
-    image = models.ImageField()
+    image = models.ForeignKey(ShoeImages, on_delete=models.CASCADE)
 
 
 
-class Shoe_second_image(models.Model):
-    shoe_second_image = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
+class ShoeImages(models.Model):
+    
     image = models.ImageField()
