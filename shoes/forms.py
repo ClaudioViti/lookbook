@@ -6,3 +6,4 @@ class ShoesForm(ModelForm):
      class Meta:
          model = Shoe
          fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']
+
