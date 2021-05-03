@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from shoes.models import Shoe
+from django.forms import BaseModelFormSet
 
 # Create the form class.
 class ShoesForm(ModelForm):
@@ -8,10 +9,10 @@ class ShoesForm(ModelForm):
          fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']
 
 
-from django.forms import BaseModelFormSet
 
 
-class ImageFormSet(ImageFormSet):
+
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.queryset = Shoe.objects.filter(name__startswith='O')
+        
