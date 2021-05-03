@@ -151,5 +151,5 @@ class Shoe(models.Model):
 
 class ShoeImages(models.Model):
 
-    question = models.ForeignKey(Shoe, on_delete=models.CASCADE)
+    image = models.ForeignKey(Shoe, on_delete=models.CASCADE)
     
