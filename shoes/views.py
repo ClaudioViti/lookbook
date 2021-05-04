@@ -72,9 +72,12 @@ def create_shoe(request):
     
     if request.method == 'POST':
         form = ShoeForm(request.POST)
+        if form.is_valid()
+            shoe = form.save()
+
     else:
         form = ShoeForm()
-​
+        
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
     })
