@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm
+from shoes.forms import ShoeForm, ShoeImageFormSet
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
