@@ -73,14 +73,14 @@ def create_shoe(request):
     
     if request.method == 'POST':
         form = ShoeForm(request.POST)
-        ShoeImageFormSet = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
+        
         if form.is_valid():
             shoe = form.save()
             return redirect('manage')
 
     else:
         form = ShoeForm()
-        
+    formset = ShoeImageFormSet()
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
     })
