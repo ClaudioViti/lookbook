@@ -10,5 +10,5 @@ class SearchForm(ModelForm):
 
 class ShoeForm(ModelForm):
     class Meta:
-         Shoe = Shoe
+         model = Shoe
          fields = '__all__'
