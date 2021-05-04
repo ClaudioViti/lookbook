@@ -77,7 +77,7 @@ def create_shoe(request):
         
         if all( [ form.is_valid(), formset.is_valid() ]):
             form.save()
-            printlog = formset.save()
+            printlog = formset.save(commit=False)
             for instance in printlog:
                 instance.save()
             print(printlog)
