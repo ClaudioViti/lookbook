@@ -3,6 +3,7 @@ from shoes.forms import ShoeForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -74,6 +75,7 @@ def create_shoe(request):
         form = ShoeForm(request.POST)
         if form.is_valid()
             shoe = form.save()
+            return redirect('manage')
 
     else:
         form = ShoeForm()
