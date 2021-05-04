@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from shoes.models import Shoe, ShoeImage
 from django import forms
+from django.forms import inlineformset_factory
 
 # Create the form class.
 class SearchForm(ModelForm):
@@ -12,3 +13,5 @@ class ShoeForm(ModelForm):
     class Meta:
          model = Shoe
          fields = '__all__'
+
+ShoeImageFormSet = inlineformset_factory(Shoe, ShoeImage, fields=('image',))

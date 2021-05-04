@@ -52,7 +52,7 @@ class minicartView(LoginRequiredMixin, ListView):
 class ShoeManageView(LoginRequiredMixin, ListView):
 
 
-    template_name = 'shoes/manage/manage_items.html'
+
     model = models.Shoe
         
 
@@ -73,7 +73,7 @@ def create_shoe(request):
     
     if request.method == 'POST':
         form = ShoeForm(request.POST)
-        if form.is_valid()
+        if form.is_valid():
             shoe = form.save()
             return redirect('manage')
 
