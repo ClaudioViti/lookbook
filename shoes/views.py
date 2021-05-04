@@ -54,14 +54,7 @@ class ShoeManageView(LoginRequiredMixin, ListView):
     template_name = 'shoes/manage/manage_items.html'
     model = models.Shoe
         
-class ShoeCreateView(LoginRequiredMixin, CreateView):
 
-    fields = '__all__'
-    template_name = 'shoes/manage/shoe_form.html'
-    model = models.Shoe
-    def form_valid(self, form):
-        self.object = form.save()
-        return JsonResponse({ 'image': self.object.image })
 
 class ShoeUpdateView(LoginRequiredMixin, UpdateView):
     
@@ -77,7 +70,11 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
     
 def create_shoe(request):
     
-    form = ShoeForm()
+    if request.method == 'POST':
+        form = ShoeForm(request.POST)
+    else:
+        form = ShoeForm()
+​
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
     })
