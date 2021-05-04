@@ -76,10 +76,8 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Shoe
     
 def create_shoe(request):
-
-     form = ShoeForm()
-
+    
+    form = ShoeForm()
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
     })
-
