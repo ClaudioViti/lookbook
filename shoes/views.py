@@ -80,8 +80,8 @@ def create_shoe(request):
             image_instance = formset.save(commit=False)
             for instance in image_instance:
                 instance.shoe = shoe_instance
-                shoeImage_instance = instance.save()
-            print(printlog)
+                instance.save()
+                print(instance.shoe)
             return redirect('manage')
 
     else:
