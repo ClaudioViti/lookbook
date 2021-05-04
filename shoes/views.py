@@ -78,6 +78,7 @@ def create_shoe(request):
         if all( [ form.is_valid(), formset.is_valid() ]):
             form.save()
             formset.save()
+            print(formset)
             return redirect('manage')
 
     else:
