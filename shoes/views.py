@@ -86,7 +86,7 @@ def create_shoe(request):
 
     else:
         form = ShoeForm()
-        formset = ShoeImageFormSet(queryset=image.objects.none())
+        formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
         return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
         'formset': formset,
