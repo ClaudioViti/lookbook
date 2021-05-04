@@ -8,7 +8,7 @@ class SearchForm(ModelForm):
          model = Shoe
          fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']
 
-class Shoe(ModelForm):
+class ShoeForm(ModelForm):
     class Meta:
-         model = ShoeImage
+         Shoe = ShoeImage
          fields = '__all__'

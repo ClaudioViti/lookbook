@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import Shoe
+from shoes.forms import ShoeForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -77,7 +77,7 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
     
 def create_shoe(request):
     
-    form = Shoe()
+    form = ShoeForm()
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
     })
