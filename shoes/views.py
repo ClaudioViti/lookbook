@@ -76,10 +76,11 @@ def create_shoe(request):
         formset = ShoeImageFormSet(request.POST, request.FILES)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
-            form.save()
-            printlog = formset.save(commit=False)
-            for instance in printlog:
-                instance.save()
+            shoe_instance = form.save()
+            image_instance = formset.save(commit=False)
+            for instance in image_instance:
+                instance.shoe = shoe_instance
+                shoeImage_instance = instance.save()
             print(printlog)
             return redirect('manage')
 
