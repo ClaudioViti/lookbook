@@ -83,4 +83,5 @@ def create_shoe(request):
         formset = ShoeImageFormSet()
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
+        'formset': formset,
     })
