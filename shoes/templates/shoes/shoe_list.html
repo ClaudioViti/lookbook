@@ -351,10 +351,10 @@ function myFunction() {
   {% for shoe in object_list %}
   <article>
     <figure>
-      {% for shoe_second_image in shoe.shoe_second_image_set.all %}
+      {% for shoeImage in shoe.shoeImage.all %}
         <div class="flip">
           <img src="{{ shoe.image.url }}">
-          <img src="{{ shoe_second_image.image.url }}">
+          <img src="{{ shoeImage.image.url }}">
         </div>
       {% empty %}
         <img src="{{ shoe.image.url }}">

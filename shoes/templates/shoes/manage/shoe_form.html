@@ -8,8 +8,8 @@
         {{ form.as_p }} 
         {{ formset.management_form }}
         <table>
-            {% for form in formset %}
-            {{ form }}
+            {% for imageform in formset %}
+            {{ imageform }}
             {% endfor %}
         </table>
         <input type="submit" value="Save"> 
