@@ -73,9 +73,11 @@ def create_shoe(request):
     
     if request.method == 'POST':
         form = ShoeForm(request.POST)
+        formset = ShoeFormset(request.POST)
         
         if form.is_valid():
             shoe = form.save()
+            shoe = formset.save()
             return redirect('manage')
 
     else:
