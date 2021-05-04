@@ -76,8 +76,8 @@ def create_shoe(request):
         formset = ShoeImageFormSet(request.POST, request.FILES)
         
         if all(form.is_valid(), formset.is_valid()):
-            shoe = form.save()
-            shoe = formset.save()
+            form.save()
+            formset.save()
             return redirect('manage')
 
     else:
