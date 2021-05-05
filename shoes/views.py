@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from shoes.models import ShoeImage
 
 # Create your views here.
 
@@ -69,6 +70,9 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'shoes/manage/delete_item.html'
     model = models.Shoe
     
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def create_shoe(request):
     
     if request.method == 'POST':
@@ -86,7 +90,31 @@ def create_shoe(request):
 
     else:
         form = ShoeForm()
-        formset = ShoeImageFormSet(queryset=image.instance.objects.none())
+        formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
+    return render(request, "shoes/manage/shoe_form.html", {
+        'form': form,
+        'formset': formset,
+    })
+
+
+def edit_shoe(LoginRequiredMixin, request):
+    
+    if request.method == 'POST':
+        form = ShoeForm(request.POST)
+        formset = ShoeImageFormSet(request.POST, request.FILES)
+        
+        if all( [ form.is_valid(), formset.is_valid() ]):
+            shoe_instance = form.save()
+            image_instance = formset.save(commit=False)
+            for instance in image_instance:
+                instance.shoe = shoe_instance
+                instance.save()
+                print(instance.shoe)
+            return redirect('manage')
+
+    else:
+        form = ShoeForm()
+        formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
         'formset': formset,
