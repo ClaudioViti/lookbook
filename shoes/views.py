@@ -106,7 +106,8 @@ def edit_shoe(request, pk):
         formset = ShoeImageFormSet(request.POST, request.FILES, instance=shoe)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
-            image_instance = formset.save(commit=False)
+            form.save()
+            formset.save(commit=False)
             return redirect('manage')
 
     else:
