@@ -4,7 +4,8 @@ from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from shoes.models import ShoeImage
+from shoes.models import ShoeImage, Shoe
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -99,22 +100,22 @@ def create_shoe(request):
 
 @login_required
 def edit_shoe(request, pk):
-    obj = get_object_or_404(Shoe, pk)
+    shoe = get_object_or_404(Shoe, pk)
     if request.method == 'POST':
         form = ShoeForm(request.POST)
         formset = ShoeImageFormSet(request.POST, request.FILES)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
-            shoe_instance = form.save()
             image_instance = formset.save(commit=False)
             for instance in image_instance:
-                instance.shoe = shoe_instance
+                instance.shoe = shoe
                 instance.save()
                 print(instance.shoe)
             return redirect('manage')
 
     else:
-        form = ShoeForm()
+        form = ShoeForm(instance=shoe)
+        ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
         formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
