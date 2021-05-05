@@ -155,4 +155,4 @@ class ShoeImage(models.Model):
     image = models.ImageField()
 
 class Brand(models.Model):
-    shoe = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
+    brand = models.ForeignKey('Brand', on_delete=models.CASCADE, null=True)
