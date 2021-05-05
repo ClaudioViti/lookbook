@@ -69,7 +69,7 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'shoes/manage/delete_item.html'
     model = models.Shoe
-    success_url = reverse_lazy('delete')
+    success_url = reverse_lazy('manage')
     
 from django.contrib.auth.decorators import login_required
 
@@ -97,8 +97,8 @@ def create_shoe(request):
         'formset': formset,
     })
 
-
-def edit_shoe(LoginRequiredMixin, request):
+@login_required
+def edit_shoe(request):
     
     if request.method == 'POST':
         form = ShoeForm(request.POST)
