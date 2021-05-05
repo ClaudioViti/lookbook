@@ -351,14 +351,17 @@ function myFunction() {
   {% for shoe in object_list %}
   <article>
     <figure>
-      {% for shoeimage in shoe.shoeimage_set.all %}
-        <div class="flip">
-          <img src="{{ shoeimage }}">
-          <img src="{{ shoeimage }}">
-        </div>
-      {% empty %}
-        <img src="{{ shoeimage }}">
-      {% endfor %}
+      {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
+      {% if shoeimages|length == 2 %}
+      <div class="flip">
+          {% for shoeimage in shoeimages %}
+          <img src="{{ shoeimage.image.url }}" >
+          {% endfor %}
+      </div>
+      {% else %}
+        <img src="{{ shoeimages.0.image.url }}">
+      {% endif %}
+  {% endwith %}
 
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
