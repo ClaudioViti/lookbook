@@ -124,7 +124,7 @@ class Shoe(models.Model):
     slingback = models.BooleanField(default=False)
     toe = models.CharField(max_length=20, choices=TOE_CHOICES, blank=True, null=True)
     style = models.CharField(max_length=200, choices=STYLE_CHOICES, blank=True, null=True)
-    brand = models.CharField(max_length=200, blank=True, null=True)
+    brand = models.ForeignKey('ShoeBrand', on_delete=models.CASCADE, null=True)
     SKU = models.CharField(max_length=200, blank=True, null=True)
     size = models.CharField(max_length=5, choices=SIZE_CHOICES, blank=True, null=True)
     color = models.CharField(max_length=200, choices=COLOR_CHOICES, blank=True, null=True)
@@ -155,4 +155,4 @@ class ShoeImage(models.Model):
     image = models.ImageField()
 
 class ShoeBrand(models.Model):
-    brand = models.ForeignKey('Brand', on_delete=models.CASCADE, null=True)
+    brand = models.CharField(max_length=200, blank=True, null=True)
