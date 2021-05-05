@@ -100,22 +100,17 @@ def create_shoe(request):
 
 @login_required
 def edit_shoe(request, pk):
-    shoe = get_object_or_404(Shoe, pk)
+    shoe = get_object_or_404(Shoe, pk=pk)
     if request.method == 'POST':
         form = ShoeForm(request.POST)
         formset = ShoeImageFormSet(request.POST, request.FILES)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
             image_instance = formset.save(commit=False)
-            for instance in image_instance:
-                instance.shoe = shoe
-                instance.save()
-                print(instance.shoe)
             return redirect('manage')
 
     else:
         form = ShoeForm(instance=shoe)
-        
         formset = ShoeImageInlineFormset(instance=shoe)
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
