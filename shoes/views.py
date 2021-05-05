@@ -98,8 +98,8 @@ def create_shoe(request):
     })
 
 @login_required
-def edit_shoe(request):
-    
+def edit_shoe(request, pk):
+    obj = get_object_or_404(Shoe, pk)
     if request.method == 'POST':
         form = ShoeForm(request.POST)
         formset = ShoeImageFormSet(request.POST, request.FILES)
