@@ -107,7 +107,7 @@ def edit_shoe(request, pk):
         
         if all( [ form.is_valid(), formset.is_valid() ]):
             form.save()
-            formset.save(commit=False)
+            formset.save()
             return redirect('manage')
 
     else:
