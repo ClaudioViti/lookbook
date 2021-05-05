@@ -154,5 +154,5 @@ class ShoeImage(models.Model):
     shoe = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
     image = models.ImageField()
 
-class Brand(models.Model):
+class ShoeBrand(models.Model):
     brand = models.ForeignKey('Brand', on_delete=models.CASCADE, null=True)
