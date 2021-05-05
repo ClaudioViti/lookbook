@@ -102,8 +102,8 @@ def create_shoe(request):
 def edit_shoe(request, pk):
     shoe = get_object_or_404(Shoe, pk=pk)
     if request.method == 'POST':
-        form = ShoeForm(instante=shoe)
-        formset = ShoeImageFormSet(instance=shoe)
+        form = ShoeForm(request.POST, instance=shoe)
+        formset = ShoeImageFormSet(request.POST, request.FILES, instance=shoe)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
             image_instance = formset.save(commit=False)
