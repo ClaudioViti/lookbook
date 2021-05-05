@@ -115,7 +115,7 @@ def edit_shoe(request, pk):
 
     else:
         form = ShoeForm(instance=shoe)
-        ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
+        
         formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,

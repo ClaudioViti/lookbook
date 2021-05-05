@@ -15,3 +15,4 @@ class ShoeForm(ModelForm):
          fields = '__all__'
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
+ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
