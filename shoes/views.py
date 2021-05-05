@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -116,7 +116,7 @@ def edit_shoe(request, pk):
     else:
         form = ShoeForm(instance=shoe)
         
-        formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
+        formset = ShoeImageInlineFormset(instance=shoe)
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
         'formset': formset,

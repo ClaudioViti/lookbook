@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from shoes.models import Shoe, ShoeImage
 from django import forms
 from django.forms.models import modelformset_factory
+from django.forms import inlineformset_factory
 
 # Create the form class.
 class SearchForm(ModelForm):
