@@ -367,7 +367,9 @@ function myFunction() {
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
         <button class="show">Details</button>
-        <a href="{% url 'shoe-image' pk=shoe.pk %}">Images</a>
+        
+        <button onclick="window.open(href='/shoes/1/images/','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600'); type='submit'">Images
+        </button>
         {% if user.is_staff %}                             
         <form action="{% url 'edit' pk=shoe.pk %}">
           <input type="submit" value="Edit" />

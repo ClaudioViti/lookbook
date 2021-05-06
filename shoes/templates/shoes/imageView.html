@@ -1,3 +1,3 @@
-    {% for shoeimage in shoe.shoeimage_set.all %}
-    <img src="{{ shoeimage.image.url }}" >
+    {% for shoeimage in shoeimages %}
+    <img src="{{ shoeimage.image.url }}" style="width:300px;height:300px;">
     {% endfor %}
