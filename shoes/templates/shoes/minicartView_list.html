@@ -14,10 +14,16 @@ li::before {
 
 <ul>
     {% for shoe in object_list %}
-    <li>
+   
+    {% for shoeimage in shoe.shoeimage_set.all|slice:":1"  %}
+        <li>
     <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="{{ shoe.image.url }}" style="width:100px;height:100px;">
+    <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
     </li>
     {% endfor %}
 
+
+    {% endfor %}
+
 </ul>
+
