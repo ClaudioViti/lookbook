@@ -115,7 +115,7 @@
     dt {
       border-bottom: solid black 1px;
     }
-body {margin:0;font-family:Arial}
+body {margin:0;margin-top:24px;font-family:Arial}
 
 .topnav {
   
@@ -367,14 +367,14 @@ function myFunction() {
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
         <button class="show">Details</button>
-        
-        <button onclick="window.open(href='/shoes/1/images/','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600'); type='submit'">Images
+        <button onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600'); type='submit'">Images
         </button>
         {% if user.is_staff %}                             
-        <form action="{% url 'edit' pk=shoe.pk %}">
+        <br>
+        <form style="display: inline-block" action="{% url 'edit' pk=shoe.pk %}">
           <input type="submit" value="Edit" />
         </form>
-        <form action="{% url 'delete' pk=shoe.pk %}">
+        <form style="display: inline-block" action="{% url 'delete' pk=shoe.pk %}">
           <input type="submit" value="Delete" />
         </form>
         {% endif %}
