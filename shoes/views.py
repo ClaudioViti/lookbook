@@ -118,7 +118,7 @@ def edit_shoe(request, pk):
         'formset': formset,
     })
 
-class ImageView(LoginRequiredMixin, ImageView):
+class ImageView(LoginRequiredMixin, ListView):
     
     fields = '__all__'
     template_name = 'shoes/imageView.html'
