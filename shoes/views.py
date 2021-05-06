@@ -121,4 +121,4 @@ def edit_shoe(request, pk):
 class ImageView(LoginRequiredMixin, ListView):
     
     template_name = 'shoes/imageView.html'
-    model = models.Shoe
+    model = models.ShoeImage
