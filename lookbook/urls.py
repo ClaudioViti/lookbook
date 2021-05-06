@@ -25,6 +25,7 @@ urlpatterns = [
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view()),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
+    path('shoes/<int:pk>/images/', ImageView.as_view(), name='shoe-images'),
     path('admin/', admin.site.urls),
     path('manage/', ShoeManageView.as_view(), name='manage'),
     path('manage/add/', create_shoe, name='add'),
