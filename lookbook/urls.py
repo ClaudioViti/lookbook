@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView, FavouriteUpdateView, minicartView, create_shoe, edit_shoe, ShoeUpdateView, ShoeDeleteView, ShoeManageView, ImageView
+from shoes.views import ShoeListView, FavouriteUpdateView, minicartView, create_shoe, edit_shoe, ShoeUpdateView, ShoeDeleteView, ShoeManageView, image_view
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -25,7 +25,7 @@ urlpatterns = [
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view()),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
-    path('shoes/<int:pk>/images/', ImageView.as_view(), name='shoe-images'),
+    path('shoes/<int:pk>/images/', image_view, name='shoe-image'),
     path('admin/', admin.site.urls),
     path('manage/', ShoeManageView.as_view(), name='manage'),
     path('manage/add/', create_shoe, name='add'),

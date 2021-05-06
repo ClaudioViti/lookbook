@@ -118,7 +118,10 @@ def edit_shoe(request, pk):
         'formset': formset,
     })
 
-class ImageView(LoginRequiredMixin, ListView):
+@login_required
+def image_view(request, pk):
+    shoe = get_object_or_404(Shoe, pk=pk)
     
-    template_name = 'shoes/imageView.html'
-    model = models.ShoeImage
+    return render(request, 'shoes/imageView.html', {
+        'shoeimages': shoe.shoeimage_set.all(),
+    })
