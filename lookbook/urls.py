@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView, FavouriteUpdateView, minicartView, create_shoe, edit_shoe, ShoeUpdateView, ShoeDeleteView, ShoeManageView
+from shoes.views import ShoeListView, FavouriteUpdateView, minicartView, create_shoe, edit_shoe, ShoeUpdateView, ShoeDeleteView, ShoeManageView, ImageView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect

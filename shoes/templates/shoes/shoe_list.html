@@ -367,7 +367,7 @@ function myFunction() {
         <header> Id: {{ shoe.pk }} </header>
         Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
         <button class="show">Details</button>
-        
+        <a href="{% url 'shoe-image' pk=shoe.pk %}">Images</a>
         {% if user.is_staff %}                             
         <form action="{% url 'edit' pk=shoe.pk %}">
           <input type="submit" value="Edit" />
