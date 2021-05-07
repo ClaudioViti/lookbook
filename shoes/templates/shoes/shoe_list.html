@@ -279,7 +279,6 @@ main {
   <a href="/" class="active">Reset</a>
   <a id="btn_close">Fold</a>
   <a id="btn_open">Unfold</a>
-  <a href="/manage/" target="_blank">Manage</a>
   <a href="/minicart/" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Order list</a> 
   {% if user.is_staff %}                             
   <a href="{% url 'add' %}">Add item</a>
