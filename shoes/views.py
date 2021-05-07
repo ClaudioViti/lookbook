@@ -53,19 +53,8 @@ class minicartView(LoginRequiredMixin, ListView):
 
 class ShoeManageView(LoginRequiredMixin, ListView):
 
-
-
     model = models.Shoe
         
-
-
-class ShoeUpdateView(LoginRequiredMixin, UpdateView):
-    
-    fields = '__all__'
-    template_name = 'shoes/manage/shoe_form.html'
-    model = models.Shoe
-    success_url = reverse_lazy('manage')
-
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'shoes/manage/delete_item.html'
