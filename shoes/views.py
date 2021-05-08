@@ -116,15 +116,14 @@ from django.conf import settings
 
 def order_list(request):
 
-	if request.method == 'POST':
+    if request.method == 'POST':
         queryset = models.Shoe.objects.filter(favourite=True)
-		message = request.POST['message'] + queryset
-
-		send_mail('Order List',
-		 message, 
-		 settings.EMAIL_HOST_USER,
-		 ['diomede979@gmail.com'], 
-		 fail_silently=False)
-	return render(request, 'shoes/minicartView_list.html')
-
-    aa
+        for itm in queryset:
+            ID = write(itm.pk)
+        message = request.POST['message'] + str(ID)
+        send_mail('Order List',
+         message, 
+         settings.EMAIL_HOST_USER,
+         ['mail9@gmail.com'], 
+         fail_silently=False)
+    return render(request, 'shoes/minicartView_list.html')
