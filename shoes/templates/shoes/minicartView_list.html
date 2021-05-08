@@ -25,5 +25,13 @@ li::before {
 
     {% endfor %}
 
+    <h3>Contact Form</h3>
+
+<form method="post" action="{% url 'order_list' %}">
+	{% csrf_token %}
+	<textarea name="message" placeholder="Message..."></textarea>
+	<input type="submit" />
+</form>
+
 </ul>
 

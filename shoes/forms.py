@@ -17,5 +17,3 @@ class ShoeForm(ModelForm):
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
-
-brand_new = models.CharField(max_length=200, blank=True, null=True)
