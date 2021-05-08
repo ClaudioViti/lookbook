@@ -1,3 +1,4 @@
+<html>
 <style>
 span, img { vertical-align:middle; font-size: 120%; font-weight: bold;}
 ul {
@@ -10,22 +11,37 @@ li::before {
   display: inline-block;
   width: 1em;
 }
+
+.lookbook {
+      position: static;
+    }
+
 </style>
+
+<section class="lookbook">
 
 <ul>
     {% for shoe in object_list %}
    
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1"  %}
         <li>
-    <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
-    Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+  </span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }} onClick="setTimeout(function(){location.reload()}, 100)">
     </li>
+    <lookbook>
+    
+  </lookbook>
     {% endfor %}
 
+    {% empty %}
+    <p style="text-align:center; margin-top: 100%">Empty cart</p>
 
     {% endfor %}
 
+    
+{% if object_list %}
     
 
 <form style="margin-top:6px" method="post" action="{% url 'order_list' %}">
@@ -33,6 +49,29 @@ li::before {
 	<textarea name="message" placeholder="Notes..."></textarea>
 	<p><input type="submit" value="Order" /> </p>
 </form>
-
+{% endif %}
 </ul>
+</section>
 
+
+<script type="module">
+    document.querySelector('.lookbook').addEventListener('change', ev => {
+      const el = ev.target;
+      const pk = el.dataset.id;
+      const state = el.checked;
+      
+      const data = new FormData();
+      data.append('favourite', state);
+      
+      const url = `/shoes/${pk}/favourite/`;
+      post(url, { body: data });
+    })
+    function post (url, options) {
+      const defaults = {
+        method: 'POST',
+      };
+      const opts = Object.assign({}, defaults, options);
+      return fetch(url, opts);
+  }
+</script>
+</html>
