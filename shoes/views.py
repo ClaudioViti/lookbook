@@ -49,12 +49,7 @@ class minicartView(LoginRequiredMixin, ListView):
     model = models.Shoe
     template_name = 'shoes/minicartView_list.html'
     queryset = model.objects.filter(favourite=True)
-
-
-class ShoeManageView(LoginRequiredMixin, ListView):
-
-    model = models.Shoe
-        
+    
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'shoes/manage/delete_item.html'
@@ -122,7 +117,8 @@ from django.conf import settings
 def order_list(request):
 
 	if request.method == 'POST':
-		message = request.POST['message']
+        queryset = models.Shoe.objects.filter(favourite=True)
+		message = request.POST['message'] + queryset
 
 		send_mail('Order List',
 		 message, 

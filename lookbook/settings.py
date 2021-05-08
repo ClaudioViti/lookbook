@@ -131,6 +131,6 @@ ALLOWED_HOSTS=["192.168.1.4", "localhost", "127.0.0.1", "192.168.170.1"]
 
 EMAIL_HOST = 'smtp.live.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'user@hotmail.com'
+EMAIL_HOST_USER = 'mail@hotmail.com'
 EMAIL_HOST_PASSWORD = 'pass'
 EMAIL_USE_TLS = True
