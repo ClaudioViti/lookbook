@@ -28,7 +28,6 @@ urlpatterns = [
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
     path('shoes/<int:pk>/images/', image_view, name='shoe-image'),
     path('admin/', admin.site.urls),
-    path('manage/', ShoeManageView.as_view(), name='manage'),
     path('manage/add/', create_shoe, name='add'),
     path('manage/<int:pk>/', edit_shoe, name='edit'),
     path('manage/<int:pk>/delete/', ShoeDeleteView.as_view(), name='delete'),
