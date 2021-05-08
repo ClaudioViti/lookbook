@@ -126,3 +126,5 @@ def order_list(request):
 		 ['diomede979@gmail.com'], 
 		 fail_silently=False)
 	return render(request, 'shoes/minicartView_list.html')
+
+    aa
