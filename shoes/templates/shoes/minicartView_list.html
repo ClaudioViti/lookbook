@@ -19,18 +19,19 @@ li::before {
         <li>
     <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+    Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
     </li>
     {% endfor %}
 
 
     {% endfor %}
 
-    <h3>Notes:</h3>
+    
 
-<form method="post" action="{% url 'order_list' %}">
+<form style="margin-top:6px" method="post" action="{% url 'order_list' %}">
 	{% csrf_token %}
-	<textarea name="message" placeholder="Message..."></textarea>
-	<input type="submit" />
+	<textarea name="message" placeholder="Notes..."></textarea>
+	<p><input type="submit" value="Order" /> </p>
 </form>
 
 </ul>
