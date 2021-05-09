@@ -60,6 +60,7 @@ class Shoe(models.Model):
     )
     COLOR_CHOICES = (
     ("Black", "Black"),
+    ("Nude", "Nude"),
     ("Gray", "Gray"),
     ("White", "White"),
     ("Brown", "Brown"),
@@ -126,6 +127,7 @@ class Shoe(models.Model):
     style = models.CharField(max_length=200, choices=STYLE_CHOICES, blank=True, null=True)
     brand = models.ForeignKey('ShoeBrand', on_delete=models.CASCADE, blank=True, null=True)
     SKU = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
     size = models.CharField(max_length=5, choices=SIZE_CHOICES, blank=True, null=True)
     color = models.CharField(max_length=200, choices=COLOR_CHOICES, blank=True, null=True)
     heel_height = models.IntegerField(default=0, blank=True, null=True)
