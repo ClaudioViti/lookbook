@@ -128,6 +128,6 @@ def order_list(request):
         send_mail('Order List',
          message, 
          settings.EMAIL_HOST_USER,
-         ['receiver email'], 
+         ['diomede979@gmail.com'], 
          fail_silently=False)
     return render(request, 'shoes/order_succeed.html')
