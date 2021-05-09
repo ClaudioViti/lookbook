@@ -18,17 +18,17 @@ li::before {
 
 </style>
 
-<section style="display:inline-block" class="lookbook">
+<section class="lookbook">
 
-<ul style="display:inline-block">
+<ul>
     {% for shoe in object_list %}
    
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1"  %}
-        <li style="display:inline-block">
-    <span style="display:inline-block"> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; display:inline-block">
+        <li>
+    <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
   </span>&nbsp;&nbsp;&nbsp;&nbsp;
-  <input style="display:inline-block" type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }} onClick="setTimeout(function(){location.reload()}, 100)">
+  <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }} onClick="setTimeout(function(){location.reload()}, 100)">
     </li>
     <lookbook>
     
