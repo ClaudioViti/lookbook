@@ -118,12 +118,16 @@ def order_list(request):
 
     if request.method == 'POST':
         queryset = models.Shoe.objects.filter(favourite=True)
+        ids = []
         for itm in queryset:
-            ID = write(itm.pk)
-        message = request.POST['message'] + str(ID)
+            
+            ids.append(f" \n \n Primary key: {itm.style}; \n ID: {itm.pk}")
+
+        message = request.POST['message']
+        for id in ids: message += str(id)
         send_mail('Order List',
          message, 
          settings.EMAIL_HOST_USER,
-         ['mail9@gmail.com'], 
+         ['receiver email'], 
          fail_silently=False)
-    return render(request, 'shoes/minicartView_list.html')
+    return render(request, 'shoes/order_succeed.html')

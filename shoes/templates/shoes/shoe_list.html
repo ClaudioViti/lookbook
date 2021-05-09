@@ -269,6 +269,10 @@ main {
   display: inline;
 }
 
+.fieldWrapper label {
+  width: 100px;
+  display: inline-block;
+}
 
 
 </style>
@@ -293,35 +297,35 @@ main {
         <form action="/" method="get">
           
 <div class="fieldWrapper">
-    <dl>Color</dl><label for="{{ form.color.id_for_label }}"></label>
+    <label for="{{ form.color.id_for_label }}">Color</label>
     {{ form.color }}
 </div>
 <div class="fieldWrapper">
-  <dl>Size</dl><label for="{{ form.size.id_for_label }}"></label>
+  <label for="{{ form.size.id_for_label }}">Size</label>
     {{ form.size }}
 </div>
 <div class="fieldWrapper">
-  <dl>Model</dl><label for="{{ form.model.id_for_label }}"></label>
+  <label for="{{ form.model.id_for_label }}">Model</label>
     {{ form.model }}
 </div>
 <div class="fieldWrapper">
-  <dl>Style</dl><label for="{{ form.style.id_for_label }}"></label>
+  <label for="{{ form.style.id_for_label }}">Style</label>
     {{ form.style }}
 </div>
 <div class="fieldWrapper">
-  <dl>Toe</dl><label for="{{ form.toe.id_for_label }}"></label>
+  <label for="{{ form.toe.id_for_label }}">Toe</label>
   {{ form.toe }}
 </div>
 <div class="fieldWrapper">
-  <dl>Slingback</dl><label for="{{ form.slingback.id_for_label }}"></label>
+  <label for="{{ form.slingback.id_for_label }}">Slingback</label>
   {{ form.slingback }}
 </div>
 <div class="fieldWrapper">
-  <dl>Platform</dl><label for="{{ form.platform.id_for_label }}"></label>
+  <label for="{{ form.platform.id_for_label }}">Platform</label>
   {{ form.platform }}
 </div>
 <div class="fieldWrapper">
-  <dl>Wishlist</dl><label for="{{ form.favourite.id_for_label }}"></label>
+  <label for="{{ form.favourite.id_for_label }}">Wishlist</label>
   {{ form.favourite }}
 </div>
         <input type="submit" value="Submit">
