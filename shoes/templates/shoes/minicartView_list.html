@@ -25,10 +25,10 @@ li::before {
    
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1"  %}
         <li>
-    <span> Id: {{ shoe.pk }} </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
     <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
-  </span>&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }} onClick="setTimeout(function(){location.reload()}, 100)">
+  </span>
+  <input style="margin-left:20%" type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }} onClick="setTimeout(function(){location.reload()}, 100)">
     </li>
     <lookbook>
     
