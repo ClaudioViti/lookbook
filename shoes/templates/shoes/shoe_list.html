@@ -24,6 +24,17 @@
       const state = el.checked;
       
       const data = new FormData();
+      data.append('cart', state);
+      
+      const url = `/shoes/${pk}/cart/`;
+      post(url, { body: data });
+    })
+    document.querySelector('.lookbook').addEventListener('change', ev => {
+      const el = ev.target;
+      const pk = el.dataset.id;
+      const state = el.checked;
+      
+      const data = new FormData();
       data.append('favourite', state);
       
       const url = `/shoes/${pk}/favourite/`;
@@ -284,7 +295,8 @@ main {
   <a href="/" class="active">Reset</a>
   <a id="btn_close">Fold</a>
   <a id="btn_open">Unfold</a>
-  <a href="/minicart/" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Order list</a> 
+  <a href="/minicart/" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Cart</a> 
+  <a href="/favourite/" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Favourite</a> 
   {% if user.is_staff %}                             
   <a href="{% url 'add' %}">Add item</a>
   {% endif %}
@@ -326,7 +338,7 @@ main {
   {{ form.platform }}
 </div>
 <div class="fieldWrapper">
-  <label for="{{ form.favourite.id_for_label }}">Wishlist</label>
+  <label for="{{ form.favourite.id_for_label }}">Favourite</label>
   {{ form.favourite }}
 </div>
         <input style="margin-top:10px" type="submit" value="Submit">
@@ -369,8 +381,9 @@ function myFunction() {
 
       <figcaption>
         <header> Id: {{ shoe.pk }} </header>
-        Wishlist <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
-        <button class="show">Details</button>
+        Cart <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
+        Favourite <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+        <button style="display: inline-block" class="show">Details</button>
         <button onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
         </button>
         {% if user.is_staff %}                             
@@ -409,7 +422,7 @@ function myFunction() {
           <dl> Info: {{ shoe.info }} </dl>
           <dl> Price: {{ shoe.price }} € </dl>
           <dl> Favourite: {{ shoe.favourite }} </dl>
-          <dl> Ordered: {{ shoe.ordered }} </dl>
+          <dl> Cart: {{ shoe.cart }} </dl>
         </dt>
         </div>
       </figcaption>

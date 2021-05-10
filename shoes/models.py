@@ -144,7 +144,7 @@ class Shoe(models.Model):
     info = models.CharField(max_length=200, blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
     favourite = models.BooleanField(default=False)
-    ordered = models.BooleanField(default=False)
+    cart = models.BooleanField(default=False)
     def real_heel(self):
         return self.heel_height - self.plateau_height
    

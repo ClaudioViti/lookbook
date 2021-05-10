@@ -36,6 +36,20 @@ class ShoeListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         return super().get_context_data(form=self.form, **kwargs)
 
+class CartUpdateView(UpdateView):
+    model = models.Shoe
+    fields = ['cart']
+    template_name_suffix = '_update_form'
+    def form_valid(self, form):
+        self.object = form.save()
+        return JsonResponse({ 'cart': self.object.cart })
+
+class minicartView(LoginRequiredMixin, ListView):
+    
+    model = models.Shoe
+    template_name = 'shoes/minicartView_list.html'
+    queryset = model.objects.filter(cart=True)
+
 class FavouriteUpdateView(UpdateView):
     model = models.Shoe
     fields = ['favourite']
@@ -44,10 +58,10 @@ class FavouriteUpdateView(UpdateView):
         self.object = form.save()
         return JsonResponse({ 'favourite': self.object.favourite })
 
-class minicartView(LoginRequiredMixin, ListView):
+class favouriteView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
-    template_name = 'shoes/minicartView_list.html'
+    template_name = 'shoes/favouriteView_list.html'
     queryset = model.objects.filter(favourite=True)
     
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
