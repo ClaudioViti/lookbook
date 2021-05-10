@@ -21,6 +21,9 @@ li::before {
 <section class="lookbook">
 
 <ul>
+  <table>
+    <tr><td>Favourite list</td><td><td style="position: absolute; display: inline-block;  width: 90%; text-align:right;color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Add to cart</td></tr>
+    </table>
     {% for shoe in object_list %}
    
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1"  %}
