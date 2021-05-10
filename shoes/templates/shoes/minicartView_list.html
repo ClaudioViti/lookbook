@@ -1,37 +1,53 @@
 <html>
 <style>
-span, img { vertical-align:middle; font-size: 120%; font-weight: bold;}
-ul {
-  padding: 0;
-  list-style-type: none;
-}
-li { border-bottom:solid rgb(138, 64, 7) 1px; }
-li::before {
-  content: "\2022";
-  display: inline-block;
-  width: 1em;
-}
+  span,
+  img {
+    vertical-align: middle;
+    font-size: 120%;
+    font-weight: bold;
+  }
 
-.lookbook {
-      position: static;
-    }
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
 
+  li {
+    border-bottom: solid rgb(138, 64, 7) 1px;
+  }
+
+  li::before {
+    content: "\2022";
+    display: inline-block;
+    width: 1em;
+  }
+
+  .lookbook {
+    position: static;
+  }
 </style>
 
 <section class="lookbook">
 
-<ul>
-  <table>
-    <tr><td>Cart</td><td><td style="position: absolute; display: inline-block;  width: 90%; text-align:right;color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Remove</td></tr>
+  <ul>
+    <table>
+      <tr>
+        <td>Cart</td>
+        <td>
+        <td
+          style="position: absolute; display: inline-block;  width: 90%; text-align:right;color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+          Remove</td>
+      </tr>
     </table>
     {% for shoe in object_list %}
-   
-    {% for shoeimage in shoe.shoeimage_set.all|slice:":1"  %}
-        <li>
-    <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
-    <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
-  
-  <input style="margin-left:20%" type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }} onClick="setTimeout(function(){location.reload()}, 100)">
+
+    {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+    <li>
+      <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
+      <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+
+      <input style="margin-left:20%" type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
+        onClick="setTimeout(function(){location.reload()}, 100)">
     </li>
 
     {% endfor %}
@@ -41,38 +57,39 @@ li::before {
 
     {% endfor %}
 
-    
-{% if object_list %}
-    
 
-<form style="margin-top:6px" method="post" action="{% url 'order_list' %}">
-	{% csrf_token %}
-	<textarea name="message" placeholder="Notes..."></textarea>
-	<p><input type="submit" value="Order" /> </p>
-</form>
-{% endif %}
-</ul>
+    {% if object_list %}
+
+
+    <form style="margin-top:6px" method="post" action="{% url 'order_list' %}">
+      {% csrf_token %}
+      <textarea name="message" placeholder="Notes..."></textarea>
+      <p><input type="submit" value="Order" /> </p>
+    </form>
+    {% endif %}
+  </ul>
 </section>
 
 
 <script type="module">
-    document.querySelector('.lookbook').addEventListener('change', ev => {
-      const el = ev.target;
-      const pk = el.dataset.id;
-      const state = el.checked;
-      
-      const data = new FormData();
-      data.append('cart', state);
-      
-      const url = `/shoes/${pk}/cart/`;
-      post(url, { body: data });
-    })
-    function post (url, options) {
-      const defaults = {
-        method: 'POST',
-      };
-      const opts = Object.assign({}, defaults, options);
-      return fetch(url, opts);
+  document.querySelector('.lookbook').addEventListener('change', ev => {
+    const el = ev.target;
+    const pk = el.dataset.id;
+    const state = el.checked;
+
+    const data = new FormData();
+    data.append('cart', state);
+
+    const url = `/shoes/${pk}/cart/`;
+    post(url, { body: data });
+  })
+  function post(url, options) {
+    const defaults = {
+      method: 'POST',
+    };
+    const opts = Object.assign({}, defaults, options);
+    return fetch(url, opts);
   }
 </script>
+
 </html>

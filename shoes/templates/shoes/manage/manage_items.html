@@ -1,14 +1,12 @@
-
-
 {% block content %}
-    {% for shoe in object_list %}
-         <div>
-            <form action="{% url 'edit' pk=shoe.pk %}">
-                <input type="submit" value="Edit" />
-              </form>
-              <form action="{% url 'delete' pk=shoe.pk %}">
-                <input type="submit" value="Delete" />
-              </form>
-         </div>
-     {% endfor %}
- {% endblock %}
+{% for shoe in object_list %}
+<div>
+  <form action="{% url 'edit' pk=shoe.pk %}">
+    <input type="submit" value="Edit" />
+  </form>
+  <form action="{% url 'delete' pk=shoe.pk %}">
+    <input type="submit" value="Delete" />
+  </form>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,180 +1,194 @@
 {% load static %}
 <html>
 <style>
-head,
-body {
-  text-align: center;
-  background-color: rgb(201, 170, 148);
-}
+  head,
+  body {
+    text-align: center;
+    background-color: rgb(201, 170, 148);
+  }
 
-table {
-  margin: 0 auto;
-}
+  table {
+    margin: 0 auto;
+  }
 </style>
 <style>
-  body{
+  body {
     margin: 0;
     padding: 0;
     font-family: 'Abril Fatface', serif;
   }
-  
-  .slider{
+
+  .slider {
     height: 60vh;
     background-color: #293132;
     text-align: center;
     position: relative;
     animation: slideColor 10s forwards infinite;
   }
-  
-  
-  
-  .text-box div{
+
+
+
+  .text-box div {
     display: inline-block;
     position: absolute;
     top: -200px;
     transform: rotateX(-90deg);
     opacity: 0;
-    text-shadow: 0px 5px 5px rgba(0,0,0,.25);
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, .25);
     animation-timing-function: ease;
   }
-  
-  .text-box div:nth-child(1){
+
+  .text-box div:nth-child(1) {
     animation: rollDown 10s forwards infinite;
   }
-  
-  .text-box div:nth-child(2){
+
+  .text-box div:nth-child(2) {
     animation: rollDown2 10s forwards infinite;
   }
-  
-  .text-box div:nth-child(3){
+
+  .text-box div:nth-child(3) {
     animation: rollDown3 10s forwards infinite;
   }
-  
+
   @keyframes rollDown {
-    0%{
+    0% {
       top: -200px;
       transform: rotateX(-90deg);
     }
-    11%{
+
+    11% {
       top: -74px;
       transform: rotateX(0deg);
       opacity: 1;
     }
-    22%{
+
+    22% {
       top: -74px;
       transform: rotateX(0deg);
       opacity: 1;
     }
-    33%{
+
+    33% {
       top: 50px;
       transform: rotateX(30deg);
       opacity: 0;
     }
   }
-  
+
   @keyframes rollDown2 {
-    33%{
+    33% {
       top: -200px;
       transform: rotateX(-90deg);
     }
-    44%{
+
+    44% {
       top: -74px;
       transform: rotateX(0deg);
       opacity: 1;
     }
-    55%{
+
+    55% {
       top: -74px;
       transform: rotateX(0deg);
       opacity: 1;
     }
-    66%{
+
+    66% {
       top: 50px;
       transform: rotateX(30deg);
       opacity: 0;
     }
   }
-  
+
   @keyframes rollDown3 {
-    66%{
+    66% {
       top: -200px;
       transform: rotateX(-90deg);
     }
-    77%{
+
+    77% {
       top: -74px;
       transform: rotateX(0deg);
       opacity: 1;
     }
-    88%{
+
+    88% {
       top: -74px;
       transform: rotateX(0deg);
       opacity: 1;
     }
-    99%{
+
+    99% {
       top: 50px;
       transform: rotateX(30deg);
       opacity: 0;
     }
   }
-  
-  @keyframes slideColor{
-    0%{
+
+  @keyframes slideColor {
+    0% {
       background-color: #387780;
     }
-    33%{
+
+    33% {
       background-color: #3f88c5;
     }
-    66%{
+
+    66% {
       background-color: #588b8b;
     }
-    100%{
+
+    100% {
       background-color: #387780;
     }
   }
-  </style>
-  <div class="slider">
-    <head>
-      <title>{% block title %}{% endblock %}</title>
+</style>
+<div class="slider">
+
+  <head>
+    <title>{% block title %}{% endblock %}</title>
   </head>
+
   <body>
-      <img src="{% static 'favicon.png' %}" alt="Logo">
-      
-      {% block content %}
+    <img src="{% static 'favicon.png' %}" alt="Logo">
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    {% block content %}
 
-{% if next %}
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+      please login with an account that has access.</p>
     {% else %}
     <p>Please login to see this page.</p>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td>{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+        </tr>
+      </table>
 
-<input type="submit" value="login">
-<input type="hidden" name="next" value="{{ next }}">
-</form>
+      <input type="submit" value="login">
+      <input type="hidden" name="next" value="{{ next }}">
+    </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
-{% endblock %}
+    {% endblock %}
   </body>
-  </div>
+</div>
 
 </html>

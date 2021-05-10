@@ -5,27 +5,27 @@
   <script type="module">
     const btn_close = document.querySelector('#btn_close');
     const btn_open = document.querySelector('#btn_open');
-      
-    addEventListener( 'load', ()=>{
-    document.querySelector('#btn_close').addEventListener('click', ev => {
-    document.querySelectorAll('.modal').forEach(el => el.classList.remove('show'))
-    });
-  })
 
-    addEventListener( 'load', ()=>{
-    document.querySelector('#btn_open').addEventListener('click', ev => {
-    document.querySelectorAll('.modal').forEach(el => el.classList.add('show'))
-    });
-  })
-    
+    addEventListener('load', () => {
+      document.querySelector('#btn_close').addEventListener('click', ev => {
+        document.querySelectorAll('.modal').forEach(el => el.classList.remove('show'))
+      });
+    })
+
+    addEventListener('load', () => {
+      document.querySelector('#btn_open').addEventListener('click', ev => {
+        document.querySelectorAll('.modal').forEach(el => el.classList.add('show'))
+      });
+    })
+
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
       const pk = el.dataset.id;
       const state = el.checked;
-      
+
       const data = new FormData();
       data.append('cart', state);
-      
+
       const url = `/shoes/${pk}/cart/`;
       post(url, { body: data });
     })
@@ -33,32 +33,30 @@
       const el = ev.target;
       const pk = el.dataset.id;
       const state = el.checked;
-      
+
       const data = new FormData();
       data.append('favourite', state);
-      
+
       const url = `/shoes/${pk}/favourite/`;
       post(url, { body: data });
     })
-    function post (url, options) {
+    function post(url, options) {
       const defaults = {
         method: 'POST',
       };
       const opts = Object.assign({}, defaults, options);
       return fetch(url, opts);
-  }
-        
-          document.querySelector('.lookbook').addEventListener('click', ev => {
-        	if(!ev.target.matches('button.show')) return;
-          ev.target.parentNode.querySelector('.modal').classList.toggle('show');
-          });
-        </script>
-<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
+    }
 
-
+    document.querySelector('.lookbook').addEventListener('click', ev => {
+      if (!ev.target.matches('button.show')) return;
+      ev.target.parentNode.querySelector('.modal').classList.toggle('show');
+    });
+  </script>
+  <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
     .lookbook figcaption {
       position: static;
     }
@@ -69,52 +67,60 @@
       position: relative;
       top: 100%;
       left: 0;
-      
+
     }
 
     .modal.show {
       display: initial;
     }
-   .lookbook img {
+
+    .lookbook img {
       height: 100px;
       float: left;
       filter: grayscale(0%);
       transition: all 0.2s;
       width: 300px;
       height: auto;
-      } 
-    
+    }
+
     .lookbook {
       display: flex;
       flex-flow: row wrap;
-      justify-content:  center;
+      justify-content: center;
       background-color: rgb(255, 255, 255);
     }
+
     .lookbook img:hover {
       filter: grayscale(100%);
-     -webkit-filter: grayscale(0%);
-     -moz-filter: grayscale(100%);
+      -webkit-filter: grayscale(0%);
+      -moz-filter: grayscale(100%);
       transform: scale(1.1);
-     -webkit-transform: scale(1.1);
-     -moz-transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+      -moz-transform: scale(1.1);
     }
+
     .lookbook details:hover {
-      width:auto;
-      height:auto;
-      background:rgb(255, 255, 255);
-      overflow:hidden;
+      width: auto;
+      height: auto;
+      background: rgb(255, 255, 255);
+      overflow: hidden;
     }
-    .lookbook details:focus { width:auto; }
-    
+
+    .lookbook details:focus {
+      width: auto;
+    }
+
     .lookbook article {
       flex: 0 0 12.5%;
       padding: 0.5rem;
     }
+
     al {
 
       margin-right: 100%;
       margin-left: 100%;
     }
+
     dl {
       display: block;
       margin-top: 0em;
@@ -123,326 +129,341 @@
       margin-right: 0;
       font-size: 80%;
     }
+
     dt {
       border-bottom: solid black 1px;
     }
-body {margin:0;margin-top:24px;font-family:Arial}
 
-.topnav {
-  
-  background-color: #333;
+    body {
+      margin: 0;
+      margin-top: 24px;
+      font-family: Arial
+    }
+
+    .topnav {
+
+      background-color: #333;
       position: fixed;
-    top: 0px;
-    width: 100%;
-    z-index: 1;
-}
+      top: 0px;
+      width: 100%;
+      z-index: 1;
+    }
 
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
+    .topnav a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
 
-btn {
-  background-color: #333;
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  z-index: 1;
-  border: none;
-  cursor: pointer;
-}
+    btn {
+      background-color: #333;
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      z-index: 1;
+      border: none;
+      cursor: pointer;
+    }
 
-.active {
-  background-color: #dccf1b;
-  color: white;
-}
+    .active {
+      background-color: #dccf1b;
+      color: white;
+    }
 
-.topnav .icon {
-  display: none;
-}
+    .topnav .icon {
+      display: none;
+    }
 
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
 
-.dropdown .dropbtn {
-  font-size: 17px;    
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-  pointer-events:none;
-}
+    .dropdown .dropbtn {
+      font-size: 17px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+      pointer-events: none;
+    }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
 
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
 
-.topnav a:hover, .dropdown:hover .dropbtn {
-  background-color: #555;
-  color: white;
-  cursor: pointer;
-}
+    .topnav a:hover,
+    .dropdown:hover .dropbtn {
+      background-color: #555;
+      color: white;
+      cursor: pointer;
+    }
 
-.dropdown-content a:hover {
-  background-color: #ddd;
-  color: black;
-}
+    .dropdown-content a:hover {
+      background-color: #ddd;
+      color: black;
+    }
 
-.dropdown:focus-within .dropdown-content {
-  display: block;
-}
+    .dropdown:focus-within .dropdown-content {
+      display: block;
+    }
 
-@media screen and (max-width: 600px) {
-  .topnav a:not(:first-child), .dropdown .dropbtn {
-    display: none;
-  }
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
-}
+    @media screen and (max-width: 600px) {
 
-@media screen and (max-width: 600px) {
-  .topnav.responsive {position: fixed;
-    top: 0px;
-    width: 100%;}
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .topnav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-  .topnav.responsive .dropdown {float: none;}
-  .topnav.responsive .dropdown-content {position: relative;}
-  .topnav.responsive .dropdown .dropbtn {
-    display: block;
-    width: 100%;
-    text-align: left;
-  }
-}
-p {
-    margin-top: 15%;
-    padding: 0;
-    margin-bottom: 15%;
-}
+      .topnav a:not(:first-child),
+      .dropdown .dropbtn {
+        display: none;
+      }
 
-header {
-  
-  background-color: rgb(255, 255, 255);
-  color: rgb(5, 3, 3);
-}
+      .topnav a.icon {
+        float: right;
+        display: block;
+      }
+    }
 
-main {
-  flex: 1;
-  background-color: lightblue;
-}
+    @media screen and (max-width: 600px) {
+      .topnav.responsive {
+        position: fixed;
+        top: 0px;
+        width: 100%;
+      }
 
-.flip img:nth-of-type(2) {
-  display: none;
-}
+      .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
 
-.flip:hover img:nth-of-type(1) {
-  display: none;
-}
-.flip:hover img:nth-of-type(2) {
-  display: inline;
-}
+      .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+      }
 
-.fieldWrapper label {
-  width: 100px;
-  display: inline-block;
-  margin-bottom: 5px;
-}
+      .topnav.responsive .dropdown {
+        float: none;
+      }
 
+      .topnav.responsive .dropdown-content {
+        position: relative;
+      }
 
-</style>
+      .topnav.responsive .dropdown .dropbtn {
+        display: block;
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    p {
+      margin-top: 15%;
+      padding: 0;
+      margin-bottom: 15%;
+    }
+
+    header {
+
+      background-color: rgb(255, 255, 255);
+      color: rgb(5, 3, 3);
+    }
+
+    main {
+      flex: 1;
+      background-color: lightblue;
+    }
+
+    .flip img:nth-of-type(2) {
+      display: none;
+    }
+
+    .flip:hover img:nth-of-type(1) {
+      display: none;
+    }
+
+    .flip:hover img:nth-of-type(2) {
+      display: inline;
+    }
+
+    .fieldWrapper label {
+      width: 100px;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
+
 <body>
-<header>
-<div class="topnav" id="myTopnav">
-  <a href="/" class="active">Reset</a>
-  <a id="btn_close">Fold</a>
-  <a id="btn_open">Unfold</a>
-  <a href="/minicart/" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Cart</a> 
-  <a href="/favourite/" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Favourite</a> 
-  {% if user.is_staff %}                             
-  <a href="{% url 'add' %}">Add item</a>
-  {% endif %}
-
-  <div class="dropdown" tabindex="0">
-    <button class="dropbtn">Filter 
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <al>
-        <form action="/" method="get">
-          
-<div class="fieldWrapper">
-    <label for="{{ form.color.id_for_label }}">Color</label>
-    {{ form.color }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.size.id_for_label }}">Size</label>
-    {{ form.size }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.model.id_for_label }}">Model</label>
-    {{ form.model }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.style.id_for_label }}">Style</label>
-    {{ form.style }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.toe.id_for_label }}">Toe</label>
-  {{ form.toe }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.slingback.id_for_label }}">Slingback</label>
-  {{ form.slingback }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.platform.id_for_label }}">Platform</label>
-  {{ form.platform }}
-</div>
-<div class="fieldWrapper">
-  <label for="{{ form.favourite.id_for_label }}">Favourite</label>
-  {{ form.favourite }}
-</div>
-        <input style="margin-top:10px" type="submit" value="Submit">
-      </form>
-      </al>
-    </div>
-  </div> 
-  <a href="{% url 'logout' %}">Logout</a>
-  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-</div>
-</header>
-
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-</script>
-<main>
-<section class="lookbook">
-  {% for shoe in object_list %}
-  <article>
-    <figure>
-      {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
-      {% if shoeimages|length == 2 %}
-      <div class="flip">
-          {% for shoeimage in shoeimages %}
-          <img src="{{ shoeimage.image.url }}" >
-          {% endfor %}
-      </div>
-      {% else %}
-        <img src="{{ shoeimages.0.image.url }}">
+  <header>
+    <div class="topnav" id="myTopnav">
+      <a href="/" class="active">Reset</a>
+      <a id="btn_close">Fold</a>
+      <a id="btn_open">Unfold</a>
+      <a href="/minicart/"
+        onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Cart</a>
+      <a href="/favourite/"
+        onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Favourite</a>
+      {% if user.is_staff %}
+      <a href="{% url 'add' %}">Add item</a>
       {% endif %}
-  {% endwith %}
 
-      <figcaption>
-        <header> Id: {{ shoe.pk }} </header>
-        Cart <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
-        Favourite <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
-        <button style="display: inline-block" class="show">Details</button>
-        <button onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
+      <div class="dropdown" tabindex="0">
+        <button class="dropbtn">Filter
+          <i class="fa fa-caret-down"></i>
         </button>
-        {% if user.is_staff %}                             
-        <br>
-        <form style="display: inline-block; margin-top: 2px" action="{% url 'edit' pk=shoe.pk %}">
-          <input type="submit" value="Edit" />
-        </form>
-        <form style="display: inline-block" action="{% url 'delete' pk=shoe.pk %}">
-          <input type="submit" value="Delete" />
-        </form>
-        {% endif %}
-        
-        <div class="modal">
-        <dt>
-          <dl> Model: {{ shoe.model }} </dl>
-          <dl> SKU: {{ shoe.sku }} </dl>
-          <dl> Toe: {{ shoe.toe }} </dl>
-          <dl> Slingback: {{ shoe.slingback }} </dl>
-          <dl> Platform: {{ shoe.platform }} </dl>
-          <dl> Style: {{ shoe.style }} </dl>
-          <dl> Brand: {{ shoe.brand }} </dl>
-          <dl> Color: {{ shoe.color }} </dl>
-          <dl> Size: {{ shoe.size }} EU </dl>
-          <dl> Heel: {{ shoe.heel_height }} mm </dl>
-          <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
-          <dl> Real heel: {{ shoe.real_heel }} mm </dl>
-          <dl> Hell kind: {{ shoe.heel_kind }} </dl>
-          <dl> Sole material: {{ shoe.sole_material }} </dl>
-          <dl> Lining material: {{ shoe.lining_material }} </dl>
-          <dl> Upper material: {{ shoe.upper_material }} </dl>
-          <dl> Year: {{ shoe.year }} </dl>
-          <dl> Season: {{ shoe.season }} </dl>
-          <dl> Comfort: {{ shoe.comfort }}/5 </dl>
-          <dl> State: {{ shoe.state }} </dl>
-          <dl> Available: {{ shoe.available }} </dl>
-          <dl> Info: {{ shoe.info }} </dl>
-          <dl> Price: {{ shoe.price }} € </dl>
-          <dl> Favourite: {{ shoe.favourite }} </dl>
-          <dl> Cart: {{ shoe.cart }} </dl>
-        </dt>
+        <div class="dropdown-content">
+          <al>
+            <form action="/" method="get">
+
+              <div class="fieldWrapper">
+                <label for="{{ form.color.id_for_label }}">Color</label>
+                {{ form.color }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.size.id_for_label }}">Size</label>
+                {{ form.size }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.model.id_for_label }}">Model</label>
+                {{ form.model }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.style.id_for_label }}">Style</label>
+                {{ form.style }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.toe.id_for_label }}">Toe</label>
+                {{ form.toe }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.slingback.id_for_label }}">Slingback</label>
+                {{ form.slingback }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.platform.id_for_label }}">Platform</label>
+                {{ form.platform }}
+              </div>
+              <div class="fieldWrapper">
+                <label for="{{ form.favourite.id_for_label }}">Favourite</label>
+                {{ form.favourite }}
+              </div>
+              <input style="margin-top:10px" type="submit" value="Submit">
+            </form>
+          </al>
         </div>
-      </figcaption>
-    </figure>
-  </article>
-  {% empty %}
-    <p>No matches found</p>
-  {% endfor %}
-</section>
-</main>
+      </div>
+      <a href="{% url 'logout' %}">Logout</a>
+      <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+  </header>
+
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+  <main>
+    <section class="lookbook">
+      {% for shoe in object_list %}
+      <article>
+        <figure>
+          {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
+          {% if shoeimages|length == 2 %}
+          <div class="flip">
+            {% for shoeimage in shoeimages %}
+            <img src="{{ shoeimage.image.url }}">
+            {% endfor %}
+          </div>
+          {% else %}
+          <img src="{{ shoeimages.0.image.url }}">
+          {% endif %}
+          {% endwith %}
+
+          <figcaption>
+            <header> Id: {{ shoe.pk }} </header>
+            Cart <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
+            Favourite <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+            <button style="display: inline-block" class="show">Details</button>
+            <button
+              onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
+            </button>
+            {% if user.is_staff %}
+            <br>
+            <form style="display: inline-block; margin-top: 2px" action="{% url 'edit' pk=shoe.pk %}">
+              <input type="submit" value="Edit" />
+            </form>
+            <form style="display: inline-block" action="{% url 'delete' pk=shoe.pk %}">
+              <input type="submit" value="Delete" />
+            </form>
+            {% endif %}
+
+            <div class="modal">
+              <dt>
+                <dl> Model: {{ shoe.model }} </dl>
+                <dl> SKU: {{ shoe.sku }} </dl>
+                <dl> Toe: {{ shoe.toe }} </dl>
+                <dl> Slingback: {{ shoe.slingback }} </dl>
+                <dl> Platform: {{ shoe.platform }} </dl>
+                <dl> Style: {{ shoe.style }} </dl>
+                <dl> Brand: {{ shoe.brand }} </dl>
+                <dl> Color: {{ shoe.color }} </dl>
+                <dl> Size: {{ shoe.size }} EU </dl>
+                <dl> Heel: {{ shoe.heel_height }} mm </dl>
+                <dl> Plateau: {{ shoe.plateau_height }} mm </dl>
+                <dl> Real heel: {{ shoe.real_heel }} mm </dl>
+                <dl> Hell kind: {{ shoe.heel_kind }} </dl>
+                <dl> Sole material: {{ shoe.sole_material }} </dl>
+                <dl> Lining material: {{ shoe.lining_material }} </dl>
+                <dl> Upper material: {{ shoe.upper_material }} </dl>
+                <dl> Year: {{ shoe.year }} </dl>
+                <dl> Season: {{ shoe.season }} </dl>
+                <dl> Comfort: {{ shoe.comfort }}/5 </dl>
+                <dl> State: {{ shoe.state }} </dl>
+                <dl> Available: {{ shoe.available }} </dl>
+                <dl> Info: {{ shoe.info }} </dl>
+                <dl> Price: {{ shoe.price }} € </dl>
+                <dl> Favourite: {{ shoe.favourite }} </dl>
+                <dl> Cart: {{ shoe.cart }} </dl>
+              </dt>
+            </div>
+          </figcaption>
+        </figure>
+      </article>
+      {% empty %}
+      <p>No matches found</p>
+      {% endfor %}
+    </section>
+  </main>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-

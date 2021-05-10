@@ -1,21 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-    <form method="post" enctype="multipart/form-data"> 
 
-        {% csrf_token %} 
-        {{ form.as_p }} 
-        {{ formset.management_form }}
-        <table>
-            {% for imageform in formset %}
-            {{ imageform }}
-            {% endfor %}
-        </table>
-        <input type="submit" value="Save"> 
-    </form> 
-     
-    
-    
- {% endblock %}
+<form method="post" enctype="multipart/form-data">
 
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ formset.management_form }}
+    <table>
+        {% for imageform in formset %}
+        {{ imageform }}
+        {% endfor %}
+    </table>
+    <input type="submit" value="Save">
+</form>
+
+
+
+{% endblock %}
