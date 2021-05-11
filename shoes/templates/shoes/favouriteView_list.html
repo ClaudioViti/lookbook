@@ -46,7 +46,7 @@
       <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
 
-      <input style="margin-left:20%" type="checkbox" name="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
+      <input style="margin-left:20%" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
         onClick="setTimeout(function(){location.reload()}, 100)">
     </li>
 
