@@ -17,10 +17,12 @@
         document.querySelectorAll('.modal').forEach(el => el.classList.add('show'))
       });
     })
-
+    
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
-      const pk = el.dataset.id;
+      if (!el.name === 'cart') 
+      const pk = el.value;
+      return; 
       const state = el.checked;
 
       const data = new FormData();
@@ -31,7 +33,9 @@
     })
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
-      const pk = el.dataset.id;
+      if (!el.name === 'favourite')
+      const pk = el.value;
+      return; 
       const state = el.checked;
 
       const data = new FormData();
@@ -411,8 +415,8 @@
 
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            Cart <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
-            Favourite <input type="checkbox" data-id="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+            Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
+            Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
             <button style="display: inline-block" class="show">Details</button>
             <button
               onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
