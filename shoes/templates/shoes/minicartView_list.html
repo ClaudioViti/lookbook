@@ -25,6 +25,9 @@
   .lookbook {
     position: static;
   }
+  table {
+    width: 90%;
+  }
 </style>
 
 <section class="lookbook">
@@ -36,19 +39,26 @@
         <td>
         <td
           style="position: absolute; display: inline-block;  width: 90%; text-align:right;color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
-          Remove</td>
-      </tr>
-    </table>
+          Remove</td></tr>
+      
+    
     {% for shoe in object_list %}
 
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
-    <li>
-      <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
+    
+    <tr>
+    <td>
+      <span style=" display: inline-block; width: 40%"> Id: {{ shoe.pk }} </span>
+    </td>
+    <td>
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+    </td>
+    <td>
 
       <input style="margin-left:20%" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
         onClick="setTimeout(function(){location.reload()}, 100)">
-    </li>
+      </td></tr>
+    
 
     {% endfor %}
 
@@ -56,7 +66,8 @@
     <p style="text-align:center; margin-top: 100%">Empty cart</p>
 
     {% endfor %}
-
+  
+  </table>
 
     {% if object_list %}
 
