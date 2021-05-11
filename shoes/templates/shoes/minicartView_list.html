@@ -15,6 +15,9 @@
   li {
     border-bottom: solid rgb(138, 64, 7) 1px;
   }
+  td {
+  border-bottom: 1px solid black;
+}
 
   li::before {
     content: "\2022";
@@ -26,7 +29,8 @@
     position: static;
   }
   table {
-    width: 90%;
+    width: 100%;
+    border-collapse: collapse;
   }
 </style>
 
@@ -38,7 +42,7 @@
         <td>Cart</td>
         <td>
         <td
-          style=" display: inline-block;  text-align:right;color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+          style="color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
           Remove</td></tr>
       
     
@@ -48,7 +52,7 @@
     
     <tr>
     <td>
-      <span style=" display: inline-block; width: 40%"> Id: {{ shoe.pk }} </span>
+      <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
     </td>
     <td>
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
