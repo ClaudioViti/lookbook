@@ -20,11 +20,11 @@
     
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
-      if (!el.name === 'cart') 
+      if (!el.name === 'cart') return;
       const pk = el.value;
-      return; 
+      
       const state = el.checked;
-
+      
       const data = new FormData();
       data.append('cart', state);
 
@@ -33,11 +33,11 @@
     })
     document.querySelector('.lookbook').addEventListener('change', ev => {
       const el = ev.target;
-      if (!el.name === 'favourite')
+      if (!el.name === 'favourite') return;
       const pk = el.value;
-      return; 
+      
       const state = el.checked;
-
+      
       const data = new FormData();
       data.append('favourite', state);
 
