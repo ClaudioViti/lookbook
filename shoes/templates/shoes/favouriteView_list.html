@@ -25,37 +25,54 @@
   .lookbook {
     position: static;
   }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td {
+  border-bottom: 1px solid black;
+  text-align: center;
+  }
 </style>
 
 <section class="lookbook">
 
-  <ul>
-    <table>
-      <tr>
-        <td>Favourite list</td>
-        <td>
-        <td
-          style="position: absolute; display: inline-block;  width: 90%; text-align:right;color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
-          Add to cart</td>
-      </tr>
-    </table>
-    {% for shoe in object_list %}
+<table>
+  <tr>
+    <td>Favourites</td>
+    <td>
+    <td
+      style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+      Add to cart</td></tr>
+  
 
-    {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
-    <li>
-      <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
-      <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+{% for shoe in object_list %}
 
-      <input style="margin-left:20%" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
-        onClick="setTimeout(function(){location.reload()}, 100)">
-    </li>
+{% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
 
-    {% endfor %}
+<tr>
+<td>
+  <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
+</td>
+<td>
+  <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+</td>
+<td>
 
-    {% empty %}
-    <p style="text-align:center; margin-top: 100%">No favourites</p>
+  <input type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
+    onClick="setTimeout(function(){location.reload()}, 100)">
+  </td></tr>
 
-    {% endfor %}
+
+{% endfor %}
+
+{% empty %}
+<p style="text-align:center; margin-top: 100%">No favourites</p>
+
+{% endfor %}
+
+</table>
 
 
     {% if object_list %}
