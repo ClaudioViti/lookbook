@@ -46,7 +46,7 @@
       <span style="  display: inline-block; width: 20%"> Id: {{ shoe.pk }} </span>
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
 
-      <input style="margin-left:20%" type="checkbox" data-id="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
+      <input style="margin-left:20%" type="checkbox" name="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
         onClick="setTimeout(function(){location.reload()}, 100)">
     </li>
 
@@ -74,7 +74,7 @@
 <script type="module">
   document.querySelector('.lookbook').addEventListener('change', ev => {
     const el = ev.target;
-    const pk = el.dataset.id;
+    const pk = el.value;
     const state = el.checked;
 
     const data = new FormData();
