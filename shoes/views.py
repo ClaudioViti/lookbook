@@ -131,7 +131,7 @@ from django.conf import settings
 def order_list(request):
 
     if request.method == 'POST':
-        queryset = models.Shoe.objects.filter(favourite=True)
+        queryset = models.Shoe.objects.filter(cart=True)
         ids = []
         for itm in queryset:
             
