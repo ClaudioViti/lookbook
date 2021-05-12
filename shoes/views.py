@@ -136,6 +136,7 @@ def order_list(request):
         for itm in queryset:
             
             ids.append(f" \n \n Primary key: {itm.style}; \n ID: {itm.pk}")
+            itm.cart = False
 
         message = request.POST['message']
         for id in ids: message += str(id)
