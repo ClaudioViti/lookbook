@@ -31,6 +31,7 @@ urlpatterns = [
     path('shoes/<int:pk>/urgent/', csrf_exempt(UrgentView.as_view()), name='shoe-urgent'),
     path('shoes/<int:pk>/images/', image_view, name='shoe-image'),
     path('admin/', admin.site.urls),
+    path('manage/', ShoeListView.as_view(), name='manage'),
     path('manage/add/', create_shoe, name='add'),
     path('manage/<int:pk>/', edit_shoe, name='edit'),
     path('manage/<int:pk>/delete/', ShoeDeleteView.as_view(), name='delete'),
