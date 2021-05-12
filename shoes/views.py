@@ -44,6 +44,14 @@ class CartUpdateView(UpdateView):
         self.object = form.save()
         return JsonResponse({ 'cart': self.object.cart })
 
+class UrgentView(UpdateView):
+    model = models.Shoe
+    fields = ['urgent']
+    template_name_suffix = '_update_form'
+    def form_valid(self, form):
+        self.object = form.save()
+        return JsonResponse({ 'urgent': self.object.urgent })
+
 class minicartView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
@@ -135,9 +143,10 @@ def order_list(request):
         ids = []
         for itm in queryset:
             
-            ids.append(f" \n \n Primary key: {itm.style}; \n ID: {itm.pk}")
+            ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n Urgent: {itm.urgent}")
 
         queryset.update(cart=False)
+        queryset.update(urgent=False)
         message = request.POST['message']
         for id in ids: message += str(id)
         send_mail('Order List',

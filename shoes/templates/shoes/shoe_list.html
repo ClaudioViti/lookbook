@@ -66,17 +66,21 @@
     }
 
     .modal {
-      transition: all 0.2s;
-      display: none;
-      position: relative;
-      top: 100%;
-      left: 0;
+  position: relative;
+}
+    .modal > * {
+  background-color: white;
+  position: absolute;
+  height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s;
+  height: min-content;
+  max-height: 0;
+}
 
-    }
-
-    .modal.show {
-      display: initial;
-    }
+.modal.show > * {
+  max-height: 100vh;
+}
 
     .lookbook img {
       height: 100px;

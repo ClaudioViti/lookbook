@@ -146,6 +146,7 @@ class Shoe(models.Model):
     favourite = models.BooleanField(default=False)
     cart = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
+    urgent = models.BooleanField(default=False)
     delivered_date = models.CharField(max_length=200, blank=True, null=True)
     returned_date = models.CharField(max_length=200, blank=True, null=True)
     def real_heel(self):
