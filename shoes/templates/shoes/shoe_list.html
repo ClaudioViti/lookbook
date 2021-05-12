@@ -77,8 +77,12 @@
   height: min-content;
   max-height: 0;
   z-index: 1;
+  border-radius: 5px;
   margin-top: 2%;
   margin-left: 20%;
+  width:200px;
+  opacity: 0.9;
+  
 }
 
 .modal.show > * {
@@ -88,6 +92,9 @@
   border-radius: 5px;
   margin-top: 2%;
   margin-left: 20%;
+  width:200px;
+  opacity: 0.9;
+
 }
 
     .lookbook img {
@@ -147,7 +154,8 @@
     }
 
     dt {
-      border-bottom: solid black 1px;
+      margin-left: 5px;
+
     }
 
     body {
@@ -445,7 +453,7 @@
 
             <div class="modal">
               <dl>
-                <dt> Model: {{ shoe.model }} </dt>
+                <dt style="margin-top: 5px;"> Model: {{ shoe.model }} </dt>
                 <dt> SKU: {{ shoe.sku }} </dt>
                 <dt> Toe: {{ shoe.toe }} </dt>
                 <dt> Slingback: {{ shoe.slingback }} </dt>
@@ -469,7 +477,7 @@
                 <dt> Info: {{ shoe.info }} </dt>
                 <dt> Price: {{ shoe.price }} € </dt>
                 <dt> Favourite: {{ shoe.favourite }} </dt>
-                <dt> Cart: {{ shoe.cart }} </dt>
+                <dt style="margin-bottom: 5px;"> Cart: {{ shoe.cart }} </dt>
               </dl>
             </div>
           </figcaption>
