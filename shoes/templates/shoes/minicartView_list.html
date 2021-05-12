@@ -84,7 +84,7 @@
     {% if object_list %}
 
 
-    <form style="margin-top:6px" method="post" action="{% url 'order_list' %}">
+    <form method="POST" style="margin-top:6px" method="post" action="{% url 'order_list' %}">
       {% csrf_token %}
       <textarea name="message" placeholder="Notes..."></textarea>
       <p><input type="submit" value="Order" /> </p>

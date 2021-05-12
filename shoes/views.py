@@ -145,8 +145,7 @@ def order_list(request):
             
             ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n Urgent: {itm.urgent}")
 
-        queryset.update(cart=False)
-        queryset.update(urgent=False)
+        queryset.update(cart=False, urgent=False)
         message = request.POST['message']
         for id in ids: message += str(id)
         send_mail('Order List',
