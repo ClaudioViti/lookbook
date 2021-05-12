@@ -69,17 +69,25 @@
   position: relative;
 }
     .modal > * {
-  background-color: white;
+  background-color: rgb(216, 158, 158);
   position: absolute;
   height: 0;
   overflow: hidden;
   transition: max-height 0.5s;
   height: min-content;
   max-height: 0;
+  z-index: 1;
+  margin-top: 2%;
+  margin-left: 20%;
 }
 
 .modal.show > * {
   max-height: 100vh;
+  background-color: rgb(216, 158, 158);
+  z-index: 1;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-left: 20%;
 }
 
     .lookbook img {
