@@ -151,6 +151,6 @@ def order_list(request):
         send_mail('Order List',
          message, 
          settings.EMAIL_HOST_USER,
-         ['diomede979@gmail.com'], 
+         settings.RECIPIENT_LIST, 
          fail_silently=False)
     return render(request, 'shoes/order_succeed.html')
