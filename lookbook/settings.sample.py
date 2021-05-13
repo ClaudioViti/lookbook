@@ -134,3 +134,4 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'sender email'
 EMAIL_HOST_PASSWORD = 'pass'
 EMAIL_USE_TLS = True
+RECIPIENT_LIST = ['recipient email']
