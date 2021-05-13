@@ -27,7 +27,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
             if value:
                 qs = qs.filter(**{field: value})
             
-        return qs
+        return qs.order_by('heel_height')
 
     def dispatch(self, request, *args, **kwargs):
         self.form = ShoeForm(request.GET)
@@ -35,6 +35,14 @@ class ShoeListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(form=self.form, **kwargs)
+
+class OrderUpdateView(UpdateView):
+    model = models.Shoe
+    fields = ['order']
+    template_name_suffix = '_update_form'
+    def form_valid(self, form):
+        self.object = form.save()
+        return JsonResponse({ 'order': self.object.cart })
 
 class CartUpdateView(UpdateView):
     model = models.Shoe
