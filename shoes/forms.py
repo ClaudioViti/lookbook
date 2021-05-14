@@ -21,4 +21,4 @@ ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',
 class OrderForm(ModelForm):
      class Meta:
          model = Shoe
-         fields = ['order_by']
+         fields = ['heel_height', 'year']
