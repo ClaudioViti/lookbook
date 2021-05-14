@@ -30,11 +30,8 @@ class ShoeListView(LoginRequiredMixin, ListView):
         return qs.order_by(models.Shoe().order_by)
 
     def dispatch(self, request, *args, **kwargs):
-        self.form = ShoeForm(request.GET)
-        return super().dispatch(request, *args, **kwargs)
-
-    def dispatch(self, request, *args, **kwargs):
-        self.form = ShoeOrderForm(request.GET)
+        self.filter_form = ShoeForm(request.GET)
+        self.order_form = ShoeOrderForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
