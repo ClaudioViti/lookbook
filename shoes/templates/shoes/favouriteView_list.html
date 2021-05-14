@@ -122,7 +122,7 @@ label {
   }
 </script>
 <script>
-  myInput = (checkboxTrigger);myInput.onclick = function () {"window.parent.postMessage('Hello Parent Frame!', '*');"};
+  myInput = document.getElementsByClassName("checkboxTrigger");myInput.onclick = function () {setTimeout(function(){location.reload()}, 100);};
 </script>
 
 </html>
