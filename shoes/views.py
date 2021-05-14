@@ -37,6 +37,12 @@ class ShoeListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         return super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
 
+    def get_ordering(self):
+        
+        if self.order_form.is_valid():
+            
+        else:
+
 class CartUpdateView(UpdateView):
     model = models.Shoe
     fields = ['cart']
