@@ -154,7 +154,7 @@ class Shoe(models.Model):
     urgent = models.BooleanField(default=False)
     delivered_date = models.CharField(max_length=200, blank=True, null=True)
     returned_date = models.CharField(max_length=200, blank=True, null=True)
-    order_by = models.CharField(max_length=200, default='pk', editable=False)
+    order_by = models.CharField(max_length=200, default='heel_height', editable=False)
     def real_heel(self):
         return self.heel_height - self.plateau_height
    

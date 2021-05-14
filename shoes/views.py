@@ -27,7 +27,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
             if value:
                 qs = qs.filter(**{field: value})
             
-        return qs.order_by(models.order_by)
+        return qs.order_by(models.Shoe().order_by)
 
     def dispatch(self, request, *args, **kwargs):
         self.form = ShoeForm(request.GET)
