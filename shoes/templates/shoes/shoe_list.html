@@ -420,6 +420,17 @@
       }
     }
   </script>
+  <script>
+    window.addEventListener('message', receiveMessage, false);
+
+function receiveMessage(evt)
+{
+  if (evt.origin === 'http://localhost:8000/favourite/')
+  {
+    alert("got message: "+evt.data);
+  }
+}
+  </script>
   <main>
     <section class="lookbook">
       {% for shoe in object_list %}
