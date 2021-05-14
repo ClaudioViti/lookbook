@@ -119,6 +119,11 @@ class Shoe(models.Model):
     )
     COMFORT_CHOICES = [(i, i) for i in range(1,6)]
     
+    ORDER_CRITERIA = (
+    ("heel_height", "heel_height"),
+    ("year", "year"),
+    )
+    
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
     platform = models.BooleanField(default=False)
@@ -149,6 +154,7 @@ class Shoe(models.Model):
     urgent = models.BooleanField(default=False)
     delivered_date = models.CharField(max_length=200, blank=True, null=True)
     returned_date = models.CharField(max_length=200, blank=True, null=True)
+    order_by = models.CharField(max_length=200, default='pk', editable=False)
     def real_heel(self):
         return self.heel_height - self.plateau_height
    
