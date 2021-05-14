@@ -40,8 +40,9 @@ class ShoeListView(LoginRequiredMixin, ListView):
     def get_ordering(self):
         
         if self.order_form.is_valid():
-            
+            return self.order_form.cleaned_data.get('order')
         else:
+            return self.ordering 
 
 class CartUpdateView(UpdateView):
     model = models.Shoe
