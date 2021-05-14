@@ -21,13 +21,13 @@ class ShoeListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         qs = super().get_queryset()
 
-        self.form.is_valid()
+        self.filter_form.is_valid()
         
-        for field, value in self.form.cleaned_data.items():
+        for field, value in self.filter_form.cleaned_data.items():
             if value:
                 qs = qs.filter(**{field: value})
             
-        return qs.order_by(models.Shoe().order_by)
+        return qs
 
     def dispatch(self, request, *args, **kwargs):
         self.filter_form = ShoeForm(request.GET)
@@ -35,15 +35,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(form=self.form, **kwargs)
-
-class OrderByUpdateView(UpdateView):
-    model = models.Shoe
-    fields = ['order_by']
-    template_name_suffix = '_update_form'
-    def form_valid(self, form):
-        self.object = form.save()
-        return JsonResponse({ 'order_by': self.object.cart })
+        return super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
 
 class CartUpdateView(UpdateView):
     model = models.Shoe

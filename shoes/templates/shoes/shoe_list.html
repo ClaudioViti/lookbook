@@ -365,35 +365,40 @@
 
               <div class="fieldWrapper">
                 <label for="{{ form.color.id_for_label }}">Color</label>
-                {{ form.color }}
+                {{ filter_form.color }}
               </div>
               <div class="fieldWrapper">
                 <label for="{{ form.size.id_for_label }}">Size</label>
-                {{ form.size }}
+                {{ filter_form.size }}
               </div>
               <div class="fieldWrapper">
                 <label for="{{ form.model.id_for_label }}">Model</label>
-                {{ form.model }}
+                {{ filter_form.model }}
               </div>
               <div class="fieldWrapper">
                 <label for="{{ form.style.id_for_label }}">Style</label>
-                {{ form.style }}
+                {{ filter_form.style }}
               </div>
               <div class="fieldWrapper">
                 <label for="{{ form.toe.id_for_label }}">Toe</label>
-                {{ form.toe }}
+                {{ filter_form.toe }}
               </div>
               <div class="fieldWrapper">
+                <label for="{{ form.toe.id_for_label }}">Order by</label>
+                {{ order_form.toe }}
+              </div>
+              
+              <div class="fieldWrapper">
                 <label for="{{ form.slingback.id_for_label }}">Slingback</label>
-                {{ form.slingback }}
+                {{ filter_form.slingback }}
               </div>
               <div class="fieldWrapper">
                 <label for="{{ form.platform.id_for_label }}">Platform</label>
-                {{ form.platform }}
+                {{ filter_form.platform }}
               </div>
               <div class="fieldWrapper">
                 <label for="{{ form.favourite.id_for_label }}">Favourite</label>
-                {{ form.favourite }}
+                {{ filter_form.favourite }}
               </div>
               <input style="margin-top:10px" type="submit" value="Submit">
             </form>

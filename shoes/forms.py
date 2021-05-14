@@ -18,5 +18,5 @@ class ShoeForm(ModelForm):
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
 
-class ShoeOrderForm(forms.Form):  # Not a ModelForm
+class ShoeOrderForm(forms.Form):
     order = forms.ChoiceField(choices=(('pk', 'ID'), ('year', 'Year')))
