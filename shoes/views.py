@@ -164,13 +164,16 @@ def order_list(request):
     return render(request, 'shoes/order_succeed.html')
 
 class BrandCreate(CreateView):
+    template_name = 'shoes/brand_form.html'
     model = ShoeBrand
     fields = ['brand']
 
 class BrandUpdate(UpdateView):
+    template_name = 'shoes/brand_form.html'
     model = ShoeBrand
     fields = ['brand']
 
 class BrandDelete(DeleteView):
+    template_name = 'shoes/brand_form.html'
     model = ShoeBrand
     success_url = reverse_lazy('manage')
