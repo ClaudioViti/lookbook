@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from shoes.models import Shoe, ShoeImage
+from shoes.models import Shoe, ShoeImage, ShoeBrand
 from django import forms
 from django.forms.models import modelformset_factory
 from django.forms import inlineformset_factory
@@ -20,3 +20,8 @@ ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',
 
 class ShoeOrderForm(forms.Form):
     order = forms.ChoiceField(choices=(('', '---------'), ('pk', 'ID'), ('-year', 'Newer'),('year', 'Older'), ('-heel_height', 'High Heel'), ('heel_height', 'Low Heel'), ('comfort', 'Comfort')), required=False)
+
+class ShoeBrandForm(ModelForm):
+    class Meta:
+         model = ShoeBrand
+         fields = '__all__'

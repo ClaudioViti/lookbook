@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from shoes.models import ShoeImage, Shoe
+from shoes.models import ShoeImage, Shoe, ShoeBrand
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -162,3 +162,15 @@ def order_list(request):
          settings.RECIPIENT_LIST, 
          fail_silently=False)
     return render(request, 'shoes/order_succeed.html')
+
+class BrandCreate(CreateView):
+    model = ShoeBrand
+    fields = ['brand']
+
+class BrandUpdate(UpdateView):
+    model = ShoeBrand
+    fields = ['brand']
+
+class BrandDelete(DeleteView):
+    model = ShoeBrand
+    success_url = reverse_lazy('manage')
