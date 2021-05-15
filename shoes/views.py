@@ -2,7 +2,7 @@ from django.shortcuts import render
 from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
 from shoes.models import ShoeImage, Shoe, ShoeBrand
 from django.shortcuts import get_object_or_404
@@ -163,17 +163,21 @@ def order_list(request):
          fail_silently=False)
     return render(request, 'shoes/order_succeed.html')
 
-class BrandCreate(CreateView):
-    template_name = 'shoes/brand_form.html'
+class BrandCreate(LoginRequiredMixin, CreateView):
+    template_name = 'shoes/manage/brand_form.html'
     model = ShoeBrand
     fields = ['brand']
+    def get_success_url(self):
+        return reverse('manage')
 
-class BrandUpdate(UpdateView):
-    template_name = 'shoes/brand_form.html'
+class BrandUpdate(LoginRequiredMixin, UpdateView):
+    template_name = 'shoes/manage/brand_form.html'
     model = ShoeBrand
     fields = ['brand']
+    def get_success_url(self):
+        return reverse('manage')
 
-class BrandDelete(DeleteView):
-    template_name = 'shoes/brand_form.html'
+class BrandDelete(LoginRequiredMixin, DeleteView):
+    template_name = 'shoes/manage/brand_form.html'
     model = ShoeBrand
     success_url = reverse_lazy('manage')
