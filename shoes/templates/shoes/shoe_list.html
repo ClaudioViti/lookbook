@@ -347,10 +347,8 @@
       <a href="/" class="active">Reset</a>
       <a id="btn_close">Fold</a>
       <a id="btn_open">Unfold</a>
-      <a href="/minicart/"
-        onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Cart</a>
-      <a href="/favourite/"
-        onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Favourite</a>
+      <a id="btnOpen">Cart</a>
+      <a id="btnOpen" >Favourite</a>
       {% if user.is_staff %}
       <a href="{% url 'add' %}">Add item</a>
       {% endif %}
@@ -420,9 +418,7 @@
       }
     }
   </script>
-  <script>
-    
-  </script>
+
   <main>
     <section class="lookbook">
       {% for shoe in object_list %}
@@ -442,8 +438,8 @@
 
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
-            Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+            Cart <input id="btnRefresh" name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
+            Favourite <input id="btnRefresh" name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
             <button style="display: inline-block" class="show">Details</button>
             <button
               onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
@@ -496,5 +492,40 @@
     </section>
   </main>
 </body>
+<script>
+  (function() {
+  var childWindow;
+
+  document.getElementById('btnOpen').onclick = openChildWindow;
+  document.getElementById('btnClose').onclick = closeChildWindow;
+  document.getElementById('btnRefresh').onclick = refreshChildWindow;
+
+  function openChildWindow() {
+      if (childWindow) {
+          alert("We already have one open.");
+      } else {
+          childWindow = window.open(href='/minicart/','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
+      }
+  }
+
+  function closeChildWindow() {
+      if (!childWindow) {
+          alert("There is no child window open.");
+      }
+      else {
+          childWindow.close();
+          childWindow = undefined;
+      }
+  }
+
+  function refreshChildWindow() {
+      if (!childWindow) {
+          alert("There is no child window open.");
+      } else {
+          childWindow.location.reload();
+      }
+  }
+})();
+</script>
 
 </html>
