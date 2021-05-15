@@ -347,8 +347,8 @@
       <a href="/" class="active">Reset</a>
       <a id="btn_close">Fold</a>
       <a id="btn_open">Unfold</a>
-      <a id="btnOpen">Cart</a>
-      <a id="btnOpen" >Favourite</a>
+      <a id="btnOpenCart">Cart</a>
+      <a id="btnOpenFavourite">Favourite</a>
       {% if user.is_staff %}
       <a href="{% url 'add' %}">Add item</a>
       {% endif %}
@@ -438,8 +438,9 @@
 
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            Cart <input id="btnRefresh" name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
-            Favourite <input id="btnRefresh" name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+            Cart <input id="btnOpenCart" name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
+            Favourite <input id='btnOpenFavourite' name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}
+            onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">
             <button style="display: inline-block" class="show">Details</button>
             <button
               onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
@@ -496,19 +497,22 @@
   (function() {
   var childWindow;
 
-  document.getElementById('btnOpen').onclick = openChildWindow;
-  document.getElementById('btnClose').onclick = closeChildWindow;
-  document.getElementById('btnRefresh').onclick = refreshChildWindow;
+  document.getElementById('btnOpenFavourite').onclick = openChildWindowFavourite;
+  document.getElementById('btnCloseFavourite').onclick = closeChildWindowFavourite;
+  document.getElementById('btnRefreshFavourite').onclick = refreshChildWindowFavourite;
+  document.getElementById('btnOpenCart').onclick = openChildWindowCart;
+  document.getElementById('btnCloseCart').onclick = closeChildWindowCart;
+  document.getElementById('btnRefreshCart').onclick = refreshChildWindowCart;
 
-  function openChildWindow() {
+  function openChildWindowFavourite() {
       if (childWindow) {
           alert("We already have one open.");
       } else {
-          childWindow = window.open(href='/minicart/','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
+          childWindow = window.open(href='/favourite/','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
       }
   }
 
-  function closeChildWindow() {
+  function closeChildWindowFavourite() {
       if (!childWindow) {
           alert("There is no child window open.");
       }
@@ -518,13 +522,42 @@
       }
   }
 
-  function refreshChildWindow() {
+  function refreshChildWindowFavourite() {
       if (!childWindow) {
           alert("There is no child window open.");
       } else {
           childWindow.location.reload();
       }
   }
+
+  function openChildWindowCart() {
+      if (childWindow) {
+          alert("We already have one open.");
+      } else {
+          childWindow = window.open(href='/minicart/','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
+      }
+  }
+
+  function closeChildWindowCart() {
+      if (!childWindow) {
+          alert("There is no child window open.");
+      }
+      else {
+          childWindow.close();
+          childWindow = undefined;
+      }
+  }
+
+  function refreshChildWindowCart() {
+      if (!childWindow) {
+          alert("There is no child window open.");
+      } else {
+          childWindow.location.reload();
+      }
+  }
+
+
+
 })();
 </script>
 
