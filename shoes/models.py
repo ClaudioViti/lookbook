@@ -119,11 +119,6 @@ class Shoe(models.Model):
     )
     COMFORT_CHOICES = [(i, i) for i in range(1,6)]
     
-    ORDER_CRITERIA = (
-    ("heel_height", "heel_height"),
-    ("year", "year"),
-    )
-    
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
     platform = models.BooleanField(default=False)

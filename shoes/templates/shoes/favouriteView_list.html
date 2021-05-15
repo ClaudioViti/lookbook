@@ -77,7 +77,7 @@ label {
 </td>
 <td style="width:200px;">
   
-  <input class="checkboxTrigger" style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
+  <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
     onClick="setTimeout(function(){location.reload()}, 100)">
     <label for="{{ shoe.id }}"></label>
   </td></tr>
@@ -122,7 +122,7 @@ label {
   }
 </script>
 <script>
-  myInput = document.getElementsByClassName("checkboxTrigger");myInput.onclick = function () {setTimeout(function(){location.reload()}, 100);};
+  
 </script>
 
 </html>
