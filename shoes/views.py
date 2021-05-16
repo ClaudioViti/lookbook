@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 
 from . import models
 
-from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView, FormView
 
 class ShoeListView(LoginRequiredMixin, ListView):
     
@@ -181,3 +181,9 @@ class BrandDelete(LoginRequiredMixin, DeleteView):
     template_name = 'shoes/manage/brand_form.html'
     model = ShoeBrand
     success_url = reverse_lazy('manage')
+
+class BrandManage(LoginRequiredMixin, FormView):
+
+    template_name = 'shoes/manage/brand_form.html'
+    form_class = BrandForm
+    

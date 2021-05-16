@@ -28,4 +28,3 @@ class ShoeBrandForm(ModelForm):
 
 class BrandForm(forms.Form):
     brand = forms.ModelChoiceField(queryset = ShoeBrand.objects.all() )
-
