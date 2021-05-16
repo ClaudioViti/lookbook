@@ -25,3 +25,6 @@ class ShoeBrandForm(ModelForm):
     class Meta:
          model = ShoeBrand
          fields = '__all__'
+
+class OrderForm(forms.Form):
+    queryset = ShoeBrand.objects.all() 
