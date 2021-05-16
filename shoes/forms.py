@@ -26,5 +26,6 @@ class ShoeBrandForm(ModelForm):
          model = ShoeBrand
          fields = '__all__'
 
-class OrderForm(forms.Form):
-    queryset = ShoeBrand.objects.all() 
+class BrandForm(forms.Form):
+    brand = forms.ChoiceField(queryset = ShoeBrand.objects.all() )
+
