@@ -67,7 +67,7 @@
     <td>
 
       <button name="cart" value="{{ shoe.id }}"
-        onClick="setTimeout(function(){location.reload()}, 100)">Remove</button>
+        onClick="pushParent(); setTimeout(function(){location.reload()}, 100)">Remove</button>
       </td></tr>
     
 
@@ -130,5 +130,11 @@
     return fetch(url, opts);
   }
 </script>
+
+<script type="text/javascript"> 
+  function pushParent(){
+       window.opener.document.functionToBeCalledFromChildWindow('my task is over you can proceed');
+  }
+</script> 
 
 </html>
