@@ -347,10 +347,8 @@
       <a href="/" class="active">Reset</a>
       <a id="btn_close">Fold</a>
       <a id="btn_open">Unfold</a>
-      <a href="/minicart/"
-        onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Cart</a>
-      <a href="/favourite/"
-        onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600'); return false;">Favourite</a>
+      <a onclick="openCartChild()">Cart</a>
+      <a onclick="openFavChild()">Favourite</a>
       {% if user.is_staff %}
       <a href="{% url 'add' %}">Add item</a>
       {% endif %}
@@ -439,8 +437,8 @@
 
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}>
-            Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }}>
+            Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }} onchange="refreshPage()">
+            Favourite <input  name="favourite" type="checkbox" value="{{ shoe.id }}" {{ shoe.favourite|yesno:"checked," }} onchange="refreshPage()">
             <button style="display: inline-block" class="show">Details</button>
             <button
               onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
@@ -493,5 +491,25 @@
     </section>
   </main>
 </body>
+<script>
+
+  var childwin;
+const childname = "popup";
+
+function openCartChild() {
+childwin = window.open('/minicart/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
+}
+function openFavChild() {
+childwin = window.open('/favourite/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
+  
+}
+function refreshPage(){
+
+  setTimeout(function(){     
+    childwin.location.reload();
+    childwin.focus();}, 5000);
+
+}
+</script>
 
 </html>

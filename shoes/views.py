@@ -186,4 +186,6 @@ class BrandManage(LoginRequiredMixin, FormView):
 
     template_name = 'shoes/manage/brand_form.html'
     form_class = BrandForm
-    
+    def form_valid(self, form):
+        return redirect('brand-update', pk=form.cleaned_data['brand'].pk)
+  
