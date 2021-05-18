@@ -40,6 +40,7 @@ class Shoe(models.Model):
     ("Fantasy", "Fantasy"),
     ("Corset", "Corset"),
     ("Cut Out", "Cut Out"),
+    ("Flip-flops", "Flip-flops"),
     )
     STYLE_CHOICES = (
     ("Casual", "Casual"),
