@@ -4,8 +4,10 @@ from django.db import models
 
 class Shoe(models.Model):
     SEAS_CHOICES = (
-    ("Autumn Winter", "Autumn Winter"),
-    ("Spring Summer", "Spring Summer"),
+    ("Autumn", "Autumn"),
+    ("Winter", "Winter"),
+    ("Spring", "Spring"),
+    ("Summer", "Summer"),
     )
     MODEL_CHOICES = (
     ("Décolleté", "Décolleté"),
