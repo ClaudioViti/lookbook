@@ -19,7 +19,6 @@ class Shoe(models.Model):
     ("Mocassins", "Mocassins"),
     ("Brogues", "Brogues"),
     ("Sandals", "Sandals"),
-    ("Ankle Boots", "Ankle Boots"),
     ("Lace-up", "Lace-up"),
     ("Gladiators", "Gladiators"),
     ("Boots", "Boots"),
@@ -122,6 +121,12 @@ class Shoe(models.Model):
     )
     COMFORT_CHOICES = [(i, i) for i in range(1,6)]
     
+    PLANT_FIT_CHOICES = (
+    ("Narrow", "Narrow"),
+    ("Normal", "Normal"),
+    ("Wide", "Wide"),
+    )
+    
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
     platform = models.BooleanField(default=False)
@@ -142,6 +147,7 @@ class Shoe(models.Model):
     season = models.CharField(max_length=20, choices=SEAS_CHOICES, blank=True, null=True)
     year = models.IntegerField(default=0)
     comfort = models.IntegerField(choices=COMFORT_CHOICES, blank=True, null=True)
+    plant_fit = models.CharField(max_length=30, choices=PLANT_FIT_CHOICES, blank=True, null=True)
     state = models.CharField(max_length=30, choices=STATE_CHOICES, blank=True, null=True)
     available = models.BooleanField(default=True)
     info = models.CharField(max_length=200, blank=True, null=True)

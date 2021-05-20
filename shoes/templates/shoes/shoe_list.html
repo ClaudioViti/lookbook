@@ -352,6 +352,7 @@
       {% if user.is_staff %}
       <a href="{% url 'add' %}">Add item</a>
       {% endif %}
+      <a href="{% static 'guide.html' %}">Guide</a>
 
       <div class="dropdown" tabindex="0">
         <button class="dropbtn">Filter
@@ -474,6 +475,7 @@
                 <dt> Year: {{ shoe.year }} </dt>
                 <dt> Season: {{ shoe.season }} </dt>
                 <dt> Comfort: {{ shoe.comfort }}/5 </dt>
+                <dt> Plant fit: {{ shoe.plant_fit }} </dt>
                 <dt> State: {{ shoe.state }} </dt>
                 <dt> Available: {{ shoe.available }} </dt>
                 <dt> Info: {{ shoe.info }} </dt>
