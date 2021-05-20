@@ -186,19 +186,10 @@ class BrandManage(LoginRequiredMixin, FormView):
 
     template_name = 'shoes/manage/brand_form.html'
     form_class = BrandForm
-    def form_valid(self, form):
-        return redirect('brand-update', pk=form.cleaned_data['brand'].pk)
-  
-
-
-# class BrandManage(LoginRequiredMixin, FormView):
-
-#    template_name = 'shoes/manage/brand_form.html'
-#    form_class = BrandForm
-#    def get_form_class(self):
-#        FORMS = {
-#            (update, BrandUpdate),
-#            (delete, BrandDelete),
-#        }
-#        form_class_name = FORMS[self.request.POST['name']]
-#        return form_class_name
+    def get_form_class(self):
+        FORMS = {
+            (update, BrandUpdate),
+            (delete, BrandDelete),
+        }
+        form_class_name = FORMS[self.request.POST['name']]
+        return form_class_name
