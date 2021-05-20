@@ -187,10 +187,10 @@ class BrandManage(LoginRequiredMixin, FormView):
     template_name = 'shoes/manage/brand_form.html'
     form_class = BrandForm
     def get_form_class(self):
-        FORMS = {
-            (update, BrandUpdate),
-            (delete, BrandDelete),
-        }
+#        FORMS = {
+#            (update, BrandUpdate),
+#            (delete, BrandDelete),
+#        }
         
         if self.request.POST['name'] is 'delete':
             return BrandDelete
