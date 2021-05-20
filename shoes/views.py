@@ -186,15 +186,11 @@ class BrandManage(LoginRequiredMixin, FormView):
 
     template_name = 'shoes/manage/brand_form.html'
     form_class = BrandForm
+    
     def form_valid(self, form):
 #        FORMS = {
 #            (update, BrandUpdate),
 #            (delete, BrandDelete),
 #        }
         
-        if self.request.POST['name'] == 'delete':
-            return redirect('delete', pk=form.cleaned_data['brand'].pk)
-        elif self.request.POST['name'] == 'update':
-            
-            return redirect('edit', pk=form.cleaned_data['brand'].pk)
-        
+        print(self.request.POST['name'])    
