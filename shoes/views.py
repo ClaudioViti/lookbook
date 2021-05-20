@@ -193,8 +193,8 @@ class BrandManage(LoginRequiredMixin, FormView):
 #        }
         
         if self.request.POST['name'] == 'delete':
-            return BrandDelete
-        else if self.request.POST['name'] == 'update':
-            return BrandUpdate
-        return redirect('<pattern name>', pk=form.cleaned_data['brand'].pk)`
+            return redirect('<pattern name>', pk=form.cleaned_data['brand'].pk)`
+        elif self.request.POST['name'] == 'update':
+            
+            return redirect('<pattern name>', pk=form.cleaned_data['brand'].pk)`
         
