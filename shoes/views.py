@@ -164,21 +164,21 @@ def order_list(request):
     return render(request, 'shoes/order_succeed.html')
 
 class BrandCreate(LoginRequiredMixin, CreateView):
-    template_name = 'shoes/manage/brand_form.html'
+    template_name = 'shoes/manage/brand_manage.html'
     model = ShoeBrand
     fields = ['brand']
     def get_success_url(self):
         return reverse('manage')
 
 class BrandUpdate(LoginRequiredMixin, UpdateView):
-    template_name = 'shoes/manage/brand_form.html'
+    template_name = 'shoes/manage/brand_manage.html'
     model = ShoeBrand
     fields = ['brand']
     def get_success_url(self):
         return reverse('manage')
 
 class BrandDelete(LoginRequiredMixin, DeleteView):
-    template_name = 'shoes/manage/brand_form.html'
+    template_name = 'shoes/manage/brand_manage.html'
     model = ShoeBrand
     success_url = reverse_lazy('manage')
 
@@ -188,9 +188,10 @@ class BrandManage(LoginRequiredMixin, FormView):
     form_class = BrandForm
     
     def form_valid(self, form):
-#        FORMS = {
-#            (update, BrandUpdate),
-#            (delete, BrandDelete),
-#        }
+        print(self.request.POST['name'])
         
-        print(self.request.POST['name'])    
+        if self.request.POST['name'] == 'delete':
+            return redirect('brand-delete', pk=form.cleaned_data['brand'].pk)
+        elif self.request.POST['name'] == 'edit':
+            return redirect('brand-update', pk=form.cleaned_data['brand'].pk)
+        

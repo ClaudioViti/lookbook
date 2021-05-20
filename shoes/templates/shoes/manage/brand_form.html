@@ -3,7 +3,13 @@
 
 <form method="post" enctype="multipart/form-data"> {% csrf_token %}
 {{ form }}
-<input name="name" type="submit" value="Edit"></form>
-<input name="name" type="Delete" value="Delete"></form>
+
+<input name="name" type="submit" value="edit">
+<input name="name" type="submit" value="delete"></form>
+<form action="/brand/add/">
+    <input type="submit" value="Add Brand" />
+</form>
 
 {% endblock %}
+
+

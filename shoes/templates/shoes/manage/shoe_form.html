@@ -2,6 +2,10 @@
 
 {% block content %}
 
+<form action="/brand/">
+    <input type="submit" value="Manage Brands" />
+</form>
+
 <form method="post" enctype="multipart/form-data">
 
     {% csrf_token %}
