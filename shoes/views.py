@@ -196,4 +196,5 @@ class BrandManage(LoginRequiredMixin, FormView):
             return BrandDelete
         else if self.request.POST['name'] == 'update':
             return BrandUpdate
+        return redirect('<pattern name>', pk=form.cleaned_data['brand'].pk)`
         
