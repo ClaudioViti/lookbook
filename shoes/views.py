@@ -192,4 +192,8 @@ class BrandManage(LoginRequiredMixin, FormView):
             (delete, BrandDelete),
         }
         form_class_name = FORMS[self.request.POST['name']]
-        return form_class_name
+        if form_class_name is 'delete':
+        return BrandDelete
+        else if form_class_name is 'update':
+        return BrandUpdate
+        
