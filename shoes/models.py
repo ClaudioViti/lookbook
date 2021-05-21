@@ -133,7 +133,7 @@ class Shoe(models.Model):
     slingback = models.BooleanField(default=False)
     toe = models.CharField(max_length=20, choices=TOE_CHOICES, blank=True, null=True)
     style = models.CharField(max_length=200, choices=STYLE_CHOICES, blank=True, null=True)
-    brand = models.ForeignKey('ShoeBrand', on_delete=models.CASCADE, blank=True, null=True)
+    brand = models.ForeignKey('ShoeBrand', on_delete=models.SET_NULL, blank=True, null=True)
     SKU = models.CharField(max_length=200, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     size = models.CharField(max_length=5, choices=SIZE_CHOICES, blank=True, null=True)

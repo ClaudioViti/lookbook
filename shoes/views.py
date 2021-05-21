@@ -26,7 +26,8 @@ class ShoeListView(LoginRequiredMixin, ListView):
         for field, value in self.filter_form.cleaned_data.items():
             if value:
                 qs = qs.filter(**{field: value})
-            
+        if not self.request.user.is_staff:                                                  # multi user enable
+            qs = qs.filter(user=self.request.user)                                          # multi user enable
         return qs
 
     def dispatch(self, request, *args, **kwargs):
@@ -43,6 +44,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
             return self.order_form.cleaned_data.get('order')
         else:
             return self.ordering 
+    
 
 class CartUpdateView(UpdateView):
     model = models.Shoe
@@ -65,6 +67,11 @@ class minicartView(LoginRequiredMixin, ListView):
     model = models.Shoe
     template_name = 'shoes/minicartView_list.html'
     queryset = model.objects.filter(cart=True)
+    def get_queryset(self):                                                 # multi user enable
+        queryset = super().get_queryset()                                   # multi user enable
+        if not self.request.user.is_staff:                                  # multi user enable
+            queryset = queryset.filter(user=self.request.user)              # multi user enable
+        return queryset                                                     # multi user enable
 
 class FavouriteUpdateView(UpdateView):
     model = models.Shoe
@@ -79,6 +86,12 @@ class favouriteView(LoginRequiredMixin, ListView):
     model = models.Shoe
     template_name = 'shoes/favouriteView_list.html'
     queryset = model.objects.filter(favourite=True)
+    def get_queryset(self):                                                 # multi user enable
+        queryset = super().get_queryset()                                   # multi user enable
+        if not self.request.user.is_staff:                                  # multi user enable
+            queryset = queryset.filter(user=self.request.user)              # multi user enable
+        return queryset                                                     # multi user enable
+    
     
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 
@@ -148,6 +161,9 @@ def order_list(request):
 
     if request.method == 'POST':
         queryset = models.Shoe.objects.filter(cart=True)
+        if not request.user.is_staff:                                       # multi user enable
+            queryset = queryset.filter(user=request.user)                   # multi user enable
+        
         ids = []
         for itm in queryset:
             
