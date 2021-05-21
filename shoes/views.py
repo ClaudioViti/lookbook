@@ -44,14 +44,14 @@ class ShoeListView(LoginRequiredMixin, ListView):
             return self.order_form.cleaned_data.get('order')
         else:
             return self.ordering 
-    
+     
 
 class CartUpdateView(UpdateView):
     model = models.Shoe
     fields = ['cart']
     template_name_suffix = '_update_form'
     def form_valid(self, form):
-        self.object = form.save()
+        self.request.user.cart_items.add(self.object)
         return JsonResponse({ 'cart': self.object.cart })
 
 class UrgentView(UpdateView):
