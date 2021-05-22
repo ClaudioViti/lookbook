@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -48,11 +48,16 @@ class ShoeListView(LoginRequiredMixin, ListView):
 
 class CartUpdateView(UpdateView):
     model = models.Shoe
-    fields = ['cart']
+    form_class = CartAddForm
     template_name_suffix = '_update_form'
     def form_valid(self, form):
-        self.request.user.cart_items.add(self.object)
-        return JsonResponse({ 'cart': self.object.cart })
+        to_cart = form.cleaned_data.get('cart', False)
+        if to_cart:
+             self.request.user.cart_items.add(self.object)
+        else:
+             self.request.user.cart_items.remove(self.object)
+        print(self.request.user.cart_items.all())
+        return JsonResponse({ 'cart': to_cart })
 
 class UrgentView(UpdateView):
     model = models.Shoe
