@@ -79,21 +79,12 @@ class minicartView(LoginRequiredMixin, ListView):
     model = models.Shoe
     template_name = 'shoes/minicartView_list.html'
 
-    
-
-    def get_queryset(self):  
+    def get_queryset(self):                                                 # multi user enable
         
-        if self.request.user.is_staff:
-            print("staff see everything")
-            queryset = super().get_queryset()                              
-        else:
-            print("user sees own")
-            queryset = self.request.user.cart_items.all()
-                                                       # multi user enable
-
-                  
+        if not self.request.user.is_staff:                                  # multi user enable  
+            self.queryset = self.request.user.cart_items.all()              # multi user enable
+        queryset = super().get_queryset()                                   # multi user enable
         return queryset                                                     # multi user enable
-    
 
 
 class FavouriteUpdateView(UpdateView):
