@@ -34,3 +34,15 @@ class CartAddForm(ModelForm):
         model = Shoe
         fields = ['id']
     cart = forms.BooleanField(required=False)
+
+class FavouriteAddForm(ModelForm):
+    class Meta:
+        model = Shoe
+        fields = ['id']
+    favourite = forms.BooleanField(required=False)
+
+class UrgentForm(ModelForm):
+    class Meta:
+        model = Shoe
+        fields = ['id']
+    urgent = forms.BooleanField(required=False)

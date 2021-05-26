@@ -129,6 +129,8 @@ class Shoe(models.Model):
     
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     cart_user = models.ManyToManyField('auth.User', related_name='cart_items', blank=True)
+    favourite_user = models.ManyToManyField('auth.User', related_name='favourite_items', blank=True)
+    urgent_user = models.ManyToManyField('auth.User', related_name='urgent_items', blank=True)
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
     platform = models.BooleanField(default=False)
     slingback = models.BooleanField(default=False)
