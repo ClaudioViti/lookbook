@@ -64,7 +64,9 @@
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
     </td>
     <td>
-      {{ shoe.user }}
+      {% for user in shoe.cart_user.all %}
+      {{ user }}
+      {% endfor %}
     </td>
     <td><input name="urgent" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in urgent_ids %}checked{% endif %}></td>
     <td>
