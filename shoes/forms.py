@@ -41,7 +41,7 @@ class FavouriteAddForm(ModelForm):
         fields = ['id']
     favourite = forms.BooleanField(required=False)
 
-class UrgentForm(ModelForm):
+class UrgentAddForm(ModelForm):
     class Meta:
         model = Shoe
         fields = ['id']

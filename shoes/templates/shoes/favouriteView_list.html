@@ -56,7 +56,10 @@ label {
   {% if object_list %}
   <tr>
     <td>Favourites</td>
-    <td>
+    <td></td>
+      {% if user.is_staff %}
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Users</td>
+      {% endif %}
     <td
       style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
       Cart</td></tr>
@@ -75,6 +78,15 @@ label {
 <td>
   <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
 </td>
+{% if user.is_staff %}
+<td>
+{% for user in shoe.favourite_user.all %}
+<dl>
+<dt style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">{{ user }}</dt>
+</dl>
+{% endfor %}
+</td>
+{% endif %}
 <td style="width:200px;">
   
   <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}

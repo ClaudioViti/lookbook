@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -67,12 +67,14 @@ class CartUpdateView(UpdateView):
         print(self.request.user.cart_items.all())
         return JsonResponse({ 'cart': to_cart })
 
-class UrgentView(UpdateView):
+class UrgentUpdateView(UpdateView):
+    print('ok')
     model = models.Shoe
-    fields = ['urgent']
+    form_class = UrgentAddForm
     template_name_suffix = '_update_form'
     def form_valid(self, form):
         to_urgent = form.cleaned_data.get('urgent', False)
+        print(to_urgent)
         if to_urgent:
              self.request.user.urgent_items.add(self.object)
         else:
@@ -92,14 +94,14 @@ class minicartView(LoginRequiredMixin, ListView):
             queryset = super().get_queryset()                              
         else:
             print("user sees own")
+        
         queryset = self.request.user.cart_items.all()
+        queryset = queryset.filter(user=self.request.user)
         return queryset
     def get_context_data(self, **kwargs):
          
         # view - get_context_data() method
         context = super().get_context_data(**kwargs)
-        context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
-        context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         return context
 
@@ -114,7 +116,7 @@ class FavouriteUpdateView(UpdateView):
              self.request.user.favourite_items.add(self.object)
         else:
              self.request.user.favourite_items.remove(self.object)
-        print(self.request.user.favourite_items.all())
+        
         return JsonResponse({ 'favourite': to_favourite })
 
 class favouriteView(LoginRequiredMixin, ListView):
@@ -199,16 +201,18 @@ from django.conf import settings
 def order_list(request):
 
     if request.method == 'POST':
-        queryset = models.Shoe.objects.filter(cart=True)
-        if not request.user.is_staff:                                       # multi user enable
-            queryset = queryset.filter(user=request.user)                   # multi user enable
+     #   queryset = models.Shoe.objects.filter(cart=True)
+       # if not request.user.is_staff:                                       # multi user enable
+        queryset = request.user.cart_items.all()
+        queryset = queryset.filter(user=request.user)                   # multi user enable
         
         ids = []
         for itm in queryset:
             
-            ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n Urgent: {itm.urgent}")
+            ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
 
-        queryset.update(cart=False, urgent=False)
+        request.user.cart_items.cart_user.remove(request.user)
+        #queryset.update(cart=False, urgent=False)
         message = request.POST['message']
         for id in ids: message += str(id)
         send_mail('Order List',
