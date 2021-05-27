@@ -89,20 +89,17 @@ class minicartView(LoginRequiredMixin, ListView):
     template_name = 'shoes/minicartView_list.html'
 
     def get_queryset(self):                                                 # multi user enable
-        if self.request.user.is_staff:
-            print("staff see everything")
-            queryset = super().get_queryset()                              
-        else:
-            print("user sees own")
+
         
         queryset = self.request.user.cart_items.all()
-        queryset = queryset.filter(user=self.request.user)
+        
         return queryset
     def get_context_data(self, **kwargs):
          
         # view - get_context_data() method
         context = super().get_context_data(**kwargs)
-        context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        context['urgent_ids'] = self.request.user.urgent_items.values_list('pk', flat=True)
+        #context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         return context
 
 
@@ -211,7 +208,7 @@ def order_list(request):
             
             ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
 
-        request.user.cart_items.cart_user.remove(request.user)
+        request.user.cart_items.clear()
         #queryset.update(cart=False, urgent=False)
         message = request.POST['message']
         for id in ids: message += str(id)
