@@ -63,7 +63,10 @@
     <td>
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
     </td>
-    <td><input name="urgent" type="checkbox" value="{{ shoe.id }}" {{ shoe.urgent|yesno:"checked," }}></td>
+    <td>
+      {{ shoe.user }}
+    </td>
+    <td><input name="urgent" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in urgent_ids %}checked{% endif %}></td>
     <td>
 
       <button name="cart" value="{{ shoe.id }}"

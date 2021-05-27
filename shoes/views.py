@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, FavouriteAddForm, UrgentForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -28,7 +28,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
                 qs = qs.filter(**{field: value})
         if not self.request.user.is_staff:                                                  # multi user enable
             
-            qs = qs.filter(cart_user=self.request.user)                                       # multi user enable
+            qs = qs.filter(user=self.request.user)                                       # multi user enable
         return qs
 
     def dispatch(self, request, *args, **kwargs):
@@ -40,7 +40,9 @@ class ShoeListView(LoginRequiredMixin, ListView):
          
         # view - get_context_data() method
         context = super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
+        context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         return context
         
 
@@ -66,9 +68,8 @@ class CartUpdateView(UpdateView):
         return JsonResponse({ 'cart': to_cart })
 
 class UrgentView(UpdateView):
-
     model = models.Shoe
-    form_class = UrgentForm
+    fields = ['urgent']
     template_name_suffix = '_update_form'
     def form_valid(self, form):
         to_urgent = form.cleaned_data.get('urgent', False)
@@ -79,22 +80,25 @@ class UrgentView(UpdateView):
         print(self.request.user.urgent_items.all())
         return JsonResponse({ 'urgent': to_urgent })
 
+
 class minicartView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/minicartView_list.html'
 
     def get_queryset(self):                                                 # multi user enable
-        if not self.request.user.is_staff:                                  # multi user enable  
-            self.queryset = self.request.user.cart_items.all()              # multi user enable
-        queryset = super().get_queryset()                                   # multi user enable
-        return queryset                                                     # multi user enable
+        if self.request.user.is_staff:
+            print("staff see everything")
+            queryset = super().get_queryset()                              
+        else:
+            print("user sees own")
+        queryset = self.request.user.cart_items.all()
+        return queryset
 
 
 class FavouriteUpdateView(UpdateView):
-
     model = models.Shoe
-    form_class = FavouriteAddForm
+    fields = ['favourite']
     template_name_suffix = '_update_form'
     def form_valid(self, form):
         to_favourite = form.cleaned_data.get('favourite', False)
@@ -105,28 +109,19 @@ class FavouriteUpdateView(UpdateView):
         print(self.request.user.favourite_items.all())
         return JsonResponse({ 'favourite': to_favourite })
 
-
-
-
-    model = models.Shoe
-    fields = ['favourite']
-    template_name_suffix = '_update_form'
-    def form_valid(self, form):
-        self.object = form.save()
-        return JsonResponse({ 'favourite': self.object.favourite })
-
 class favouriteView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/favouriteView_list.html'
-
-
+    queryset = model.objects.filter(favourite=True)
     def get_queryset(self):                                                 # multi user enable
-        if not self.request.user.is_staff:                                  # multi user enable  
-            self.queryset = self.request.user.favourite_items.all()         # multi user enable
-        queryset = super().get_queryset()                                   # multi user enable
-        return queryset                                                     # multi user enable
-
+        if self.request.user.is_staff:
+            print("staff see everything")
+            queryset = super().get_queryset()                              
+        else:
+            print("user sees own")
+        queryset = self.request.user.favourite_items.all()
+        return queryset
     
     
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
