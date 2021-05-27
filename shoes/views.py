@@ -94,6 +94,14 @@ class minicartView(LoginRequiredMixin, ListView):
             print("user sees own")
         queryset = self.request.user.cart_items.all()
         return queryset
+    def get_context_data(self, **kwargs):
+         
+        # view - get_context_data() method
+        context = super().get_context_data(**kwargs)
+        context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
+        context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        return context
 
 
 class FavouriteUpdateView(UpdateView):
