@@ -6,6 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
 from shoes.models import ShoeImage, Shoe, ShoeBrand
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -89,10 +90,14 @@ class minicartView(LoginRequiredMixin, ListView):
     template_name = 'shoes/minicartView_list.html'
 
     def get_queryset(self):                                                 # multi user enable
-
+        if self.request.user.is_staff:
+            print("staff see everything")
+            queryset = Shoe.objects.filter(cart_user__in = User.objects.all())                              
+        else:
+            print("user sees own")
         
-        queryset = self.request.user.cart_items.all()
-        
+            queryset = self.request.user.cart_items.all()
+            
         return queryset
     def get_context_data(self, **kwargs):
          

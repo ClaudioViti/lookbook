@@ -46,3 +46,8 @@ class UrgentAddForm(ModelForm):
         model = Shoe
         fields = ['id']
     urgent = forms.BooleanField(required=False)
+
+class ShoeCartsForm(ModelForm):
+    class Meta:
+        model = Shoe
+        fields = ['cart_user']
