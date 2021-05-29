@@ -43,12 +43,14 @@
   <table>
     {% if object_list %}
     <tr>
-      <td>Cart</td>
+      <td>Cart Manage</td>
       <td></td>
       
-      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Users</td>
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Cart</td>
       
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Urgent</td>
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Ordered</td>
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Delivered</td>
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
       </td>
     </tr>
@@ -71,7 +73,7 @@
       </td>
       
       <td>
-        <form action="{% url 'shoe-cart' pk=Shoe.pk %}" method="post">
+        <form  method="post">
         <div class="fieldWrapper">
           
           {{ form.cart_user }}
@@ -80,12 +82,37 @@
       </form>
         
       </td>
+      
       <td>
       
-      ​
-                    <input name="urgent" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in urgent_ids %}checked{% endif %}></td>
+        <form  method="post">
+          <div class="fieldWrapper">
+            
+            {{ form.urgent_user }}
+          </div>
+        </form>
+      </td>
       
+      <td>
+            <form  method="post">
+            <div class="fieldWrapper">
+            {{ form.ordered_user }}
+          </div>
+        </form>
+      </td>
       
+      <td>
+            <form  method="post">
+            <div class="fieldWrapper">
+            {{ form.delivered_user }}
+          </form>
+          </div>
+        </td>
+      
+        
+           
+        </form>
+        
     </tr>
     ​
     {% endwith %}
@@ -197,6 +224,21 @@
       data.append('cart', false);
       
       const url = `/shoes/${pk}/cart/`;
+      post(url, { body: data });
+    })
+
+    document.querySelector('.lookbook').addEventListener('change', ev => {
+      const el = ev.target;
+      
+      if (el.name !== 'ordered') return;
+      const pk = el.value;
+      
+      const state = el.checked;
+      console.log(state);
+      const data = new FormData();
+      data.append('ordered', state);
+      
+      const url = `/shoes/${pk}/ordered/`;
       post(url, { body: data });
     })
     function post(url, options) {

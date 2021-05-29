@@ -50,4 +50,11 @@ class UrgentAddForm(ModelForm):
 class ShoeCartsForm(ModelForm):
     class Meta:
         model = Shoe
-        fields = ['cart_user']
+        fields = ['cart_user', 'urgent_user', 'ordered_user', 'delivered_user']
+
+
+class ShoeFavouriteForm(ModelForm):
+    class Meta:
+        model = Shoe
+        fields = ['favourite_user']
+

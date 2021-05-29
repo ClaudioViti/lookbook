@@ -51,15 +51,12 @@
 </style>
 
 <section class="lookbook">
-  
+  {% if not user.is_staff %}
   <table>
     {% if object_list %}
     <tr>
       <td>Favourites</td>
       <td></td>
-      {% if user.is_staff %}
-      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Users</td>
-      {% endif %}
       <td
       style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
       Cart</td></tr>
@@ -78,7 +75,7 @@
         <td>
           <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
         </td>
-        {% if user.is_staff %}
+        
         <td>
           {% for user in shoe.favourite_user.all %}
           <dl>
@@ -86,7 +83,7 @@
           </dl>
           {% endfor %}
         </td>
-        {% endif %}
+        
         <td style="width:200px;">
           
           <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
@@ -103,12 +100,66 @@
         {% endfor %}
         
       </table>
-      
+      {% endif %}
       
       {% if object_list %}
       
       {% endif %}
-    </ul>
+
+
+      {% if user.is_staff %}
+      <table>
+        {% if object_list %}
+        <tr>
+          <td>Favourites</td>
+          <td></td>
+          <td
+          style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+          User</td></tr>
+          
+          {% endif %}
+          
+          {% csrf_token %}
+          {% for form in shoe_formset %}
+          {% with form.instance as shoe %}
+          ​
+          
+          <tr>
+            <td>
+              <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
+            </td>
+            <td>
+              <img src="{{ shoe.shoeimage_set.first.image.url }}" style="width:100px;height:100px;">
+            </td>
+            
+            <td>
+              <form  method="post">
+                <div class="fieldWrapper">
+                  
+                  {{ form.favourite_user }}
+                </div>
+                 
+              </form>
+            </td>
+           
+  
+          
+          
+          </tr>
+            
+            
+            
+          {% endwith %}
+            {% empty %}
+            <p style="text-align:center; margin-top: 100%">No favourites</p>
+            
+            {% endfor %}
+            
+          </table>
+          <input style="margin-top:10px" type="submit" value="Submit">
+          {% endif %}
+          
+    
     <button style="margin-top: 10%;" onClick="window.location.reload();">&#x21ba;</button>
   </section>
   
