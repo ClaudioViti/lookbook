@@ -348,6 +348,9 @@
       <a href="/" class="active">Reset</a>
       <a id="btn_close">Fold</a>
       <a id="btn_open">Unfold</a>
+      {% if user.is_staff %}
+      <a onclick="openAdminCartChild()">Cart</a>
+      {% endif %}
       <a onclick="openCartChild()">Cart</a>
       <a onclick="openFavChild()">Favourite</a>
       {% if user.is_staff %}
@@ -498,9 +501,13 @@
   
   var childwin;
   const childname = "popup";
-  
-  function openCartChild() {
+
+
+  function openAdminCartChild() {
     childwin = window.open('/minicart/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600');
+  }
+  function openCartChild() {
+    childwin = window.open('/minicart/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600');
   }
   function openFavChild() {
     childwin = window.open('/favourite/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
