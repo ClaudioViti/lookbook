@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, modelformset_factory
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -92,7 +92,7 @@ class minicartView(LoginRequiredMixin, ListView):
     def get_queryset(self):                                                 # multi user enable
         if self.request.user.is_staff:
             print("staff see everything")
-            queryset = Shoe.objects.filter(cart_user__in = User.objects.all())                              
+            queryset = Shoe.objects.filter(cart_user__in = User.objects.all()).distinct()                       
         else:
             print("user sees own")
         
@@ -104,7 +104,10 @@ class minicartView(LoginRequiredMixin, ListView):
         # view - get_context_data() method
         context = super().get_context_data(**kwargs)
         context['urgent_ids'] = self.request.user.urgent_items.values_list('pk', flat=True)
-        #context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
+        context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
+
+        formset_class = modelformset_factory(Shoe, form=ShoeCartsForm, extra=0)
+        context['shoe_formset'] = formset_class(queryset=context['object_list'])
         return context
 
 

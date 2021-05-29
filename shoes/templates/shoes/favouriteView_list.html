@@ -6,22 +6,22 @@
     font-size: 120%;
     font-weight: bold;
   }
-
+  
   ul {
     padding: 0;
     list-style-type: none;
   }
-
+  
   li {
     border-bottom: solid rgb(138, 64, 7) 1px;
   }
-
+  
   li::before {
     content: "\2022";
     display: inline-block;
     width: 1em;
   }
-
+  
   .lookbook {
     position: static;
   }
@@ -29,17 +29,17 @@
     width: 100%;
     border-collapse: collapse;
   }
-
+  
   td {
-  border-bottom: 1px solid black;
-  text-align: center;
+    border-bottom: 1px solid black;
+    text-align: center;
   }
-
-input:checked + label + div { display: none; }
-input + label:after { content: "Add"; }
-input:checked + label:after { content: "Remove"; }
-
-label {
+  
+  input:checked + label + div { display: none; }
+  input + label:after { content: "Add"; }
+  input:checked + label:after { content: "Remove"; }
+  
+  label {
     
     box-shadow: inset 0 2px 3px rgba(255,255,255,0.2), inset 0 -2px 3px rgba(0,0,0,0.2);
     border-radius: 4px;
@@ -47,97 +47,97 @@ label {
     display: inline-block;
     padding: 2px 5px;
     cursor: pointer;
-}
+  }
 </style>
 
 <section class="lookbook">
-
-<table>
-  {% if object_list %}
-  <tr>
-    <td>Favourites</td>
-    <td></td>
+  
+  <table>
+    {% if object_list %}
+    <tr>
+      <td>Favourites</td>
+      <td></td>
       {% if user.is_staff %}
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Users</td>
       {% endif %}
-    <td
+      <td
       style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
       Cart</td></tr>
-
+      
       {% endif %}
+      
+      
+      {% for shoe in object_list %}
+      
+      {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+      
+      <tr>
+        <td>
+          <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
+        </td>
+        <td>
+          <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+        </td>
+        {% if user.is_staff %}
+        <td>
+          {% for user in shoe.favourite_user.all %}
+          <dl>
+            <dt style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">{{ user }}</dt>
+          </dl>
+          {% endfor %}
+        </td>
+        {% endif %}
+        <td style="width:200px;">
+          
+          <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
+          onClick="pushParent()">
+          <label for="{{ shoe.id }}"></label>
+        </td></tr>
+        
+        
+        {% endfor %}
+        
+        {% empty %}
+        <p style="text-align:center; margin-top: 100%">No favourites</p>
+        
+        {% endfor %}
+        
+      </table>
+      
+      
+      {% if object_list %}
+      
+      {% endif %}
+    </ul>
+    <button style="margin-top: 10%;" onClick="window.location.reload();">&#x21ba;</button>
+  </section>
   
-
-{% for shoe in object_list %}
-
-{% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
-
-<tr>
-<td>
-  <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
-</td>
-<td>
-  <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
-</td>
-{% if user.is_staff %}
-<td>
-{% for user in shoe.favourite_user.all %}
-<dl>
-<dt style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">{{ user }}</dt>
-</dl>
-{% endfor %}
-</td>
-{% endif %}
-<td style="width:200px;">
   
-  <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{ shoe.cart|yesno:"checked," }}
-    onClick="pushParent()">
-    <label for="{{ shoe.id }}"></label>
-  </td></tr>
-
-
-{% endfor %}
-
-{% empty %}
-<p style="text-align:center; margin-top: 100%">No favourites</p>
-
-{% endfor %}
-
-</table>
-
-
-    {% if object_list %}
-
-    {% endif %}
-  </ul>
-  <button style="margin-top: 10%;" onClick="window.location.reload();">&#x21ba;</button>
-</section>
-
-
-<script type="module">
-  document.querySelector('.lookbook').addEventListener('change', ev => {
-    const el = ev.target;
-    const pk = el.value;
-    const state = el.checked;
-
-    const data = new FormData();
-    data.append('cart', state);
-
-    const url = `/shoes/${pk}/cart/`;
-    post(url, { body: data });
-  })
-  function post(url, options) {
-    const defaults = {
-      method: 'POST',
-    };
-    const opts = Object.assign({}, defaults, options);
-    return fetch(url, opts);
-  }
-</script>
-
-<script type="text/javascript"> 
-function pushParent(){
-     window.opener.document.functionToBeCalledFromChildWindow('my task is over you can proceed');
-}
-</script> 
-
-</html>
+  <script type="module">
+    document.querySelector('.lookbook').addEventListener('change', ev => {
+      const el = ev.target;
+      const pk = el.value;
+      const state = el.checked;
+      
+      const data = new FormData();
+      data.append('cart', state);
+      
+      const url = `/shoes/${pk}/cart/`;
+      post(url, { body: data });
+    })
+    function post(url, options) {
+      const defaults = {
+        method: 'POST',
+      };
+      const opts = Object.assign({}, defaults, options);
+      return fetch(url, opts);
+    }
+  </script>
+  
+  <script type="text/javascript"> 
+    function pushParent(){
+      window.opener.document.functionToBeCalledFromChildWindow('my task is over you can proceed');
+    }
+  </script> 
+  
+  </html>

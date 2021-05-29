@@ -127,7 +127,7 @@ class Shoe(models.Model):
     ("Wide", "Wide"),
     )
     
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ManyToManyField('auth.User', related_name='user_items', blank=True)
     cart_user = models.ManyToManyField('auth.User', related_name='cart_items', blank=True)
     favourite_user = models.ManyToManyField('auth.User', related_name='favourite_items', blank=True)
     urgent_user = models.ManyToManyField('auth.User', related_name='urgent_items', blank=True)
