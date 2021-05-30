@@ -59,7 +59,7 @@
     
     
     
-    
+    <form  method="post">
       {% csrf_token %}
     {% for form in shoe_formset %}
     {% with form.instance as shoe %}
@@ -73,39 +73,39 @@
       </td>
       
       <td>
-        <form  method="post">
+       
         <div class="fieldWrapper">
           
           {{ form.cart_user }}
         </div>
          
-      </form>
+      
         
       </td>
       
       <td>
       
-        <form  method="post">
+        
           <div class="fieldWrapper">
             
             {{ form.urgent_user }}
           </div>
-        </form>
+        
       </td>
       
       <td>
-            <form  method="post">
+            
             <div class="fieldWrapper">
             {{ form.ordered_user }}
           </div>
-        </form>
+       
       </td>
       
       <td>
-            <form  method="post">
+            
             <div class="fieldWrapper">
             {{ form.delivered_user }}
-          </form>
+          
           </div>
         </td>
       
@@ -120,6 +120,7 @@
     <p style="text-align:center; margin-top: 100%">Empty cart</p>
     ​
     {% endfor %}
+  </form>
   </table>
   <input style="margin-top:10px" type="submit" value="Submit">
 
