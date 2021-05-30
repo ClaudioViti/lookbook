@@ -101,6 +101,7 @@
 
 
       {% if user.is_staff %}
+      <form  method="post">
       <table>
         {% if object_list %}
         <tr>
@@ -126,13 +127,13 @@
             </td>
             
             <td>
-              <form  method="post">
+              
                 <div class="fieldWrapper">
                   
                   {{ form.favourite_user }}
                 </div>
                  
-              </form>
+              
             </td>
            
   
@@ -150,6 +151,7 @@
             
           </table>
           <input style="margin-top:10px" type="submit" value="Submit">
+        </form>
           {% endif %}
           
     
