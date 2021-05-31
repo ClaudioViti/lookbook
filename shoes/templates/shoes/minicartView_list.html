@@ -40,7 +40,8 @@
 <section class="lookbook">
   
   {% if user.is_staff %}
-  <form  method="post">
+  <form   action="{% url 'shoe-cart' pk= %}" method="post">
+    {{ shoe_formset.management_form }}
     {% csrf_token %}
   <table>
     {% if object_list %}
