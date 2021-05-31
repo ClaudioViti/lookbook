@@ -127,7 +127,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
-ALLOWED_HOSTS=["192.168.1.4", "localhost", "127.0.0.1", "192.168.170.1"]
+ALLOWED_HOSTS=["192.168.1.4", "localhost", "127.0.0.1", "192.168.170.1", "*"]
 
 EMAIL_HOST = 'smtp.live.com'
 EMAIL_PORT = 25
