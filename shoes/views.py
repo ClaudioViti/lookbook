@@ -93,33 +93,70 @@ class OrderedUpdateView(UpdateView):
 
 
 class minicartView(LoginRequiredMixin, ListView):
-    
-    model = models.Shoe
+    model = Shoe
     template_name = 'shoes/minicartView_list.html'
 
-    def get_queryset(self):                                                 # multi user enable
+    formset = None
+    formset_class = modelformset_factory(Shoe, form=ShoeCartsForm, extra=0)  # if it doesn't work uncomment dispatch
+
+    # def dispatch(self, request, *args, **kwargs):
+    #    self.formset_class = modelformset_factory(Shoe, form=ShoeCartsForm, extra=0)
+    #    return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        self.object_list = self.get_queryset()
+        self.formset = self.get_formset(data=request.POST)
+        if self.formset.is_valid():
+            return self.formset_valid(self.formset)
+        else:
+            return self.formset_invalid(self.formset)
+
+
+    def get_formset(self, data=None):
+        kwargs = {
+            "queryset": self.object_list,
+        }
+        if data:
+            kwargs["data"] = data
+        return self.formset_class(**kwargs)
+
+    def formset_valid(self, formset):
+        print("formset is valid")
+        formset.save()
+        return redirect('minicart')
+
+    def formset_invalid(self, formset, error_anchor=None):
+        return self.render_to_response(
+            self.get_context_data()
+        )
+
+    def get_queryset(self):
         if self.request.user.is_staff:
-            print("staff see everything")
+            # print("staff see everything")
             queryset = Shoe.objects.filter(cart_user__in = User.objects.all()).distinct()                       
         else:
-            print("user sees own")
-        
+            # print("user sees own")
             queryset = self.request.user.cart_items.all()
-            
+
         return queryset
+
     def get_context_data(self, **kwargs):
-         
-        # view - get_context_data() method
+
         context = super().get_context_data(**kwargs)
         context['urgent_ids'] = self.request.user.urgent_items.values_list('pk', flat=True)
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['ordered_ids'] = self.request.user.ordered_items.values_list('pk', flat=True)
         context['delivered_ids'] = self.request.user.delivered_items.values_list('pk', flat=True)
 
-        formset_class = modelformset_factory(Shoe, form=ShoeCartsForm, extra=0)
-       
-        context['shoe_formset'] = formset_class(queryset=context['object_list'])
-        
+        if self.formset:
+             context['shoe_formset'] = self.formset
+        else:
+            context['shoe_formset'] = self.formset_class(queryset=context['object_list'])
+
         return context
 
 

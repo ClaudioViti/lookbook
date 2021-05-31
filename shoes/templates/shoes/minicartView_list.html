@@ -40,7 +40,7 @@
 <section class="lookbook">
   
   {% if user.is_staff %}
-  <form   action="{% url 'shoe-cart' pk= %}" method="post">
+  <form   action="{% url 'minicart' %}" method="post">
     {{ shoe_formset.management_form }}
     {% csrf_token %}
   <table>
@@ -75,7 +75,8 @@
       </td>
       
       <td>
-       
+        {{ form.errors }}
+        {{ form.id }}
         <div class="fieldWrapper">
           
           {{ form.cart_user }}
