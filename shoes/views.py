@@ -159,6 +159,70 @@ class minicartView(LoginRequiredMixin, ListView):
 
         return context
 
+class favouriteView(LoginRequiredMixin, ListView):
+    model = Shoe
+    template_name = 'shoes/favouriteView_list.html'
+
+    formset = None
+    formset_class = modelformset_factory(Shoe, form=ShoeFavouriteForm, extra=0)  # if it doesn't work uncomment dispatch
+
+    # def dispatch(self, request, *args, **kwargs):
+    #    self.formset_class = modelformset_factory(Shoe, form=ShoeFavouritesForm, extra=0)
+    #    return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        self.object_list = self.get_queryset()
+        self.formset = self.get_formset(data=request.POST)
+        if self.formset.is_valid():
+            return self.formset_valid(self.formset)
+        else:
+            return self.formset_invalid(self.formset)
+
+
+    def get_formset(self, data=None):
+        kwargs = {
+            "queryset": self.object_list,
+        }
+        if data:
+            kwargs["data"] = data
+        return self.formset_class(**kwargs)
+
+    def formset_valid(self, formset):
+        print("formset is valid")
+        formset.save()
+        return redirect('favourites')
+
+    def formset_invalid(self, formset, error_anchor=None):
+        return self.render_to_response(
+            self.get_context_data()
+        )
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            # print("staff see everything")
+            queryset = Shoe.objects.filter(favourite_user__in = User.objects.all()).distinct()                       
+        else:
+            # print("user sees own")
+            queryset = self.request.user.favourite_items.all()
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['favourite_ids'] = self.request.user.urgent_items.values_list('pk', flat=True)
+  
+        if self.formset:
+             context['shoe_formset'] = self.formset
+        else:
+            context['shoe_formset'] = self.formset_class(queryset=context['object_list'])
+
+        return context
+
 
 class FavouriteUpdateView(UpdateView):
     model = models.Shoe
@@ -173,32 +237,6 @@ class FavouriteUpdateView(UpdateView):
         
         return JsonResponse({ 'favourite': to_favourite })
 
-class favouriteView(LoginRequiredMixin, ListView):
-    
-    model = models.Shoe
-    template_name = 'shoes/favouriteView_list.html'
-    queryset = model.objects.filter(favourite=True)
-    def get_queryset(self):                                                 # multi user enable
-        if self.request.user.is_staff:
-            print("staff see everything")
-            queryset = Shoe.objects.filter(cart_user__in = User.objects.all()).distinct()                                     
-        else:
-            print("user sees own")
-        queryset = self.request.user.favourite_items.all()
-        return queryset
-    def get_context_data(self, **kwargs):
-         
-        # view - get_context_data() method
-        context = super().get_context_data(**kwargs)
-        context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
-
-
-        formset_class = modelformset_factory(Shoe, form=ShoeFavouriteForm, extra=0)
-       
-        context['shoe_formset'] = formset_class(queryset=context['object_list'])
-        
-        return context
-    
     
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
 

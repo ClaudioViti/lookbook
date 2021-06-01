@@ -55,7 +55,7 @@
   <table>
     {% if object_list %}
     <tr>
-      <td>Favourites Manage</td>
+      <td>Favourites</td>
       <td></td>
       <td
       style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
@@ -101,11 +101,13 @@
 
 
       {% if user.is_staff %}
-      <form  method="post">
+      <form   action="{% url 'favourites' %}" method="post">
+        {{ shoe_formset.management_form }}
+        {% csrf_token %}
       <table>
         {% if object_list %}
         <tr>
-          <td>Favourites</td>
+          <td>Favourites Manage</td>
           <td></td>
           <td
           style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
@@ -113,7 +115,7 @@
           
           {% endif %}
           
-          {% csrf_token %}
+         
           {% for form in shoe_formset %}
           {% with form.instance as shoe %}
           ​
@@ -127,7 +129,7 @@
             </td>
             
             <td>
-              
+                {{ form.id }}
                 <div class="fieldWrapper">
                   
                   {{ form.favourite_user }}

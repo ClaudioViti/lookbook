@@ -57,5 +57,6 @@ class ShoeCartsForm(ModelForm):
 class ShoeFavouriteForm(ModelForm):
     class Meta:
         model = Shoe
-        fields = ['favourite_user']
+        fields = ['favourite_user', 'id']
+        widgets = {'id': forms.HiddenInput()}
 

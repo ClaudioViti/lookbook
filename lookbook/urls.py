@@ -24,7 +24,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view(), name='minicart'),
-    path('favourite/', favouriteView.as_view()),
+    path('favourite/', favouriteView.as_view(), name='favourites'),
     path('minicart/sendmail/', order_list, name="order_list"),
     path('shoes/<int:pk>/cart/', csrf_exempt(CartUpdateView.as_view()), name='shoe-cart'),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
