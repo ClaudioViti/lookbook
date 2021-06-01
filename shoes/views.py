@@ -314,6 +314,7 @@ def order_list(request):
         for itm in queryset:
             
             ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
+            request.user.ordered_items.add(* request.user.cart_items.all())
 
         request.user.cart_items.clear()
         #queryset.update(cart=False, urgent=False)
