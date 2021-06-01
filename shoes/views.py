@@ -308,13 +308,13 @@ def order_list(request):
      #   queryset = models.Shoe.objects.filter(cart=True)
        # if not request.user.is_staff:                                       # multi user enable
         queryset = request.user.cart_items.all()
-        queryset = queryset.filter(user=request.user)                   # multi user enable
+        request.user.ordered_items.add(* request.user.cart_items.all())                   # multi user enable
         
         ids = []
         for itm in queryset:
             
             ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
-            request.user.ordered_items.add(* request.user.cart_items.all())
+            
 
         request.user.cart_items.clear()
         #queryset.update(cart=False, urgent=False)
