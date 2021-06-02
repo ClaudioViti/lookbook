@@ -75,7 +75,13 @@
       </td>
       
       <td>
-        {{ form.errors }}
+        {% if form.non_field_errors %}
+        <ul class='warn'>
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {{ form.id }}
         <div class="fieldWrapper">
           
