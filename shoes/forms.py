@@ -69,6 +69,11 @@ class ShoeCartsForm(ModelForm):
                                     params={'name': user.username}),
                 ) 
         if errors:
+       
+            self.data = self.data.copy()
+           # self.data['delivered_user'] = User.objects.none()
+    
+            self.fields['delivered_user'].queryset.none()
             raise ValidationError(errors)
 
         for user in urgent_users:
