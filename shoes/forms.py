@@ -4,6 +4,7 @@ from django import forms
 from django.forms.models import modelformset_factory
 from django.forms import inlineformset_factory
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 
 # Create the form class.
@@ -62,20 +63,24 @@ class ShoeCartsForm(ModelForm):
         urgent_users = cleaned_data.get("urgent_user")  # fill the field name
         
         errors = []
+        valid_user_pks = []
         for user in delivered_users:
             if user not in ordered_users:
                 errors.append(
                     ValidationError('User %(name)s is not in list of users who made order',
                                     params={'name': user.username}),
                 ) 
+            else:
+                valid_user_pks.append(user.pk)  
+        
         if errors:
        
             self.data = self.data.copy()
            # self.data['delivered_user'] = User.objects.none()
     
-            self.fields['delivered_user'].queryset.none()
+            self.fields['delivered_user'].queryset = User.objects.filter(pk__in=valid_user_pks)
             raise ValidationError(errors)
-
+        
         for user in urgent_users:
             if user not in cart_users:
                 errors.append(
