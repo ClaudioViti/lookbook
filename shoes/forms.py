@@ -76,10 +76,10 @@ class ShoeCartsForm(ModelForm):
         if errors:
        
             self.data = self.data.copy()
-           # self.data['delivered_user'] = User.objects.none()
+            self.fields['delivered_user'].value = User.objects.none()
     
-            self.fields['delivered_user'].queryset = User.objects.filter(pk__in=valid_user_pks)
-            raise ValidationError(errors)
+           # self.fields['delivered_user'].queryset = User.objects.all()
+            
         
         for user in urgent_users:
             if user not in cart_users:
