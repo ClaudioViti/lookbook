@@ -20,8 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
+
 urlpatterns = [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('accounts.urls')),
+    #
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view(), name='minicart'),
     path('favourite/', favouriteView.as_view(), name='favourites'),
