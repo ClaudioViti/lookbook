@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from shoes.models import ShoeImage, Shoe, ShoeBrand
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from django.db.models import F
 
 # Create your views here.
 
@@ -314,9 +315,14 @@ def order_list(request):
         for itm in queryset:
             
             ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
+            itm.ordered = F('ordered') + 1
+            itm.save()
+            
             
 
         request.user.cart_items.clear()
+        
+        print(itm.ordered)
         #queryset.update(cart=False, urgent=False)
         message = request.POST['message']
         for id in ids: message += str(id)

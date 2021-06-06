@@ -23,7 +23,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 urlpatterns = [
     path('accounts/', include('accounts.urls')),
-    #
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view(), name='minicart'),
     path('favourite/', favouriteView.as_view(), name='favourites'),
