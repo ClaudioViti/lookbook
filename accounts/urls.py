@@ -1,8 +1,9 @@
 from django.urls import include, path
-from accounts.views import signup,  signup_sent_view
+from accounts.views import signup,  activate
 
 urlpatterns = [
 
     path('signup/', signup, name="signup"),
-    path('signup_sent/', signup_sent_view, name="signup_sent")
+    
+    path('activate/<uidb64>/<token>/', activate, name='activate'),  
 ]
