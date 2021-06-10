@@ -8,9 +8,10 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.urls import reverse
 
 UserModel = get_user_model()
-from .forms import SignupForm
+from .forms import SignupForm, UserUpdateForm
 
 
 def signup(request):
@@ -51,3 +52,21 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
+from django.views.generic.edit import UpdateView
+class UserUpdate(UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name_suffix = '_update_form'  # if template is like user_update_form.html
+    # template_name  # or provide custom name
+  
+    # if we need it in future
+    """
+    def form_valid(self, form):
+        pass
+    """
+    def get_object(self):
+        return self.request.user
+    def get_success_url(self):
+        return reverse('manage')
+        
