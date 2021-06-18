@@ -410,12 +410,13 @@
           
         </div>
       </div>
+
+      <a href="{% url 'logout' %}">Logout</a>
       <a>
         {% if user.is_authenticated %}
-        Welcome '{{ user.username }}'
+        Welcome <b>{{ user.username }}</b>
         {% endif %}
       </a>
-      <a href="{% url 'logout' %}">Logout</a>
       <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
   </header>
