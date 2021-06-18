@@ -246,7 +246,7 @@ class ShoeDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('manage')
     
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Count
 @login_required
 def create_shoe(request):
     
@@ -273,7 +273,12 @@ def create_shoe(request):
 
 @login_required
 def edit_shoe(request, pk):
-    shoe = get_object_or_404(Shoe, pk=pk)
+    queryset = Shoe.objects.all()
+    if not request.user.is_superuser:
+        queryset = queryset.annotate(user_count=Count('user')).filter(user_count=1)
+
+    shoe = get_object_or_404(queryset, pk=pk)
+
     if request.method == 'POST':
         form = ShoeForm(request.POST, instance=shoe)
         formset = ShoeImageInlineFormset(request.POST, request.FILES, instance=shoe)

@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 
 UserModel = get_user_model()
-from .forms import SignupForm, UserUpdateForm
+from .forms import SignupForm, UserUpdateForm, UserFromMailForm
 
 
 def signup(request):
@@ -127,3 +127,29 @@ def confirm_mail_change(request, token):
             return HttpResponse('Confirmation link is invalid or your account is not yet activated!')
     else:
         return HttpResponse("Email is not found in session, please open this link in same browser you've used to request change.")
+
+def UsernameFromMailView(request):
+
+    if request.method == 'POST':
+        form = UserFromMailForm(request.POST)
+     
+        if form.is_valid():
+
+            to_email = form.cleaned_data.get('email')
+            user = UserModel._default_manager.get(email=to_email)
+            mail_subject = 'Your username.'
+            message = render_to_string('username_email.html', {
+
+                'user': user,
+                
+ 
+            })
+
+           
+            user.email_user(mail_subject, message, from_email=None)
+
+    
+    else:
+        form = UserFromMailForm()
+
+    return render(request, 'username_from_email.html', {'form': form})

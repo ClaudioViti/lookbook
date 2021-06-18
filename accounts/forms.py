@@ -55,3 +55,10 @@ class UserUpdateForm(PasswordChangeForm, forms.ModelForm):
         if commit:
             self.user.save()
         return self.user
+
+
+
+
+class UserFromMailForm(forms.Form):
+
+        email = forms.CharField(max_length=100)
