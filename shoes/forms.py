@@ -13,10 +13,15 @@ class SearchForm(ModelForm):
          model = Shoe
          fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']
 
-class ShoeForm(ModelForm):
+class ShoeAdminForm(ModelForm):
     class Meta:
          model = Shoe
          fields = '__all__'
+
+class ShoeForm(ModelForm):
+    class Meta:
+         model = Shoe
+         exclude = ['user']
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))

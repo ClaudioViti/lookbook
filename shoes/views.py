@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -34,7 +34,11 @@ class ShoeListView(LoginRequiredMixin, ListView):
         return qs
 
     def dispatch(self, request, *args, **kwargs):
-        self.filter_form = ShoeForm(request.GET)
+        if request.user.is_staff:
+            self.filter_form = ShoeAdminForm(request.GET)
+        else:
+            self.filter_form = ShoeForm(request.GET)
+
         self.order_form = ShoeOrderForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
 
@@ -251,7 +255,10 @@ from django.db.models import Count
 def create_shoe(request):
     
     if request.method == 'POST':
-        form = ShoeForm(request.POST)
+        if request.user.is_staff:
+            form = ShoeAdminForm(request.POST)
+        else:
+            form = ShoeForm(request.POST)
         formset = ShoeImageFormSet(request.POST, request.FILES)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
@@ -264,7 +271,11 @@ def create_shoe(request):
             return redirect('manage')
 
     else:
-        form = ShoeForm()
+        if request.user.is_staff:
+            form = ShoeAdminForm()
+        else:
+            form = ShoeForm()
+    
         formset = ShoeImageFormSet(queryset=ShoeImage.objects.none())
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
@@ -280,7 +291,11 @@ def edit_shoe(request, pk):
     shoe = get_object_or_404(queryset, pk=pk)
 
     if request.method == 'POST':
-        form = ShoeForm(request.POST, instance=shoe)
+        if request.user.is_staff:
+            form = ShoeAdminForm(request.POST, instance=shoe)
+        else:
+            form = ShoeForm(request.POST, instance=shoe)
+        
         formset = ShoeImageInlineFormset(request.POST, request.FILES, instance=shoe)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
@@ -289,7 +304,12 @@ def edit_shoe(request, pk):
             return redirect('manage')
 
     else:
-        form = ShoeForm(instance=shoe)
+        if request.user.is_staff:
+            form = ShoeAdminForm(instance=shoe)
+        else:
+            form = ShoeForm(instance=shoe)
+        
+        
         formset = ShoeImageInlineFormset(instance=shoe)
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
@@ -392,7 +412,12 @@ class ShoeListManage(LoginRequiredMixin, ListView):
         return qs
 
     def dispatch(self, request, *args, **kwargs):
-        self.filter_form = ShoeForm(request.GET)
+        if request.user.is_staff:
+            self.filter_form = ShoeAdminForm(request.GET)
+        else:
+            self.filter_form = ShoeForm(request.GET)
+
+        
         self.order_form = ShoeOrderForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
 
