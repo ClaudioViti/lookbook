@@ -348,16 +348,13 @@
       <a href="/" class="active">Reset</a>
       <a id="btn_close">Fold</a>
       <a id="btn_open">Unfold</a>
-      {% if user.is_staff %}
-      <a onclick="openAdminCartChild()">Cart</a>
-      {% endif %}
+
       {% if not user.is_staff %}
       <a onclick="openCartChild()">Cart</a>
       {% endif %}
       <a onclick="openFavChild()">Favourite</a>
-
-      <a href="{% url 'manage' %}">Manage view</a>
-
+      <a href="{% url 'add' %}">Add item</a>
+      <a href="/">Normal view</a>
       <a href="{% static 'guide.html' %}">Guide</a>
       <a href="{% url 'UserUpdate' %}">Account</a>
       
@@ -457,6 +454,14 @@
             <button
             onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
           </button>
+          
+          <br>
+          <form style="display: inline-block; margin-top: 2px" action="{% url 'edit' pk=shoe.pk %}">
+            <input type="submit" value="Edit" />
+          </form>
+          <form style="display: inline-block" action="{% url 'delete' pk=shoe.pk %}">
+            <input type="submit" value="Delete" />
+          </form>
         
           
           <div class="modal">

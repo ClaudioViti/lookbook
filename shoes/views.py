@@ -370,3 +370,46 @@ class BrandManage(LoginRequiredMixin, FormView):
         elif self.request.POST['name'] == 'edit':
             return redirect('brand-update', pk=form.cleaned_data['brand'].pk)
         
+
+
+class ShoeListManage(LoginRequiredMixin, ListView):
+    
+    model = models.Shoe
+    template_name = 'shoes/shoe_list_manage.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        self.filter_form.is_valid()
+        
+        for field, value in self.filter_form.cleaned_data.items():
+            if value:
+                qs = qs.filter(**{field: value})
+        if not self.request.user.is_staff:                                                  # multi user enable
+              
+            qs = qs.annotate(user_count=Count('user')).filter(user_count=1)                                 # multi user enable
+            qs = qs.filter(user=self.request.user)
+        return qs
+
+    def dispatch(self, request, *args, **kwargs):
+        self.filter_form = ShoeForm(request.GET)
+        self.order_form = ShoeOrderForm(request.GET)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+         
+        # view - get_context_data() method
+        context = super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
+        context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
+        context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        return context
+        
+
+    def get_ordering(self):
+        
+        if self.order_form.is_valid():
+            return self.order_form.cleaned_data.get('order')
+        else:
+            return self.ordering 
+     
