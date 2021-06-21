@@ -262,7 +262,9 @@ def create_shoe(request):
         formset = ShoeImageFormSet(request.POST, request.FILES)
         
         if all( [ form.is_valid(), formset.is_valid() ]):
+            
             shoe_instance = form.save()
+            shoe_instance.user.add(request.user)
             image_instance = formset.save(commit=False)
             for instance in image_instance:
                 instance.shoe = shoe_instance
