@@ -329,6 +329,8 @@ def image_view(request, pk):
 
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+
 
 def order_list(request):
 
@@ -336,28 +338,35 @@ def order_list(request):
      #   queryset = models.Shoe.objects.filter(cart=True)
        # if not request.user.is_staff:                                       # multi user enable
         queryset = request.user.cart_items.all()
-        request.user.ordered_items.add(* request.user.cart_items.all())                   # multi user enable
+        
         
         ids = []
+        itm_remove = []
+        itm_not_ordered = []
         for itm in queryset:
+            if not itm.ordered_user.exists():
+                ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
+                itm.ordered = F('ordered') + 1
+                itm.save()
+                itm_remove.append(itm)
+            else:
+                itm_not_ordered.append(itm.pk)
             
-            ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
-            itm.ordered = F('ordered') + 1
-            itm.save()
             
-            
-
-        request.user.cart_items.clear()
+        request.user.ordered_items.add(* request.user.cart_items.all())                   # multi user enable
+        request.user.cart_items.remove(*itm_remove)
+        messages.add_message(request, messages.INFO, itm_not_ordered)
         
         print(itm.ordered)
         #queryset.update(cart=False, urgent=False)
         message = request.POST['message']
         for id in ids: message += str(id)
-        send_mail('Order List',
-         message, 
-         settings.EMAIL_HOST_USER,
-         settings.RECIPIENT_LIST, 
-         fail_silently=False)
+        if len(itm_remove):
+            send_mail('Order List',
+            message, 
+            settings.EMAIL_HOST_USER,
+            settings.RECIPIENT_LIST, 
+            fail_silently=False)
     return render(request, 'shoes/order_succeed.html')
 
 class BrandCreate(LoginRequiredMixin, CreateView):
