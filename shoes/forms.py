@@ -21,7 +21,7 @@ class ShoeAdminForm(ModelForm):
 class ShoeForm(ModelForm):
     class Meta:
          model = Shoe
-         exclude = ['user']
+         exclude = ['user', 'available']
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))

@@ -344,16 +344,17 @@ def order_list(request):
         itm_remove = []
         itm_not_ordered = []
         for itm in queryset:
-            if not itm.ordered_user.exists():
-                ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {itm.user}; \n Urgent: {itm.urgent}")
+            if not itm.ordered_user.exists() and itm.available == True:
+                ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {request.user.username}; \n Urgent: {itm.urgent}")
                 itm.ordered = F('ordered') + 1
                 itm.save()
                 itm_remove.append(itm)
+                request.user.ordered_items.add(* request.user.cart_items.all())    
             else:
                 itm_not_ordered.append(itm.pk)
             
             
-        request.user.ordered_items.add(* request.user.cart_items.all())                   # multi user enable
+                       
         request.user.cart_items.remove(*itm_remove)
         messages.add_message(request, messages.INFO, itm_not_ordered)
         

@@ -441,17 +441,28 @@
           {% if shoeimages|length == 2 %}
           <div class="flip">
             {% for shoeimage in shoeimages %}
+            {% if shoe.available == False %}
+            <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%);">
+            {% else %}
             <img src="{{ shoeimage.image.url }}">
+            {% endif %}
             {% endfor %}
           </div>
           {% else %}
+          {% if shoe.available == False %}
+          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%);">
+          {% else %}
           <img src="{{ shoeimages.0.image.url }}">
+          {% endif %}
+          
           {% endif %}
           {% endwith %}
           
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
+            {% if not shoe.available == False %}
             Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
+            {% endif %}
             Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">
             <button style="display: inline-block" class="show">Details</button>
             <button
