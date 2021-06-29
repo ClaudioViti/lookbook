@@ -70,9 +70,9 @@
   float: left;
   color: #f2f2f2;
   text-align: center;
-  padding: 12px 12px;
+  padding: 10px 10px;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .topnav a:hover {
@@ -88,6 +88,7 @@
 
 <div class="topnav">
   <a href="/minicart/" class="active">Cart</a>
+  <a onclick="windowClose();">Close</a>
   <a onClick="window.location.reload();">&#x21ba;</a>
   </div>
 
@@ -275,5 +276,12 @@
     window.opener.document.functionToBeCalledFromChildWindow('my task is over you can proceed');
   }
 </script>
+
+<script language="javascript" type="text/javascript">
+  function windowClose() {
+  window.open('','_parent','');
+  window.close();
+  }
+  </script>
 
 </html>
