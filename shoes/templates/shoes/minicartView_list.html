@@ -41,7 +41,7 @@
   display: inline-block;
 }
 .soldout::after {
-      {% if shoe.available == False %}
+  {% if shoe.available == False %}
   content: 'Unavailable';
   {% else %}
   content: 'Ordered';
@@ -55,7 +55,41 @@
   transform: translate(0, -50%);
   margin-top: 50%;
 }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 12px 12px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
 </style>
+
+<div class="topnav">
+<a href="/orders/" class="active">Orders</a>
+<a onClick="window.location.reload();">&#x21ba;</a>
+</div>
+
+
 
 <section class="lookbook">
   
@@ -63,11 +97,11 @@
   <form   action="{% url 'minicart' %}" method="post">
     {{ shoe_formset.management_form }}
     {% csrf_token %}
-    <a href="/orders/" class="active">Orders</a>
+    
   <table>
     {% if object_list %}
     <tr>
-      <td>Cart Manage</td>
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Cart Manage</td>
       <td></td>
       
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Cart</td>
@@ -159,11 +193,11 @@
   {% endif %}
   
   {% if not user.is_staff %}
-  <a href="/orders/" class="active">Orders</a>
+  
   <table>
     {% if object_list %}
     <tr>
-      <td>Cart</td><td></td>
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Cart</td><td></td>
       {% if user.is_staff %}
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Users</td>
       {% endif %}
@@ -239,7 +273,7 @@
     </form>
     {% endif %}
     {% endif %}
-    <button onClick="window.location.reload();">&#x21ba;</button>
+    
   </section>
   
   
