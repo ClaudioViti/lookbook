@@ -73,7 +73,11 @@
           <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
         </td>
         <td>
+          {% if shoe.available == False %}
+          <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
+          {% else %}
           <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+          {% endif %}
         </td>
 
         
@@ -83,6 +87,8 @@
           onClick="pushParent()">
           
           <label for="{{ shoe.id }}"></label>
+          {% else %}
+          <p style="color: rgb(187, 0, 0);">Sold Out</p>
           {% endif %}
         </td></tr>
         

@@ -339,6 +339,47 @@
       display: inline-block;
       margin-bottom: 5px;
     }
+
+    .soldout img {
+  position: relative;
+	filter: grayscale(60%);
+  display: inline-block;
+}
+    .soldout::after {
+      {% if shoe.available == False %}
+  content: 'Unavailable';
+  {% else %}
+  content: 'Ordered';
+  {% endif %}
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translate(0, -50%);
+  margin-top: 50%;
+}
+
+#myTopnav > span {
+  position: absolute;
+  right: 3px;
+  writing-mode: lr;
+  top: 18px;
+}
+
+.topnav a[href="/accounts/logout/"] {
+    margin-right: 20px;
+}
+
+@media  (max-width: 600px) {
+  #myTopnav > span {
+    right: 55px;
+    writing-mode:lr;
+    top:23px;
+    transform: translateY(-50%);
+  }
+}
+
   </style>
 </head>
 
@@ -358,7 +399,7 @@
 
       <a href="{% url 'manage' %}">Manage view</a>
 
-      <a href="{% static 'guide.html' %}">Guide</a>
+      <a href="{% static 'guide.html' %}" target="_blank">Guide</a>
       <a href="{% url 'UserUpdate' %}">Account</a>
       
       <div class="dropdown" tabindex="0">
@@ -439,15 +480,26 @@
         <figure>
           {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
           {% if shoeimages|length == 2 %}
-          <div class="flip">
+          
+              {% if shoe.available == False %}
+              <div class="flip">
+              <div class="soldout" style="position: relative;">
             {% for shoeimage in shoeimages %}
-            {% if shoe.available == False %}
-            <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%);">
-            {% else %}
-            <img src="{{ shoeimage.image.url }}">
-            {% endif %}
+
+            <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
             {% endfor %}
           </div>
+        
+          {% else %}
+          <div class="flip">
+          {% for shoeimage in shoeimages %}
+          <img src="{{ shoeimage.image.url }}">
+          {% endfor %}
+        </div>
+            {% endif %}
+          </div>
+          
+          
           {% else %}
           {% if shoe.available == False %}
           <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%);">

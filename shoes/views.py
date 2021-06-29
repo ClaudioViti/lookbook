@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeOrdersForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -213,6 +213,71 @@ class favouriteView(LoginRequiredMixin, ListView):
         else:
             # print("user sees own")
             queryset = self.request.user.favourite_items.all()
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['favourite_ids'] = self.request.user.urgent_items.values_list('pk', flat=True)
+  
+        if self.formset:
+             context['shoe_formset'] = self.formset
+        else:
+            context['shoe_formset'] = self.formset_class(queryset=context['object_list'])
+
+        return context
+
+
+class ordersView(LoginRequiredMixin, ListView):
+    model = Shoe
+    template_name = 'shoes/ordersView_list.html'
+
+    formset = None
+    formset_class = modelformset_factory(Shoe, form=ShoeOrdersForm, extra=0)  # if it doesn't work uncomment dispatch
+
+    # def dispatch(self, request, *args, **kwargs):
+    #    self.formset_class = modelformset_factory(Shoe, form=ShoeFavouritesForm, extra=0)
+    #    return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        self.object_list = self.get_queryset()
+        self.formset = self.get_formset(data=request.POST)
+        if self.formset.is_valid():
+            return self.formset_valid(self.formset)
+        else:
+            return self.formset_invalid(self.formset)
+
+
+    def get_formset(self, data=None):
+        kwargs = {
+            "queryset": self.object_list,
+        }
+        if data:
+            kwargs["data"] = data
+        return self.formset_class(**kwargs)
+
+    def formset_valid(self, formset):
+        print("formset is valid")
+        formset.save()
+        return redirect('orders')
+
+    def formset_invalid(self, formset, error_anchor=None):
+        return self.render_to_response(
+            self.get_context_data()
+        )
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            # print("staff see everything")
+            queryset = Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct()                       
+        else:
+            # print("user sees own")
+            queryset = self.request.user.ordered_items.all()
 
         return queryset
 
@@ -450,3 +515,31 @@ class ShoeListManage(LoginRequiredMixin, ListView):
         else:
             return self.ordering 
      
+
+def terminate_order(request):
+
+    if request.method == 'POST':
+        queryset = request.user.delivered_items.all()
+        
+        ids = []
+        itm_terminate = []
+        
+        for itm in queryset:
+            if not itm.terminated_user.exists():
+                ids.append(f" \n \n ID: {itm.pk}; \n User: {request.user.username}; \n Urgent: {itm.urgent}")
+                itm.ordered = F('ordered') + 1
+                itm.save()
+                itm_terminate.append(itm)
+                request.user.terminated_items.add(* request.user.delivered_items.all())    
+
+        request.user.terminated_items.remove(*itm_terminate)
+
+        message = request.POST['message']
+        for id in ids: message += str(id)
+        if len(itm_terminate):
+            send_mail('Terminate Order List',
+            message, 
+            settings.EMAIL_HOST_USER,
+            settings.RECIPIENT_LIST, 
+            fail_silently=False)
+    return render(request, 'shoes/order_succeed.html')

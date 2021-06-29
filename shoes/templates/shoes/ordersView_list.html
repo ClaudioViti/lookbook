@@ -1,0 +1,248 @@
+<html> {% load static %}
+<style>
+  span,
+  img {
+    vertical-align: middle;
+    font-size: 120%;
+    font-weight: bold;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  li {
+    border-bottom: solid rgb(138, 64, 7) 1px;
+  }
+
+  li::before {
+    content: "\2022";
+    display: inline-block;
+    width: 1em;
+  }
+
+  .lookbook {
+    position: static;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td {
+    border-bottom: 1px solid black;
+    text-align: center;
+  }
+
+  input:checked+label+div {
+    display: none;
+  }
+
+  input+label:after {
+    content: "Add";
+  }
+
+  input:checked+label:after {
+    content: "Remove";
+  }
+
+  label {
+
+    box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.2), inset 0 -2px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+    padding: 2px 5px;
+    cursor: pointer;
+  }
+</style>
+
+<section class="lookbook">
+  {% if not user.is_staff %}
+  <a href="/minicart/" class="active">Cart</a>
+  <table>
+    {% if object_list %}
+    <tr>
+      <td>Orders</td>
+      <td></td>
+      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+        state</td>
+        <td>Terminated</td>
+    </tr>
+
+    {% endif %}
+
+    
+   
+    
+    <form action="{% url 'terminate_order' %}" method="post">
+      {% for form in shoe_formset %}
+      {% with form.instance as shoe %}
+    {% csrf_token %}
+    
+    {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+   
+
+    <tr>
+      <td>
+        <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
+      </td>
+      <td>
+        {% if shoe.ordered == True %}
+        <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
+        {% else %}
+        <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+        {% endif %}
+      </td>
+
+
+      <td style="width:200px;">
+        {% if shoe.ordered == True %}
+        <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{
+          shoe.cart|yesno:"checked," }} onClick="pushParent()">
+
+        <label for="{{ shoe.id }}"></label>
+        {% else %}
+        <p style="color: rgb(187, 0, 0);">Unavailable</p>
+        {% endif %}
+      </td>
+      <td>
+        {{ form.id }}
+        <div class="fieldWrapper">
+
+          {{ form.terminated_user }}
+        </div>
+
+      </td>
+    </tr>
+
+
+   
+
+    {% empty %}
+    <p style="text-align:center; margin-top: 100%">No orders</p>
+
+    {% endfor %}
+
+    {% endwith %}
+    {% endfor %}
+  </table>
+ 
+  {% endif %}
+
+  {% if object_list %}
+
+  {% endif %}
+
+
+  {% if user.is_staff %}
+  <form action="{% url 'orders' %}" method="post">
+    {{ shoe_formset.management_form }}
+    {% csrf_token %}
+    <a href="/minicart/" class="active">Cart</a>
+    <table>
+      {% if object_list %}
+      <tr>
+        <td>Orders Manage</td>
+        <td></td>
+        <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+          Ordered</td>
+          <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+            delivered</td>
+      </tr>
+
+      {% endif %}
+
+
+      {% for form in shoe_formset %}
+      {% with form.instance as shoe %}
+      ​
+
+      <tr>
+        <td>
+          <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
+        </td>
+        <td>
+          <img src="{{ shoe.shoeimage_set.first.image.url }}" style="width:100px;height:100px;">
+        </td>
+
+        <td>
+          {{ form.id }}
+          <div class="fieldWrapper">
+
+            {{ form.ordered_user }}
+          </div>
+
+
+        </td>
+      <td>
+        {{ form.id }}
+        <div class="fieldWrapper">
+
+          {{ form.delivered_user }}
+        </div>
+
+      </td>
+
+      </tr>
+
+
+
+      {% endwith %}
+      {% empty %}
+      <p style="text-align:center; margin-top: 100%">No orders</p>
+
+      {% endfor %}
+
+    </table>
+    <input style="margin-top:10px" type="submit" value="Submit">
+  </form>
+  {% endif %}
+
+  {% if not user.is_staff %}
+  {% if object_list %}
+  
+  
+  <form method="POST" style="margin-top:6px" action="{% url 'terminate_order' %}">
+    {% csrf_token %}
+    <textarea name="message" placeholder="Notes..."></textarea>
+    <p><input type="submit" value="Submit" /> </p>
+  </form>
+  {% endif %}
+  {% endif %}
+
+
+  <button style="margin-top: 10%;" onClick="window.location.reload();">&#x21ba;</button>
+</section>
+
+
+<script type="module">
+  document.querySelector('.lookbook').addEventListener('change', ev => {
+    const el = ev.target;
+    const pk = el.value;
+    const state = el.checked;
+
+    const data = new FormData();
+    data.append('cart', state);
+
+    const url = `/shoes/${pk}/cart/`;
+    post(url, { body: data });
+  })
+  function post(url, options) {
+    const defaults = {
+      method: 'POST',
+    };
+    const opts = Object.assign({}, defaults, options);
+    return fetch(url, opts);
+  }
+</script>
+
+<script type="text/javascript">
+  function pushParent() {
+    window.opener.document.functionToBeCalledFromChildWindow('my task is over you can proceed');
+  }
+</script>
+
+</html>

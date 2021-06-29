@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage
+from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -27,6 +27,7 @@ urlpatterns = [
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view(), name='minicart'),
     path('favourite/', favouriteView.as_view(), name='favourites'),
+    path('orders/', ordersView.as_view(), name='orders'),
     path('minicart/sendmail/', order_list, name="order_list"),
     path('shoes/<int:pk>/cart/', csrf_exempt(CartUpdateView.as_view()), name='shoe-cart'),
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
@@ -42,4 +43,5 @@ urlpatterns = [
     path('manage/add/', create_shoe, name='add'),
     path('manage/<int:pk>/', edit_shoe, name='edit'),
     path('manage/<int:pk>/delete/', ShoeDeleteView.as_view(), name='delete'),
+    path('minicart/sendmailterminate/', terminate_order, name="terminate_order"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

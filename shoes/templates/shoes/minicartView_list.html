@@ -35,6 +35,26 @@
     border-bottom: 1px solid black;
     text-align: center;
   }
+  .soldout img {
+  position: relative;
+	filter: grayscale(60%);
+  display: inline-block;
+}
+.soldout::after {
+      {% if shoe.available == False %}
+  content: 'Unavailable';
+  {% else %}
+  content: 'Ordered';
+  {% endif %}
+  color: rgb(187, 0, 0);
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translate(0, -50%);
+  margin-top: 50%;
+}
 </style>
 
 <section class="lookbook">
@@ -43,6 +63,7 @@
   <form   action="{% url 'minicart' %}" method="post">
     {{ shoe_formset.management_form }}
     {% csrf_token %}
+    <a href="/orders/" class="active">Orders</a>
   <table>
     {% if object_list %}
     <tr>
@@ -138,6 +159,7 @@
   {% endif %}
   
   {% if not user.is_staff %}
+  <a href="/orders/" class="active">Orders</a>
   <table>
     {% if object_list %}
     <tr>
@@ -156,14 +178,27 @@
 
     {% for shoe in object_list %}
 
-    {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+    
     
     <tr>
     <td>
       <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
     </td>
     <td>
+      
+      
+      {% if shoe.available == False %}
+      <div class="soldout" style="position: relative; display: inline-block;">
+      {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+      <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
+      {% endfor %}
+    </div>
+      {% else %}
+      {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+      {% endfor %}
+      {% endif %}
+   
     </td>
     {% if user.is_staff %}
       <td>
@@ -183,10 +218,10 @@
       </td></tr>
     
 
-    {% endfor %}
+    
       
       {% empty %}
-      <p style="text-align:center; margin-top: 100%">No favourites</p>
+      <p style="text-align:center; margin-top: 100%">No items</p>
       
       {% endfor %}
       

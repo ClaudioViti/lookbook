@@ -101,3 +101,11 @@ class ShoeFavouriteForm(ModelForm):
         fields = ['favourite_user', 'id']
         widgets = {'id': forms.HiddenInput()}
 
+
+
+class ShoeOrdersForm(ModelForm):
+    class Meta:
+        model = Shoe
+        fields = ['ordered_user', 'id', 'delivered_user', 'terminated_user']
+        widgets = {'id': forms.HiddenInput()}
+
