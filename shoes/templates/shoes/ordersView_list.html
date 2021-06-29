@@ -173,7 +173,7 @@
   <form action="{% url 'orders' %}" method="post">
     {{ shoe_formset.management_form }}
     {% csrf_token %}
-    <a href="/minicart/" class="active">Cart</a>
+    
     <table>
       {% if object_list %}
       <tr>
