@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order
+from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order, terminateOrder
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -33,6 +33,7 @@ urlpatterns = [
     path('shoes/<int:pk>/favourite/', csrf_exempt(FavouriteUpdateView.as_view()), name='shoe-favourite'),
     path('shoes/<int:pk>/urgent/', csrf_exempt(UrgentUpdateView.as_view()), name='shoe-urgent'),
     path('shoes/<int:pk>/ordered/', csrf_exempt(OrderedUpdateView.as_view()), name='shoe-ordered'),
+    path('shoes/<int:pk>/terminated/', csrf_exempt(terminateOrder), name='shoe-terminated'),
     path('shoes/<int:pk>/images/', image_view, name='shoe-image'),
     path('brand/', BrandManage.as_view(), name='brand'),
     path('brand/add/', BrandCreate.as_view(), name='brand-add'),

@@ -543,3 +543,30 @@ def terminate_order(request):
             settings.RECIPIENT_LIST, 
             fail_silently=False)
     return render(request, 'shoes/order_succeed.html')
+
+
+
+
+class TerminatedUpdateView(UpdateView):
+    model = models.Shoe
+    fields = ['terminated_user']
+    
+    
+    def form_valid(self, form):
+        to_terminated = form.cleaned_data.get('terminated', False)
+        if to_terminated:
+             self.request.user.terminated_items.add(self.object)
+        else:
+             self.request.user.terminated_items.remove(self.object)
+        print(self.request.user.terminated_items.all())
+        return JsonResponse({ 'terminated': to_terminated })
+
+
+
+def terminateOrder(request, pk):
+    shoe = get_object_or_404(Shoe, pk=pk)
+        
+   
+    request.user.terminated_items.add(pk)
+    return render(request, 'shoes/imageView.html', {'terminated_user': shoe.terminated_user.all()})
+        

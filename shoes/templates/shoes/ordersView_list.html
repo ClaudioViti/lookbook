@@ -142,10 +142,7 @@
         {% endif %}
       </td>
       <td>
-        {{ form.id }}
-        <div class="fieldWrapper">
-
-          {{ form.terminated_user }}
+        <input name="terminated" type="button" value="{% url 'shoe-terminated' pk=shoe.pk %}">
         </div>
 
       </td>
