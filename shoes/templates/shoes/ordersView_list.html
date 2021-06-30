@@ -142,7 +142,7 @@
         {% endif %}
       </td>
       <td>
-        <input name="terminated" type="button" value="{% url 'shoe-terminated' pk=shoe.pk %}">
+        <input class="term" name="terminated" type="checkbox" value="{{ shoe.id }}">
         </div>
 
       </td>
@@ -280,5 +280,19 @@
   window.close();
   }
   </script>
-
+  <script>
+document.querySelector('term').addEventListener('change', ev => {
+  const el = ev.target;
+  if (el.name !== 'terminated') return;
+  const pk = el.value;
+  
+  const state = el.checked;
+  
+  const data = new FormData();
+  data.append('terminated', state);
+  console.log(state);
+  const url = `/shoes/${pk}/terminated/`;
+  post(url, { body: data });
+})
+</script>
 </html>
