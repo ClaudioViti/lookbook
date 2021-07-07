@@ -260,11 +260,22 @@ class ordersView(LoginRequiredMixin, ListView):
         if data:
             kwargs["data"] = data
         return self.formset_class(**kwargs)
-
+    print("formset is valid")
+    
     def formset_valid(self, formset):
-        print("formset is valid")
-        formset.save()
-        return redirect('orders')
+        print("joined")
+        for form in formset:
+            
+            term = form.cleaned_data.get('terminated', False)
+            obj = form.save()
+            if term:
+
+                
+                
+                self.user.terminated_items.add(obj)
+        
+           
+        return redirect('minicart')
 
     def formset_invalid(self, formset, error_anchor=None):
         return self.render_to_response(
@@ -284,7 +295,7 @@ class ordersView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
-        context['favourite_ids'] = self.request.user.urgent_items.values_list('pk', flat=True)
+        context['terminated_items'] = self.request.user.urgent_items.values_list('pk', flat=True)
   
         if self.formset:
              context['shoe_formset'] = self.formset

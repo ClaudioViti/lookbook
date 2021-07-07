@@ -109,3 +109,6 @@ class ShoeOrdersForm(ModelForm):
         fields = ['ordered_user', 'id', 'delivered_user', 'terminated_user']
         widgets = {'id': forms.HiddenInput()}
 
+    
+    terminated = forms.BooleanField(required=False)
+

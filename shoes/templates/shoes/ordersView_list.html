@@ -94,7 +94,6 @@
 
 <section class="lookbook">
   {% if not user.is_staff %}
-  
   <table>
     {% if object_list %}
     <tr>
@@ -110,10 +109,11 @@
     
    
     
-    <form action="{% url 'terminate_order' %}" method="post">
+    
       {% for form in shoe_formset %}
+      {% csrf_token %}
       {% with form.instance as shoe %}
-    {% csrf_token %}
+    
     
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
    
@@ -142,11 +142,12 @@
         {% endif %}
       </td>
       <td>
-        <input class="term" name="terminated" type="checkbox" value="{{ shoe.id }}">
-        </div>
+        {{ form.terminated }}
+        
 
       </td>
     </tr>
+
 
 
    
@@ -159,6 +160,7 @@
     {% endwith %}
     {% endfor %}
   </table>
+
  
   {% endif %}
 
@@ -235,38 +237,18 @@
   {% if object_list %}
   
   
-  <form method="POST" style="margin-top:6px" action="{% url 'terminate_order' %}">
+  
     {% csrf_token %}
     <textarea name="message" placeholder="Notes..."></textarea>
     <p><input type="submit" value="Submit" /> </p>
   </form>
+  
   {% endif %}
   {% endif %}
 
 
 </section>
 
-
-<script type="module">
-  document.querySelector('.lookbook').addEventListener('change', ev => {
-    const el = ev.target;
-    const pk = el.value;
-    const state = el.checked;
-
-    const data = new FormData();
-    data.append('cart', state);
-
-    const url = `/shoes/${pk}/cart/`;
-    post(url, { body: data });
-  })
-  function post(url, options) {
-    const defaults = {
-      method: 'POST',
-    };
-    const opts = Object.assign({}, defaults, options);
-    return fetch(url, opts);
-  }
-</script>
 
 <script type="text/javascript">
   function pushParent() {
@@ -280,19 +262,5 @@
   window.close();
   }
   </script>
-  <script>
-document.querySelector('term').addEventListener('change', ev => {
-  const el = ev.target;
-  if (el.name !== 'terminated') return;
-  const pk = el.value;
-  
-  const state = el.checked;
-  
-  const data = new FormData();
-  data.append('terminated', state);
-  console.log(state);
-  const url = `/shoes/${pk}/terminated/`;
-  post(url, { body: data });
-})
-</script>
+
 </html>
