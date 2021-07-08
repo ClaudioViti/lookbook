@@ -288,7 +288,7 @@ class ordersView(LoginRequiredMixin, ListView):
             queryset = Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct()                       
         else:
             # print("user sees own")
-            queryset = self.request.user.ordered_items.all()
+            queryset = self.request.user.ordered_items.all() & self.request.user.terminated_items.exclude()
 
         return queryset
 
@@ -536,7 +536,7 @@ def terminate_order(request):
         itm_terminate = []
         
         for itm in queryset:
-            if not itm.terminated_user.exists():
+            if itm.terminated_user.exists():
                 ids.append(f" \n \n ID: {itm.pk}; \n User: {request.user.username}; \n Urgent: {itm.urgent}")
                 itm.ordered = F('ordered') + 1
                 itm.save()
@@ -553,7 +553,7 @@ def terminate_order(request):
             settings.EMAIL_HOST_USER,
             settings.RECIPIENT_LIST, 
             fail_silently=False)
-    return render(request, 'shoes/order_succeed.html')
+    return render(request, 'shoes/terminate_succeed.html')
 
 
 
