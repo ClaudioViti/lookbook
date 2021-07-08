@@ -288,7 +288,7 @@ class ordersView(LoginRequiredMixin, ListView):
             queryset = Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct()                       
         else:
             # print("user sees own")
-            queryset = self.request.user.ordered_items.all() & self.request.user.terminated_items.exclude()
+            queryset = self.request.user.delivered_items.all() & self.request.user.terminated_items.exclude()
 
         return queryset
 
