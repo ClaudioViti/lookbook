@@ -157,12 +157,13 @@
 
    
 
-    {% empty %}
-    <p style="text-align:center; margin-top: 100%">No orders</p>
+
 
     {% endfor %}
 
     {% endwith %}
+    {% empty %}
+    <p style="text-align:center; margin-top: 50%">No delivered orders</p>
     {% endfor %}
   </table>
 
@@ -244,7 +245,7 @@
   
   
     
-    <textarea name="message" placeholder="Notes..."></textarea>
+    <textarea style="margin-top:6px" name="message" placeholder="Notes..."></textarea>
     <p><input type="submit" value="Submit" /> </p>
   </form>
   

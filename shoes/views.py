@@ -273,6 +273,7 @@ class ordersView(LoginRequiredMixin, ListView):
 
                 
                 self.request.user.terminated_items.add(obj)
+            terminate_order(self.request)
                 
         
            
