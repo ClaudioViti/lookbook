@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order, terminateOrder
+from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order, terminateOrder, LoginViewCustom
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -23,6 +23,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 urlpatterns = [
     path('accounts/', include('accounts.urls')),
+    path('accounts/login/', LoginViewCustom.as_view(), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', ShoeListView.as_view()),
     path('minicart/', minicartView.as_view(), name='minicart'),

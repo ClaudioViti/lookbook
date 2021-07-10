@@ -192,7 +192,7 @@
         <td><a style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;" href="{% url 'password_reset' %}">Lost password</a></td>
         <td><a style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;" href="{% url 'userfromemail' %}">Lost username</a></td>
         <td><a style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;" href="{% url 'signup' %}">Sign Up</a></td>
-        <td><a style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;" href="mailto: abc@example.com">Help</a></td>
+        <td><a style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;" href="mailto: {{ admin_mail }}?subject=Login problem">Help</a></td>
       </tr>
     </table>
 

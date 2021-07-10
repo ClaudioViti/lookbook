@@ -49,6 +49,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+        context['admin_mail'] = settings.DEFAULT_FROM_EMAIL
         return context
         
 
@@ -580,4 +581,8 @@ def terminateOrder(request, pk):
    
     request.user.terminated_items.add(pk)
     return render(request, 'shoes/imageView.html', {'terminated_user': shoe.terminated_user.all()})
-        
+from django.contrib.auth.views import LoginView
+
+class LoginViewCustom(LoginView):
+    
+    extra_context = {'admin_mail': settings.DEFAULT_FROM_EMAIL}
