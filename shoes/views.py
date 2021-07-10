@@ -272,24 +272,26 @@ class ordersView(LoginRequiredMixin, ListView):
             if term:
 
                 
+                self.request.user.terminated_items.add(obj)
                 
-                self.user.terminated_items.add(obj)
         
            
         return redirect('minicart')
-
+    
     def formset_invalid(self, formset, error_anchor=None):
+        print(formset.errors)
+        print(self.request.POST)
         return self.render_to_response(
             self.get_context_data()
         )
-
+    
     def get_queryset(self):
         if self.request.user.is_staff:
             # print("staff see everything")
             queryset = Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct()                       
         else:
             # print("user sees own")
-            queryset = self.request.user.delivered_items.all() & self.request.user.terminated_items.exclude()
+            queryset = self.request.user.delivered_items.exclude(pk__in=self.request.user.terminated_items.values_list('pk'))
 
         return queryset
 

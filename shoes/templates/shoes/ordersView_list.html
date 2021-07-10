@@ -111,9 +111,9 @@
     
    
     
-    
+    {{ shoe_formset.management_form }}
       {% for form in shoe_formset %}
-      
+     
       {% with form.instance as shoe %}
     
     
@@ -144,8 +144,11 @@
         {% endif %}
       </td>
       <td>
-        {{ form.terminated }}
-        
+        {{ form.id }}
+        <div class="fieldWrapper">
+
+          {{ form.terminated }}
+        </div>
 
       </td>
     </tr>
@@ -172,7 +175,7 @@
 
 
   {% if user.is_staff %}
-  <form action="{% url 'terminate_order' %}" method="post">
+  <form action="{% url 'orders' %}" method="post">
     {{ shoe_formset.management_form }}
     {% csrf_token %}
     
