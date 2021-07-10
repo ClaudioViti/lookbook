@@ -451,9 +451,9 @@
           
         </div>
       </div>
-
-      <a href="{% url 'logout' %}">Logout</a>
       <a href="mailto: {{ admin_mail }}?subject=Help request for user: {{ user.username }}">Help</a>
+      <a href="{% url 'logout' %}">Logout</a>
+      
       <span style="font-size:10px; color: rgb(255, 255, 255);">
         {% if user.is_authenticated %}
         Welcome <b>{{ user.username }}</b>
