@@ -273,10 +273,10 @@ class ordersView(LoginRequiredMixin, ListView):
 
                 
                 self.request.user.terminated_items.add(obj)
-            terminate_order(self.request)
+
                 
         
-           
+        return terminate_order(self.request)
         return redirect('minicart')
     
     def formset_invalid(self, formset, error_anchor=None):
@@ -534,11 +534,11 @@ class ShoeListManage(LoginRequiredMixin, ListView):
 def terminate_order(request):
 
     if request.method == 'POST':
-        queryset = request.user.delivered_items.all()
+        queryset = request.user.terminated_items.all()
         
         ids = []
         itm_terminate = []
-        
+        print(len(queryset))
         for itm in queryset:
             if itm.terminated_user.exists():
                 ids.append(f" \n \n ID: {itm.pk}; \n User: {request.user.username}; \n Urgent: {itm.urgent}")
