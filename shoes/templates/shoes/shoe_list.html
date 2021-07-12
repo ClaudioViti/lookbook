@@ -477,6 +477,7 @@
   <main>
     <section class="lookbook">
       {% for shoe in object_list %}
+      {{ shoe.state }}
       <article>
         <figure>
           {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
