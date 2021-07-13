@@ -183,7 +183,7 @@ class Shoe(models.Model):
             state = 'Delivered'
         elif self.delivered_user.all():
             state = 'Delivered'
-            print(state)
+        print(state)
         return state
 
 class ShoeImage(models.Model):
