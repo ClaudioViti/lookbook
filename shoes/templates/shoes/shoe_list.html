@@ -1,4 +1,5 @@
 <!DOCTYPE html>{% load static %}
+{% load shoes_extras %}
 <html>
 
 <head>
@@ -477,7 +478,8 @@
   <main>
     <section class="lookbook">
       {% for shoe in object_list %}
-      {{ shoe.state }}
+      
+      
       <article>
         <figure>
           {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
@@ -513,7 +515,7 @@
           {% endwith %}
           
           <figcaption>
-            <header> Id: {{ shoe.pk }} </header>
+            <header> Id: {{ shoe|getUserState:user }} {{ shoe.pk }} </header>
             {% if not shoe.available == False %}
             Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
             {% endif %}

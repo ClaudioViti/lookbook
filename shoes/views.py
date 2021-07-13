@@ -50,7 +50,6 @@ class ShoeListView(LoginRequiredMixin, ListView):
         context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['admin_mail'] = settings.DEFAULT_FROM_EMAIL
-        context['state'] = checkItemState(self.user, self.pk)
         return context
         
 

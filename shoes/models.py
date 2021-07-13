@@ -166,10 +166,25 @@ class Shoe(models.Model):
     returned_date = models.CharField(max_length=200, blank=True, null=True)
     def real_heel(self):
         return self.heel_height - self.plateau_height
-   
 
 
-
+    def checkItemState(self, user):
+        state = ''
+        if not self.available:
+            
+            state = 'in service'
+        elif self.terminated_user.exists():
+            state = 'Unavailbable'
+        elif self.ordered_user.exists():
+            state = 'Ordered'
+        elif self.ordered_user.all():
+            state = 'Ordered'
+        elif self.delivered_user.exists():
+            state = 'Delivered'
+        elif self.delivered_user.all():
+            state = 'Delivered'
+            print(state)
+        return state
 
 class ShoeImage(models.Model):
     shoe = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
