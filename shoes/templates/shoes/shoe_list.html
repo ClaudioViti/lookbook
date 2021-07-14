@@ -340,16 +340,18 @@
       display: inline-block;
       margin-bottom: 5px;
     }
+    {% for shoe in object_list %}
+    {% if shoe|getUserState:user  == 'in service' %}
 
-    .soldout img {
+    .in_service img {
   position: relative;
 	filter: grayscale(60%);
   display: inline-block;
 }
-    .soldout::after {
-      {% for shoe in object_list %}
+    .in_service::after {
+
   content: '{{ shoe|getUserState:user }}';
-  {% endfor %}
+
   text-align: center;
   position: absolute;
   top: 50%;
@@ -359,6 +361,30 @@
   margin-top: 50%;
 }
 
+{% endif %}
+
+{% if shoe|getUserState:user  == 'just finished' %}
+
+.ordered img {
+position: relative;
+filter: grayscale(60%);
+display: inline-block;
+}
+.ordered::after {
+
+content: '{{ shoe|getUserState:user }}';
+
+text-align: center;
+position: absolute;
+top: 50%;
+left: 0;
+width: 100%;
+transform: translate(0, -50%);
+margin-top: 50%;
+}
+
+{% endif %}
+{% endfor %}
 #myTopnav > span {
   position: absolute;
   right: 3px;
@@ -481,40 +507,63 @@
       <article>
         <figure>
           {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
-          {% if shoeimages|length == 2 %}
           
-              {% if shoe.available == False %}
-              <div class="flip">
-              <div class="soldout" style="position: relative;">
-            {% for shoeimage in shoeimages %}
+          {% if shoeimages|length == 2 %}
+          <div class="flip">
+            {% if shoe|getUserState:user  == "in service" %}
+            
+                  
+                <div class="in_service" style="position: relative;">
+                  {% for shoeimage in shoeimages %}
 
-            <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
-            {% endfor %}
+                  <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+                {% endfor %}
+              </div>
+            {% endif %}
+            
+            {% if shoe|getUserState:user  == "just finished" %}
+              <div class="ordered" style="position: relative;">
+                {% for shoeimage in shoeimages %}
+
+                <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+              {% endfor %}
+            {% endif %}
+
           </div>
         
-          {% else %}
+          {% if shoe|getUserState:user  == "" %}
           <div class="flip">
-          {% for shoeimage in shoeimages %}
+            {% for shoeimage in shoeimages %}
           <img src="{{ shoeimage.image.url }}">
-          {% endfor %}
-        </div>
+            {% endfor %}
             {% endif %}
+          
+        </div>
+        {% else %}
           </div>
           
           
-          {% else %}
-          {% if shoe.available == False %}
-          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%);">
-          {% else %}
+          
+          {% if shoe|getUserState:user  == "in service" %}
+          <div class="in_service" style="position: relative;">
+          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+        </div>
+            {% endif %}
+            {% if shoe|getUserState:user  == "just finished" %}
+            <div class="ordered" style="position: relative;">
+            <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+          </div>
+            {% endif %}
+            {% if shoe|getUserState:user  == "" %}
           <img src="{{ shoeimages.0.image.url }}">
-          {% endif %}
+           {% endif %}
           
           {% endif %}
           {% endwith %}
           
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            {% if not shoe.available == False %}
+            {% if shoe|getUserState:user  == "" %}
             Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
             {% endif %}
             Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">

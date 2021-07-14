@@ -1,4 +1,5 @@
 <!DOCTYPE html>{% load static %}
+{% load shoes_extras %}
 <html>
 
 <head>
@@ -339,17 +340,18 @@
       display: inline-block;
       margin-bottom: 5px;
     }
-    .soldout img {
+    {% for shoe in object_list %}
+    {% if shoe|getUserState:user  == 'in service' %}
+
+    .in_service img {
   position: relative;
 	filter: grayscale(60%);
   display: inline-block;
 }
-    .soldout::after {
-      {% if shoe.available == False %}
-  content: 'Unavailable';
-  {% else %}
-  content: 'Ordered';
-  {% endif %}
+    .in_service::after {
+
+  content: '{{ shoe|getUserState:user }}';
+
   text-align: center;
   position: absolute;
   top: 50%;
@@ -358,6 +360,31 @@
   transform: translate(0, -50%);
   margin-top: 50%;
 }
+
+{% endif %}
+
+{% if shoe|getUserState:user  == 'just finished' %}
+
+.ordered img {
+position: relative;
+filter: grayscale(60%);
+display: inline-block;
+}
+.ordered::after {
+
+content: '{{ shoe|getUserState:user }}';
+
+text-align: center;
+position: absolute;
+top: 50%;
+left: 0;
+width: 100%;
+transform: translate(0, -50%);
+margin-top: 50%;
+}
+
+{% endif %}
+{% endfor %}
 
 #myTopnav > span {
   position: absolute;
@@ -473,40 +500,65 @@
   </script>
   <main>
     <section class="lookbook">
-      {% for shoe in object_list %}
-      <article>
-        <figure>
-          {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
-          {% if shoeimages|length == 2 %}
-          
-              {% if shoe.available == False %}
-              <div class="flip">
-              <div class="soldout" style="position: relative;">
-            {% for shoeimage in shoeimages %}
-
-            <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
-            {% endfor %}
-          </div>
+    {% for shoe in object_list %}
+      
+      
+    <article>
+      <figure>
+        {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
         
-          {% else %}
-          <div class="flip">
-          {% for shoeimage in shoeimages %}
-          <img src="{{ shoeimage.image.url }}">
-          {% endfor %}
+        {% if shoeimages|length == 2 %}
+        <div class="flip">
+          {% if shoe|getUserState:user  == "in service" %}
+          
+                
+              <div class="in_service" style="position: relative;">
+                {% for shoeimage in shoeimages %}
+
+                <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+              {% endfor %}
+            </div>
+          {% endif %}
+          
+          {% if shoe|getUserState:user  == "just finished" %}
+            <div class="ordered" style="position: relative;">
+              {% for shoeimage in shoeimages %}
+
+              <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+            {% endfor %}
+          {% endif %}
+
         </div>
-            {% endif %}
-          </div>
-          
-          
-          {% else %}
-          {% if shoe.available == False %}
-          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%);">
-          {% else %}
-          <img src="{{ shoeimages.0.image.url }}">
+      
+        {% if shoe|getUserState:user  == "" %}
+        <div class="flip">
+          {% for shoeimage in shoeimages %}
+        <img src="{{ shoeimage.image.url }}">
+          {% endfor %}
           {% endif %}
-          
+        
+      </div>
+      {% else %}
+        </div>
+        
+        
+        
+        {% if shoe|getUserState:user  == "in service" %}
+        <div class="in_service" style="position: relative;">
+        <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+      </div>
           {% endif %}
-          {% endwith %}
+          {% if shoe|getUserState:user  == "just finished" %}
+          <div class="ordered" style="position: relative;">
+          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+        </div>
+          {% endif %}
+          {% if shoe|getUserState:user  == "" %}
+        <img src="{{ shoeimages.0.image.url }}">
+         {% endif %}
+        
+        {% endif %}
+        {% endwith %}
           
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>

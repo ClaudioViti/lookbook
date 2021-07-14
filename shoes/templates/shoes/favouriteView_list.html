@@ -1,4 +1,5 @@
 <html> {% load static %}
+{% load shoes_extras %}
 <style>
   span,
   img {
@@ -75,6 +76,55 @@
   background-color: #04AA6D;
   color: white;
 }
+
+
+{% for shoe in object_list %}
+    {% if shoe|getUserState:user  == 'in service' %}
+
+    .in_service img {
+  position: relative;
+	filter: grayscale(60%);
+  display: inline-block;
+}
+    .in_service::after {
+
+  content: '{{ shoe|getUserState:user }}';
+  color: rgb(187, 0, 0);
+  text-align: center;
+  position: absolute;
+  top: 0%;
+  left: 0;
+  width: 100%;
+  transform: translate(0, -50%);
+  margin-top: 50%;
+}
+
+{% endif %}
+
+{% if shoe|getUserState:user  == 'just finished' %}
+
+.ordered img {
+position: relative;
+filter: grayscale(60%);
+display: inline-block;
+}
+.ordered::after {
+
+content: '{{ shoe|getUserState:user }}';
+color: rgb(187, 0, 0);
+  text-align: center;
+  position: absolute;
+  top: 0%;
+  left: 0;
+  width: 100%;
+  transform: translate(0, -50%);
+  margin-top: 50%;
+}
+
+{% endif %}
+{% endfor %}
+
+
 </style>
 
 <div class="topnav">
@@ -105,11 +155,25 @@
           <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
         </td>
         <td>
-          {% if shoe.available == False %}
+          {% if shoe|getUserState:user  == "in service" %}
+          <div class="in_service" style="position: relative; display: inline-block;">
+          {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
           <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
-          {% else %}
-          <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+          {% endfor %}
           {% endif %}
+        </div>
+        {% if shoe|getUserState:user  == "just finished" %}
+        <div class="ordered" style="position: relative; display: inline-block;">
+          {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+          <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+          {% endfor %}
+          {% endif %}
+          {% if shoe|getUserState:user  == "" %}
+          
+            {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
+            <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+            {% endfor %}
+            {% endif %}
         </td>
 
         
