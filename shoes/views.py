@@ -589,21 +589,3 @@ from django.contrib.auth.views import LoginView
 class LoginViewCustom(LoginView):
     
     extra_context = {'admin_mail': settings.DEFAULT_FROM_EMAIL}
-
-
-def checkItemState(user, pk):
-    state = ''
-    if user.available:
-        print('joinedss')
-        state = 'in service'
-    elif user.terminated_items.exists():
-        state = 'Unavailbable'
-    elif user.ordered_items.exists():
-        state = 'Ordered'
-    elif user.ordered_items.all():
-        state = 'Ordered'
-    elif user.delivered_items.exists():
-        state = 'Delivered'
-    elif user.delivered_items.all():
-        state = 'Delivered'
-    return state

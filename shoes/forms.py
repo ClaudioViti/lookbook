@@ -55,11 +55,20 @@ class UrgentAddForm(ModelForm):
         fields = ['id']
     urgent = forms.BooleanField(required=False)
 
+from django.db.models import Exists, OuterRef
+
 class ShoeCartsForm(ModelForm):
     class Meta:
         model = Shoe
         fields = ['cart_user', 'urgent_user', 'ordered_user', 'delivered_user', 'id']
         widgets = {'id': forms.HiddenInput()}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cart_user'].queryset = self.fields['cart_user'].queryset.annotate(selected=Exists(self.instance.cart_user.filter(pk=OuterRef('pk')))).order_by('-selected')
+        self.fields['urgent_user'].queryset = self.fields['urgent_user'].queryset.annotate(selected=Exists(self.instance.urgent_user.filter(pk=OuterRef('pk')))).order_by('-selected')
+        self.fields['ordered_user'].queryset = self.fields['ordered_user'].queryset.annotate(selected=Exists(self.instance.ordered_user.filter(pk=OuterRef('pk')))).order_by('-selected')
+        self.fields['delivered_user'].queryset = self.fields['delivered_user'].queryset.annotate(selected=Exists(self.instance.delivered_user.filter(pk=OuterRef('pk')))).order_by('-selected')
     def clean(self):
         cleaned_data = super().clean()
         delivered_users = cleaned_data.get("delivered_user")  # fill the field name
