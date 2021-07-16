@@ -293,6 +293,7 @@ class ordersView(LoginRequiredMixin, ListView):
         else:
             # print("user sees own")
             queryset = self.request.user.delivered_items.exclude(pk__in=self.request.user.terminated_items.values_list('pk'))
+            queryset = queryset.union(self.request.user.ordered_items.exclude(pk__in=self.request.user.terminated_items.values_list('pk')))
 
         return queryset
 

@@ -138,8 +138,6 @@ body {
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Cart</td>
       
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Urgent</td>
-      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Ordered</td>
-      <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">Delivered</td>
       <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
       </td>
     </tr>
@@ -187,22 +185,7 @@ body {
           </div>
         
       </td>
-      
-      <td>
-            
-            <div class="fieldWrapper">
-            {{ form.ordered_user }}
-          </div>
-       
-      </td>
-      
-      <td>
-            
-            <div class="fieldWrapper">
-            {{ form.delivered_user }}
-          
-          </div>
-        </td>
+
       
         
            
@@ -265,7 +248,7 @@ body {
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
       {% endfor %}
       {% endif %}
-      {% if shoe|getUserState:user  == "" %}
+      {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
       
         {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
         <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">

@@ -530,7 +530,7 @@ margin-top: 50%;
 
         </div>
       
-        {% if shoe|getUserState:user  == "" %}
+        {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
         <div class="flip">
           {% for shoeimage in shoeimages %}
         <img src="{{ shoeimage.image.url }}">
@@ -553,7 +553,7 @@ margin-top: 50%;
           <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
         </div>
           {% endif %}
-          {% if shoe|getUserState:user  == "" %}
+          {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
         <img src="{{ shoeimages.0.image.url }}">
          {% endif %}
         

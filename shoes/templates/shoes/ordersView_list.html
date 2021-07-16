@@ -1,4 +1,5 @@
 <html> {% load static %}
+  {% load shoes_extras %}
 <style>
   span,
   img {
@@ -125,20 +126,22 @@
         <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
       </td>
       <td>
-        {% if shoe.ordered == True %}
-        <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
-        {% else %}
+        {% if shoe|getUserState:user  == "Ordered" or shoe|getUserState:user  == "Delivered" %}
         <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
+        {% else %}
+        <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
         {% endif %}
       </td>
 
 
       <td style="width:200px;">
-        {% if shoe.ordered == True %}
-        <input style="display: none" id="{{ shoe.id }}" type="checkbox" value="{{ shoe.id }}" {{
-          shoe.cart|yesno:"checked," }} onClick="pushParent()">
+        {% if shoe|getUserState:user  == "Ordered" %}
+        <p style="color: rgb(187, 0, 0);">Ordered</p>
+        {% elif shoe|getUserState:user  == "Delivered" %}
+        <p style="color: rgb(187, 0, 0);">Delivered</p>
 
-        <label for="{{ shoe.id }}"></label>
+        
+        
         {% else %}
         <p style="color: rgb(187, 0, 0);">Unavailable</p>
         {% endif %}

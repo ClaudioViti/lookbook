@@ -175,8 +175,10 @@ class Shoe(models.Model):
             state = 'in service'
         elif self.terminated_user.filter(pk=user.pk).exists():
             state = 'just finished'
-        elif self.terminated_user.filter(pk=user.pk).exists():
+        elif self.ordered_user.filter(pk=user.pk).exists():
             state = 'Ordered'
+        elif self.delivered_user.filter(pk=user.pk).exists():
+            state = 'Delivered'
         elif self.ordered_user.all():
             state = 'Ordered by others'
         elif self.terminated_user.filter(pk=user.pk).exists():
