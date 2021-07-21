@@ -21,7 +21,7 @@ class ShoeAdminForm(ModelForm):
 class ShoeForm(ModelForm):
     class Meta:
          model = Shoe
-         exclude = ['user', 'available']
+         exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
@@ -60,7 +60,7 @@ from django.db.models import Exists, OuterRef
 class ShoeCartsForm(ModelForm):
     class Meta:
         model = Shoe
-        fields = ['cart_user', 'urgent_user', 'ordered_user', 'delivered_user', 'id']
+        fields = ['cart_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user', 'id']
         widgets = {'id': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
@@ -118,6 +118,13 @@ class ShoeFavouriteForm(ModelForm):
 class ShoeOrdersForm(ModelForm):
     class Meta:
         model = Shoe
+        fields = ['id']
+        widgets = {'id': forms.HiddenInput()}
+    terminated = forms.BooleanField(required=False)
+
+class ShoeOrdersAdminForm(ModelForm):
+    class Meta:
+        model = Shoe
         fields = ['ordered_user', 'id', 'delivered_user', 'terminated_user']
         widgets = {'id': forms.HiddenInput()}
 
@@ -125,6 +132,6 @@ class ShoeOrdersForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['ordered_user'].queryset = self.fields['ordered_user'].queryset.annotate(selected=Exists(self.instance.ordered_user.filter(pk=OuterRef('pk')))).order_by('-selected')
         self.fields['delivered_user'].queryset = self.fields['delivered_user'].queryset.annotate(selected=Exists(self.instance.delivered_user.filter(pk=OuterRef('pk')))).order_by('-selected')
-
+        self.fields['terminated_user'].queryset = self.fields['terminated_user'].queryset.annotate(selected=Exists(self.instance.terminated_user.filter(pk=OuterRef('pk')))).order_by('-selected')
     terminated = forms.BooleanField(required=False)
 

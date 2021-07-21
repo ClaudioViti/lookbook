@@ -171,20 +171,20 @@ class Shoe(models.Model):
     def checkItemState(self, user):
         state = ''
         if not self.available:
-            
             state = 'in service'
         elif self.terminated_user.filter(pk=user.pk).exists():
-            state = 'just finished'
-        elif self.ordered_user.filter(pk=user.pk).exists():
-            state = 'Ordered'
+            state = 'Terminated'
         elif self.delivered_user.filter(pk=user.pk).exists():
             state = 'Delivered'
-        elif self.ordered_user.all():
-            state = 'Ordered by others'
-        elif self.terminated_user.filter(pk=user.pk).exists():
-            state = 'i have this'
+        elif self.ordered_user.filter(pk=user.pk).exists():
+            state = 'Ordered'
+        elif self.terminated_user.all():
+            state = 'others have this'
         elif self.delivered_user.all():
             state = 'others have this'
+        elif self.ordered_user.all():
+            state = 'Ordered by others'
+
         print(state)
         return state
 

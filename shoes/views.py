@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeOrdersForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeOrdersForm, ShoeOrdersAdminForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from shoes.models import ShoeImage, Shoe, ShoeBrand
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from django.db.models import F
+from django.db.models import F, Q
 
 # Create your views here.
 
@@ -157,6 +157,7 @@ class minicartView(LoginRequiredMixin, ListView):
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['ordered_ids'] = self.request.user.ordered_items.values_list('pk', flat=True)
         context['delivered_ids'] = self.request.user.delivered_items.values_list('pk', flat=True)
+        context['terminated_ids'] = self.request.user.terminated_items.values_list('pk', flat=True)
 
         if self.formset:
              context['shoe_formset'] = self.formset
@@ -235,7 +236,7 @@ class ordersView(LoginRequiredMixin, ListView):
     template_name = 'shoes/ordersView_list.html'
 
     formset = None
-    formset_class = modelformset_factory(Shoe, form=ShoeOrdersForm, extra=0)  # if it doesn't work uncomment dispatch
+
 
     # def dispatch(self, request, *args, **kwargs):
     #    self.formset_class = modelformset_factory(Shoe, form=ShoeFavouritesForm, extra=0)
@@ -255,29 +256,36 @@ class ordersView(LoginRequiredMixin, ListView):
 
 
     def get_formset(self, data=None):
+        if self.request.user.is_staff:
+            formset_class = modelformset_factory(Shoe, form=ShoeOrdersAdminForm, extra=0)  # if it doesn't work uncomment dispatch
+        else:
+            formset_class = modelformset_factory(Shoe, form=ShoeOrdersForm, extra=0)
         kwargs = {
             "queryset": self.object_list,
         }
         if data:
             kwargs["data"] = data
-        return self.formset_class(**kwargs)
-    print("formset is valid")
+        return formset_class(**kwargs)
+    
     
     def formset_valid(self, formset):
-        print("joined")
+        
         for form in formset:
-            
+            print(self.request)
             term = form.cleaned_data.get('terminated', False)
+            
             obj = form.save()
+            
             if term:
-
+               
                 
                 self.request.user.terminated_items.add(obj)
 
                 
-        
-        return terminate_order(self.request)
-        return redirect('minicart')
+        if not self.request.user.is_staff:
+            return terminate_order(self.request)
+        else:    
+            return redirect('minicart')
     
     def formset_invalid(self, formset, error_anchor=None):
         print(formset.errors)
@@ -289,15 +297,26 @@ class ordersView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if self.request.user.is_staff:
             # print("staff see everything")
-            queryset = Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct()                       
+            a = Q(ordered_user__isnull=False) 
+            b = Q(delivered_user__isnull=False)
+            c = Q(terminated_user__isnull=False)
+            queryset = Shoe.objects.filter(a | b | c).distinct()
+            
         else:
             # print("user sees own")
-            queryset = self.request.user.delivered_items.exclude(pk__in=self.request.user.terminated_items.values_list('pk'))
-            queryset = queryset.union(self.request.user.ordered_items.exclude(pk__in=self.request.user.terminated_items.values_list('pk')))
+            a = Q(ordered_user=self.request.user) 
+            b = Q(delivered_user=self.request.user)
+            c = Q(terminated_user=self.request.user)
+            queryset = Shoe.objects.filter(a | b | c).distinct()
+            
 
         return queryset
 
     def get_context_data(self, **kwargs):
+        if self.request.user.is_staff:
+            formset_class = modelformset_factory(Shoe, form=ShoeOrdersAdminForm, extra=0)  # if it doesn't work uncomment dispatch
+        else:
+            formset_class = modelformset_factory(Shoe, form=ShoeOrdersForm, extra=0)
 
         context = super().get_context_data(**kwargs)
         context['terminated_items'] = self.request.user.urgent_items.values_list('pk', flat=True)
@@ -305,7 +324,7 @@ class ordersView(LoginRequiredMixin, ListView):
         if self.formset:
              context['shoe_formset'] = self.formset
         else:
-            context['shoe_formset'] = self.formset_class(queryset=context['object_list'])
+            context['shoe_formset'] = formset_class(queryset=context['object_list'])
 
         return context
 
@@ -546,9 +565,9 @@ def terminate_order(request):
                 itm.ordered = F('ordered') + 1
                 itm.save()
                 itm_terminate.append(itm)
-                request.user.terminated_items.add(* request.user.delivered_items.all())    
+                
 
-        request.user.terminated_items.remove(*itm_terminate)
+       
 
         message = request.POST['message']
         for id in ids: message += str(id)

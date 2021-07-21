@@ -116,6 +116,7 @@
       {% for form in shoe_formset %}
      
       {% with form.instance as shoe %}
+      {{ form.id }}
     
     
     {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
@@ -126,7 +127,7 @@
         <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
       </td>
       <td>
-        {% if shoe|getUserState:user  == "Ordered" or shoe|getUserState:user  == "Delivered" %}
+        {% if shoe|getUserState:user == "Ordered" or shoe|getUserState:user == "Delivered" or shoe|getUserState:user == "Terminated" %}
         <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
         {% else %}
         <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px; filter: grayscale(100%);">
@@ -135,9 +136,11 @@
 
 
       <td style="width:200px;">
-        {% if shoe|getUserState:user  == "Ordered" %}
+        {% if shoe|getUserState:user == "Terminated" %}
+        <p style="color: rgb(187, 0, 0);">Terminated</p>
+        {% elif shoe|getUserState:user == "Ordered" %}
         <p style="color: rgb(187, 0, 0);">Ordered</p>
-        {% elif shoe|getUserState:user  == "Delivered" %}
+        {% elif shoe|getUserState:user == "Delivered" %}
         <p style="color: rgb(187, 0, 0);">Delivered</p>
 
         
@@ -147,12 +150,13 @@
         {% endif %}
       </td>
       <td>
-        {{ form.id }}
+        {% if not shoe|getUserState:user == "Terminated" %}
+        
         <div class="fieldWrapper">
 
           {{ form.terminated }}
         </div>
-
+        {% endif %}
       </td>
     </tr>
 
@@ -191,7 +195,9 @@
         <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
           Ordered</td>
           <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
-            delivered</td>
+            Delivered</td>
+          <td style="text-align: center; color:rgb(87, 87, 87);font-size:12px; left: 0; right: 0;">
+            Terminated</td>
       </tr>
 
       {% endif %}
@@ -223,6 +229,14 @@
         <div class="fieldWrapper">
 
           {{ form.delivered_user }}
+        </div>
+
+      </td>
+      <td>
+        {{ form.id }}
+        <div class="fieldWrapper">
+
+          {{ form.terminated_user }}
         </div>
 
       </td>
