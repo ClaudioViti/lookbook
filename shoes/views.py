@@ -19,6 +19,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
+    paginate_by = 3
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -60,7 +61,6 @@ class ShoeListView(LoginRequiredMixin, ListView):
         else:
             return self.ordering 
      
-
 class CartUpdateView(UpdateView):
     model = models.Shoe
     form_class = CartAddForm
