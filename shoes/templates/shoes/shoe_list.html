@@ -617,10 +617,10 @@ margin-top: 50%;
 <nav aria-label="Page navigation conatiner"></nav>
 <ul class="pagination justify-content-center" style="text-align: center;">
   {% if page_obj.has_previous %}
-  <a href="?{{ request.GET|page_querystring:page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a>
+  <a href="?{{ request.GET|page_querystring:page_obj.previous_page_number }}" class="page-link" style="text-decoration: none;">&laquo; PREV </a>
   {% endif %}
   {% if page_obj.has_next %}
-  <a href="?{{ request.GET|page_querystring:page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a>
+  <a href="?{{ request.GET|page_querystring:page_obj.next_page_number }}" class="page-link" style="text-decoration: none;"> NEXT &raquo;</a>
 
   {% endif %}
 </ul>
