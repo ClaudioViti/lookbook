@@ -19,7 +19,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
-    paginate_by = 3
+    paginate_by = 4
 
     def get_queryset(self):
         qs = super().get_queryset()
