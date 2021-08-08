@@ -144,6 +144,7 @@ class Shoe(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     size = models.CharField(max_length=5, choices=SIZE_CHOICES, blank=True, null=True)
     color = models.CharField(max_length=200, choices=COLOR_CHOICES, blank=True, null=True)
+    sole_color = models.CharField(max_length=200, choices=COLOR_CHOICES, blank=True, null=True)
     heel_height = models.IntegerField(default=0, blank=True, null=True)
     heel_kind = models.CharField(max_length=20, choices= HEEL_KIND_CHOICES, blank=True, null=True)
     plateau_height = models.IntegerField(default=0, blank=True, null=True)
