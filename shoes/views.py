@@ -9,6 +9,10 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import F, Q
 
+# Set the pagination value here.
+
+PAGINATE_CONST = 4
+
 # Create your views here.
 
 from . import models
@@ -19,7 +23,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
-    paginate_by = 4
+    paginate_by = PAGINATE_CONST
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -508,7 +512,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoe_list_manage.html'
-    paginate_by = 4
+    paginate_by = PAGINATE_CONST
 
     def get_queryset(self):
         qs = super().get_queryset()
