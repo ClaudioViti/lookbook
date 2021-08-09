@@ -364,7 +364,7 @@
 
 {% endif %}
 
-{% if shoe|getUserState:user  == 'just finished' %}
+{% if shoe|getUserState:user  == 'ordered' %}
 
 .ordered img {
 position: relative;
@@ -537,7 +537,7 @@ margin-right: 200px; margin-left: 200px;
               </div>
             {% endif %}
             
-            {% if shoe|getUserState:user  == "just finished" %}
+            {% if shoe|getUserState:user  == "ordered" %}
               <div class="ordered" style="position: relative;">
                 {% for shoeimage in shoeimages %}
 
@@ -547,7 +547,7 @@ margin-right: 200px; margin-left: 200px;
 
           </div>
         
-          {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
+          {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
           <div class="flip">
             {% for shoeimage in shoeimages %}
           <img src="{{ shoeimage.image.url }}">
@@ -565,12 +565,12 @@ margin-right: 200px; margin-left: 200px;
           <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
         </div>
             {% endif %}
-            {% if shoe|getUserState:user  == "just finished" %}
+            {% if shoe|getUserState:user  == "ordered" %}
             <div class="ordered" style="position: relative;">
             <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
           </div>
             {% endif %}
-            {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
+            {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
           <img src="{{ shoeimages.0.image.url }}">
            {% endif %}
           
@@ -579,7 +579,7 @@ margin-right: 200px; margin-left: 200px;
           
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
+            {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
             Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
             {% endif %}
             Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">
