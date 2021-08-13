@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 
 UserModel = get_user_model()
-from .forms import SignupForm, UserUpdateForm, UserFromMailForm
+from .forms import SignupForm, UserAdminUpdateForm, UserUpdateForm, UserFromMailForm
 
 
 def signup(request):
@@ -57,11 +57,16 @@ def activate(request, uidb64, token):
 from django.views.generic.edit import UpdateView
 class UserUpdate(UpdateView):
     model = User
-    form_class = UserUpdateForm
+    def get_form_class(self):
+        if self.request.user.is_staff:
+            form_class = UserAdminUpdateForm
+        else:
+            form_class = UserUpdateForm
+        return form_class
     template_name_suffix = '_update_form'  # if template is like user_update_form.html
-    # template_name  # or provide custom name
-  
-    # if we need it in future
+        # template_name  # or provide custom name
+    
+        # if we need it in future
 
 
     

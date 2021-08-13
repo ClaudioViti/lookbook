@@ -16,7 +16,7 @@ class SignupForm(UserCreationForm):
 
 
 
-class UserUpdateForm(PasswordChangeForm, forms.ModelForm):
+class UserAdminUpdateForm(PasswordChangeForm, forms.ModelForm):
 
     class Meta:
         model = User
@@ -55,6 +55,11 @@ class UserUpdateForm(PasswordChangeForm, forms.ModelForm):
         if commit:
             self.user.save()
         return self.user
+
+class UserUpdateForm(UserAdminUpdateForm):
+
+    class Meta(UserAdminUpdateForm.Meta):
+        exclude = ['password',]
 
 
 

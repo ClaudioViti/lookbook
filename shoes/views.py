@@ -79,7 +79,6 @@ class CartUpdateView(UpdateView):
         return JsonResponse({ 'cart': to_cart })
 
 class UrgentUpdateView(UpdateView):
-    print('ok')
     model = models.Shoe
     form_class = UrgentAddForm
     template_name_suffix = '_update_form'
