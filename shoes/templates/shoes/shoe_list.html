@@ -514,15 +514,15 @@ margin-right: 200px; margin-left: 200px;
         </button>
         <div class="dropdown-content">
           
-          <form action="/" method="get">
+          <form action="{% url 'config' %}" method="get">
             
             <div class="fieldWrapper">
               <label>Items</label>
-              {{ config_form.paginate }}
+              {{ form.paginate }}
             </div>
             <div class="fieldWrapper">
               <label>Dark mode</label>
-              {{ config_form.dark_mode }}
+              {{ form }}
             </div>
             <input style="margin-top:10px" type="submit" value="Apply">
           </form>
