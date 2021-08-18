@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeOrdersForm, ShoeOrdersAdminForm
+from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeOrdersForm, ShoeOrdersAdminForm, ConfForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -45,12 +45,13 @@ class ShoeListView(LoginRequiredMixin, ListView):
             self.filter_form = ShoeForm(request.GET)
 
         self.order_form = ShoeOrderForm(request.GET)
+        self.config_form = ConfForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
          
         # view - get_context_data() method
-        context = super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
+        context = super().get_context_data(form=self.filter_form, order_form=self.order_form, config_form=self.config_form, **kwargs)
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)

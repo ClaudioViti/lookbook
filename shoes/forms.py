@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from shoes.models import Shoe, ShoeImage, ShoeBrand
+from shoes.models import Shoe, ShoeImage, ShoeBrand, AccountConfig
 from django import forms
 from django.forms.models import modelformset_factory
 from django.forms import inlineformset_factory
@@ -135,3 +135,8 @@ class ShoeOrdersAdminForm(ModelForm):
         self.fields['terminated_user'].queryset = self.fields['terminated_user'].queryset.annotate(selected=Exists(self.instance.terminated_user.filter(pk=OuterRef('pk')))).order_by('-selected')
     terminated = forms.BooleanField(required=False)
 
+
+class ConfForm(ModelForm):
+    class Meta:
+         model = AccountConfig
+         fields = ['paginate', 'dark_mode' ]

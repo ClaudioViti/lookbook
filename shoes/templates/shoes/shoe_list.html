@@ -113,7 +113,11 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
-      background-color: rgb(255, 255, 255);
+      {% if dark_mode  == True %}
+        background-color: rgb(37, 37, 37);
+      {% else %}
+        background-color: rgb(255, 255, 255);
+      {% endif %}
     }
     
     .lookbook img:hover {
@@ -494,6 +498,49 @@ margin-right: 200px; margin-left: 200px;
       </div>
       <a href="mailto: {{ admin_mail }}?subject=Help request for user: {{ user.username }}">Help</a>
       <a href="{% url 'logout' %}">Logout</a>
+
+
+
+
+
+
+
+
+
+
+      <div class="dropdown" tabindex="0">
+        <button class="dropbtn" style="font-size: 90%;"> &#x2699
+          
+        </button>
+        <div class="dropdown-content">
+          
+          <form action="/" method="get">
+            
+            <div class="fieldWrapper">
+              <label>Items</label>
+              {{ config_form.paginate }}
+            </div>
+            <div class="fieldWrapper">
+              <label>Dark mode</label>
+              {{ config_form.dark_mode }}
+            </div>
+            <input style="margin-top:10px" type="submit" value="Apply">
+          </form>
+          
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
       
       <span style="font-size:10px; color: rgb(255, 255, 255);">
         {% if user.is_authenticated %}

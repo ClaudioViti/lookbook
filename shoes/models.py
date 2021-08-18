@@ -186,7 +186,6 @@ class Shoe(models.Model):
         elif self.ordered_user.all():
             state = 'ordered by others'
 
-        print(state)
         return state
 
 class ShoeImage(models.Model):
@@ -198,3 +197,18 @@ class ShoeBrand(models.Model):
 
     def __str__(self):
         return self.brand
+
+from django.contrib.auth.models import User
+
+class AccountConfig(models.Model):
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dark_mode = models.BooleanField(default=True)
+
+    PAGINATE_NUM = (
+        ("8", "8"),
+        ("32", "32"),
+        ("128", "128"),
+        ("0", "0"),
+    )
+    paginate = models.IntegerField(choices=PAGINATE_NUM, blank=False, null=False)
