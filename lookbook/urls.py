@@ -46,6 +46,6 @@ urlpatterns = [
     path('manage/<int:pk>/', edit_shoe, name='edit'),
     path('manage/<int:pk>/delete/', ShoeDeleteView.as_view(), name='delete'),
     path('minicart/sendmailterminate/', terminate_order, name="terminate_order"),
-     path('config/', ConfigView.as_view(), name='config'),
+    path('config/', ConfigView.as_view(), name='config'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

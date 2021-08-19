@@ -45,16 +45,18 @@ class ShoeListView(LoginRequiredMixin, ListView):
             self.filter_form = ShoeForm(request.GET)
 
         self.order_form = ShoeOrderForm(request.GET)
+        
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-         
+        config_form = ConfForm()
         # view - get_context_data() method
-        context = super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
+        context = super().get_context_data(form=self.filter_form, order_form=self.order_form, config_form_=config_form, **kwargs)
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['admin_mail'] = settings.DEFAULT_FROM_EMAIL
+        context['dark_mode'] = self.request.user.user_config.dark_mode
         return context
         
 
@@ -615,9 +617,11 @@ class LoginViewCustom(LoginView):
     extra_context = {'admin_mail': settings.DEFAULT_FROM_EMAIL}
 
 
-class ConfigView(LoginRequiredMixin, FormView):
+class ConfigView(UpdateView):
     model = models.AccountConfig
     form_class = ConfForm
     template_name_suffix = '_update_form'
-    def get_success_url(self):
-        return reverse_lazy('shoe-list')
+    def get_object(self):
+        return self.request.user.user_config
+
+    success_url = reverse_lazy('shoe-list')
