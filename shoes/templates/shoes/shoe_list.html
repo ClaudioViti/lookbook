@@ -113,7 +113,7 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
-      {% if not dark_mode %}
+      {% if dark_mode %}
         background-color: rgb(37, 37, 37);
       {% else %}
         background-color: rgb(255, 255, 255);
@@ -626,7 +626,7 @@ margin-right: 200px; margin-left: 200px;
           
           <figcaption>
             <header> Id: {{ shoe.pk }} </header>
-            {% if not dark_mode %}
+            {% if dark_mode %}
             <a style="color: rgb(255, 255, 255);">
           {% else %}
           <a style="color: rgb(37, 37, 37);">

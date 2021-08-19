@@ -23,7 +23,9 @@ class ShoeListView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
-    paginate_by = PAGINATE_CONST
+    def get_paginate_by(self, queryset):
+        paginate_by = self.request.user.user_config.paginate
+        return paginate_by
 
     def get_queryset(self):
         qs = super().get_queryset()
