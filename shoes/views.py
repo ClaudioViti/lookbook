@@ -51,7 +51,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        config_form = ConfForm()
+        config_form = ConfForm(instance=self.request.user.user_config)
         # view - get_context_data() method
         context = super().get_context_data(form=self.filter_form, order_form=self.order_form, config_form_=config_form, **kwargs)
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
