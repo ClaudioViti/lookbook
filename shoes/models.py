@@ -209,6 +209,6 @@ class AccountConfig(models.Model):
         (8, "8"),
         (32, "32"),
         (128, "128"),
-        (0, "0"),
+        (0, "all"),
     )
     paginate = models.IntegerField(choices=PAGINATE_NUM, blank=False, null=False)
