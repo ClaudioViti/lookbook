@@ -203,7 +203,7 @@ from django.contrib.auth.models import User
 class AccountConfig(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_config')
-    dark_mode = models.BooleanField(default=True)
+    dark_mode = models.BooleanField(default=False)
 
     PAGINATE_NUM = (
         (8, "8"),
