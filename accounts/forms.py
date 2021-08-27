@@ -21,6 +21,7 @@ class UserAdminUpdateForm(PasswordChangeForm, forms.ModelForm):
     class Meta:
         model = User
         fields = '__all__'
+        exclude = ['password',]
 
     def clean(self):
         if 'email' in self.changed_data and 'new_password1' in self.changed_data:
