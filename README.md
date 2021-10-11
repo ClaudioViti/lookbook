@@ -16,3 +16,6 @@ and
 NOTE1: if "migrate" goes wrong, you can try deleting last migration .py file placed in shoes/migrations/
 
 NOTE2: an edit to templates (.html) doesn't need to run the commands upon.
+
+admin credentials: user: admin / password: testaccount
+normal user credentials: user: user1 / password: testaccount
