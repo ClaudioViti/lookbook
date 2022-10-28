@@ -89,6 +89,7 @@ class Shoe(models.Model):
     ("Blade", "Blade"),
     ("Kitten", "Kitten"),
     ("Spool", "Spool"),
+    ("Triangle", "Triangle"),
     )
     STATE_CHOICES = (
     ("New", "New"),
