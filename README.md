@@ -3,13 +3,13 @@
 It's a shoes lookbook web app based on Django framework.
 This app allows offers an inventory system to manage shoes items, with a specific detal fields.
 
-
+----------------
 First Installation guide:
 
 sudo apt-get install python
 sudo pip install django
 rename settings.sample.py located in lookbook/ in settings.py
-
+-----------------
 
 to start the server run the following command: python manage.py runserver 0.0.0.0:8000
 
