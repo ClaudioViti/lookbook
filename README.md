@@ -3,13 +3,13 @@
 It's a shoes virtual inventory web app based on Django framework.
 This app allows offers an inventory system to manage shoes items, with a specific detailed fields.
 
-----------------
+
 First Installation guide:
 
 sudo apt-get install python
 sudo pip install django
 rename settings.sample.py located in lookbook/ in settings.py
------------------
+
 
 To start the server run the following command: python.exe manage.py runserver 0.0.0.0:8000
 
