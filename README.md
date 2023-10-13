@@ -7,7 +7,9 @@ This app allows offers an inventory system to manage shoes items, with a specifi
 First Installation guide:
 
 sudo apt-get install python
+
 sudo pip install django
+
 rename settings.sample.py located in lookbook/ in settings.py
 
 
