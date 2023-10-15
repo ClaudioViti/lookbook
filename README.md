@@ -1,7 +1,7 @@
 # lookbook (multi-user version, no longer developed)
 
-It's a shoes virtual inventory web app based on Django framework.
-This app allows offers an inventory system to manage shoes items, with a specific detal fields.
+t's a shoes virtual inventory web app based on Django framework.
+This app allows offers an inventory system to manage shoes items, with a specific detailed fields.
 
 
 First Installation guide:
