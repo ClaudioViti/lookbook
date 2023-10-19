@@ -470,7 +470,7 @@ def order_list(request):
         message = request.POST['message']
         for id in ids: message += str(id)
         if len(itm_remove):
-            send_mail('Order List',
+            send_mail('Lookbook: Order List',
             message, 
             settings.EMAIL_HOST_USER,
             settings.RECIPIENT_LIST, 
@@ -580,7 +580,7 @@ def terminate_order(request):
         message = request.POST['message']
         for id in ids: message += str(id)
         if len(itm_terminate):
-            send_mail('Terminate Order List',
+            send_mail('Lookbook: Terminate Order List',
             message, 
             settings.EMAIL_HOST_USER,
             settings.RECIPIENT_LIST, 

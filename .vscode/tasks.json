@@ -7,17 +7,18 @@
         {
             "label": "makemigrations",
             "type": "shell",
-            "command": "python.exe manage.py makemigrations"
+            "command": "python manage.py makemigrations"
         },
         {
             "label": "migrate",
             "type": "shell",
-            "command": "python.exe manage.py migrate"
+            "command": "python manage.py migrate"
         },
         {
             "label": "runserver",
             "type": "shell",
-            "command": "python.exe manage.py runserver 0.0.0.0:8000"
+            "command": "python manage.py runserver 0.0.0.0:8000",
+            "runOptions": { "runOn": "folderOpen" }
         }
     ]
 }
