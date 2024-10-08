@@ -101,6 +101,12 @@
     }
     
     .lookbook img {
+      {% if dark_mode %}
+      background-color: rgb(37, 37, 37);
+          {% else %}
+          background-color: rgb(255, 255, 255);
+          {% endif %}
+      
       height: 100px;
       float: left;
       filter: grayscale(0%);
@@ -497,7 +503,7 @@ margin-right: 200px; margin-left: 200px;
         </div>
       </div>
       <a href="mailto: {{ admin_mail }}?subject=Help request for user: {{ user.username }}">Help</a>
-      <a href="{% url 'logout' %}">Logout</a>
+      <form method="POST" action="{% url 'logout' %}"><button type="submit">Logout</button>{% csrf_token %}</form>
 
 
 
@@ -628,10 +634,12 @@ margin-right: 200px; margin-left: 200px;
           {% endwith %}
           
           <figcaption>
-            <header> Id: {{ shoe.pk }} </header>
+            
             {% if dark_mode %}
+            <header style="background-color: rgb(37, 37, 37); color: rgb(255, 255, 255);"> Id: {{ shoe.pk }} </header>
             <a style="color: rgb(255, 255, 255);">
           {% else %}
+          <header> Id: {{ shoe.pk }} </header>
           <a style="color: rgb(37, 37, 37);">
           {% endif %}
             {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}

@@ -492,7 +492,7 @@ margin-right: 200px; margin-left: 200px;
         </div>
       </div>
       <a href="mailto: {{ admin_mail }}?subject=Help request for user: {{ user.username }}">Help</a>
-      <a href="{% url 'logout' %}">Logout</a>
+      <form method="POST" action="{% url 'logout' %}"><button type="submit">Logout</button>{% csrf_token %}</form>
       <span style="font-size:15px; color: rgb(255, 255, 255);">
         {% if user.is_authenticated %}
         Welcome <b>{{ user.username }}</b>
