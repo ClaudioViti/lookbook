@@ -6,14 +6,14 @@ This app allows offers an inventory system to manage shoes items, with a specifi
 
 First Installation guide:
 
-sudo apt-get install python
+sudo apt-get install python3 python3-venv and python3-pip
 
-sudo pip install django
+pip install django
 
 rename settings.sample.py located in lookbook/ in settings.py
 
 
-To start the server run the following command: python.exe manage.py runserver 0.0.0.0:8000
+To start the server run the following command: python manage.py runserver 0.0.0.0:8000
 
 when an edit is made, the following commands are needed:
 
