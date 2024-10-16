@@ -42,13 +42,11 @@
     </style>  
   
     <div class="topnav">
-    <a href="{% url 'manage' %}" class="active">Back</a>
+    <a href="{% url 'manage' %}?{{ request.GET.urlencode }}" class="active">Back</a>
   
   </div>
 
-<form action="/brand/">
-    <input type="submit" value="Manage Fields" />
-</form>
+  <a style="display: inline-block; margin-top: 2px" href="/brand/?{{ request.GET.urlencode }}" target=”_blank” class="active"><button type="submit">Manage Fields</button></a>
 
 <form method="post" enctype="multipart/form-data">
 
@@ -62,7 +60,5 @@
     </table>
     <input type="submit" value="Save">
 </form>
-
-
 
 {% endblock %}
