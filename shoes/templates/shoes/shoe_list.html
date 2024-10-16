@@ -429,6 +429,36 @@ margin-right: 200px; margin-left: 200px;
 }
 }
 
+.pagination a {
+  text-decoration: none;
+  margin: auto;
+  color: green;
+  padding: 0.5rem;
+}
+
+
+ul.pagination {
+  list-style: none;
+  display: flex;
+  background-color: lightblue;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.pagination li {
+  padding: 0.5rem;
+  border: solid grey 1px;
+}
+
+.pagination li:first-child {
+  border-bottom-left-radius: 0.2rem;
+  border-top-left-radius: 0.2rem;
+}
+.pagination li:last-child {
+  border-bottom-right-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
 
 
   </style>
@@ -503,7 +533,7 @@ margin-right: 200px; margin-left: 200px;
         </div>
       </div>
       <a href="mailto: {{ admin_mail }}?subject=Help request for user: {{ user.username }}">Help</a>
-      <form method="POST" action="{% url 'logout' %}"><button type="submit">Logout</button>{% csrf_token %}</form>
+      <form style="display: inline-block; margin-top: 12px;" method="POST" action="{% url 'logout' %}"><button type="submit">Logout</button>{% csrf_token %}</form>
 
 
 
@@ -547,13 +577,11 @@ margin-right: 200px; margin-left: 200px;
 
 
 
-
-
-
       
       <span style="font-size:15px; color: rgb(255, 255, 255);">
+        <b style="color: green;">Total shoes: {{paginator.count}} </b>
         {% if user.is_authenticated %}
-        Welcome <b>{{ user.username }}</b>
+        | Welcome <b>{{ user.username }}</b>
         {% endif %}
       </span>
       <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
@@ -693,21 +721,46 @@ margin-right: 200px; margin-left: 200px;
 </main>
 
 {% if is_paginated %}
-<nav aria-label="Page navigation conatiner"></nav>
-<ul class="pagination justify-content-center" style="text-align: center;">
-  {% if page_obj.has_previous %}
-  <a href="?{{ request.GET|page_querystring:1 }}" class="page-link" style="text-decoration: none;">&laquo; FIRST </a>
-  <a href="?{{ request.GET|page_querystring:page_obj.previous_page_number }}" class="page-link" style="text-decoration: none;">&laquo; PREV </a>
-  {% endif %}
-  {% if page_obj.has_next %}
-  <a href="?{{ request.GET|page_querystring:page_obj.next_page_number }}" class="page-link" style="text-decoration: none;"> NEXT &raquo;</a>
-  <a href="?{{ request.GET|page_querystring:page_obj.paginator.num_pages }}" class="page-link" style="text-decoration: none;"> LAST &raquo;</a>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center" style="text-align: center;">
+
+      <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+          <a class="page-link" href="?page=1" tabindex="-1">FIRST</a>
+      </li>
+      <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+          <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %} " tabindex="-1">Previous</a>
+      </li>
+
+      {% if page_obj.number|add:'-4' > 1 %}
+    <li>  <a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+      {% endif %}
+
+      {% for i in page_obj.paginator.page_range %}
+          {% if page_obj.number == i %}
+        <li>   <a class="page-link" style="color: red" href="?page={{ i }}">{{ i }}</a></li>
+          {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+        <li>   <a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+      {% endfor %}
+
+      {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+    <li>  <a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+      {% endif %}
+
+      <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+          <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }} {% endif %}">Next</a>
+      </li>
+      <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+          <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.paginator.num_pages }}  {% endif %}">LAST</a>
+      </li>
+    </ul>
+</nav>  
+
+
+
 
   {% endif %}
-</ul>
-</nav>
-</div>
-{% endif %}
+
 
 </body>
 <script>
