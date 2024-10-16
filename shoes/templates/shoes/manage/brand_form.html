@@ -41,8 +41,9 @@
     </style>  
   
     <div class="topnav">
-    <a href="{% url 'manage' %}" class="active">Back</a>
-  
+    <a style="cursor: pointer;" onclick="windowClose();">Close</a>
+    <a href="{% url 'manage' %}?{{ request.GET.urlencode }}" class="active">Back</a>
+    
   </div>
 
 <form method="post" enctype="multipart/form-data"> {% csrf_token %}
@@ -53,6 +54,12 @@
 <form action="/brand/add/">
     <input type="submit" value="Add Brand" />
 </form>
+<script language="javascript" type="text/javascript">
+  function windowClose() {
+  window.open('','_parent','');
+  window.close();
+  }
+  </script>
 
 {% endblock %}
 
