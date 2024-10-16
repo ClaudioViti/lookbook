@@ -1,2 +1,9 @@
 __pycache__
 lookbook/settings.py
+lookbook/db.sqlite3
+lookbook/nohup.out
+lookbook/README.md
+media/
+shoes/migrations/
+shoes/static/guide.html
+accounts/views.py
