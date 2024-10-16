@@ -11,7 +11,7 @@ from django.db.models import F, Q
 
 # Set the pagination value here.
 
-PAGINATE_CONST = 4
+PAGINATE_CONST = 9
 
 # Create your views here.
 
@@ -410,7 +410,7 @@ def edit_shoe(request, pk):
         if all( [ form.is_valid(), formset.is_valid() ]):
             form.save()
             formset.save()
-            return redirect('manage')
+            return redirect( reverse('manage') + '?' + request.GET.urlencode())
 
     else:
         if request.user.is_staff:
@@ -482,19 +482,19 @@ class BrandCreate(LoginRequiredMixin, CreateView):
     model = ShoeBrand
     fields = ['brand']
     def get_success_url(self):
-        return reverse('manage')
+        return reverse('brand')
 
 class BrandUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'shoes/manage/brand_manage.html'
     model = ShoeBrand
     fields = ['brand']
     def get_success_url(self):
-        return reverse('manage')
+        return reverse('brand')
 
 class BrandDelete(LoginRequiredMixin, DeleteView):
     template_name = 'shoes/manage/brand_manage.html'
     model = ShoeBrand
-    success_url = reverse_lazy('manage')
+    success_url = reverse_lazy('brand')
 
 class BrandManage(LoginRequiredMixin, FormView):
 
@@ -509,8 +509,6 @@ class BrandManage(LoginRequiredMixin, FormView):
         elif self.request.POST['name'] == 'edit':
             return redirect('brand-update', pk=form.cleaned_data['brand'].pk)
         
-
-
 class ShoeListManage(LoginRequiredMixin, ListView):
     
     model = models.Shoe
@@ -537,7 +535,6 @@ class ShoeListManage(LoginRequiredMixin, ListView):
         else:
             self.filter_form = ShoeForm(request.GET)
 
-        
         self.order_form = ShoeOrderForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
 
