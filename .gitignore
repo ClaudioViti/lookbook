@@ -1,8 +1,7 @@
 __pycache__
 lookbook/settings.py
-lookbook/db.sqlite3
-lookbook/nohup.out
-lookbook/README.md
+db.sqlite3
+nohup.out
 media/
 shoes/migrations/
 shoes/static/guide.html
