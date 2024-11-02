@@ -6,7 +6,7 @@ This app allows offers an inventory system to manage shoes items, with a specifi
 
 First Installation guide:
 
-sudo apt-get install python3 python3-venv and python3-pip
+sudo apt-get install python3 python3-venv python3-pip
 
 pip install django
 
