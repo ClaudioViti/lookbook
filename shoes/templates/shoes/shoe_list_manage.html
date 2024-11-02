@@ -617,9 +617,7 @@ ul.pagination {
           </button>
           
           <br>
-          <form style="display: inline-block; margin-top: 2px" action="{% url 'edit' pk=shoe.pk %}">
-            <input type="submit" value="Edit" />
-          </form>
+          <a style="display: inline-block; margin-top: 2px" href="{% url 'edit' pk=shoe.pk %}?{{ request.GET.urlencode }}" class="active"><button type="submit">Edit</button></a>
           <form style="display: inline-block" action="{% url 'delete' pk=shoe.pk %}">
             <input type="submit" value="Delete" />
           </form>
