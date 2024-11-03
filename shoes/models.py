@@ -194,7 +194,7 @@ class ShoeImage(models.Model):
     image = models.ImageField()
 
 class ShoeBrand(models.Model):
-    brand = models.CharField(max_length=200, blank=True, null=True)
+    brand = models.CharField(max_length=200, blank=True, null=False)
 
     def __str__(self):
         return self.brand
