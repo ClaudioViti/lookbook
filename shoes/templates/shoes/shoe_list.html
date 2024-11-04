@@ -386,6 +386,11 @@ display: inline-block;
 content: '{{ shoe|getUserState:user }}';
 
 text-align: center;
+
+{% if dark_mode %}
+color: green;
+{% endif %}
+
 position: absolute;
 top: 50%;
 left: 0;
