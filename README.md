@@ -8,7 +8,7 @@ First Installation guide:
 
 sudo apt-get install python3 python3-venv python3-pip
 
-pip install django
+pip install -r requirements.txt
 
 rename settings.sample.py located in lookbook/ in settings.py
 
