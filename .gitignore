@@ -1,8 +1,8 @@
 __pycache__
 lookbook/settings.py
-db.sqlite3
 nohup.out
 media/
 shoes/migrations/
-shoes/static/guide.html
+db.sqlite3
 accounts/views.py
+shoes/static/guide.html
