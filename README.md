@@ -10,8 +10,6 @@ sudo apt-get install python3 python3-venv python3-pip
 
 pip install -r requirements.txt
 
-rename settings.sample.py located in lookbook/ in settings.py
-
 
 To start the server run the following command: python manage.py runserver 0.0.0.0:8000
 
