@@ -351,10 +351,10 @@ class FavouriteUpdateView(UpdateView):
 
     
 class ShoeDeleteView(LoginRequiredMixin, DeleteView):
-
     template_name = 'shoes/manage/delete_item.html'
     model = models.Shoe
-    success_url = reverse_lazy('manage')
+    def get_success_url(self):
+        return reverse('manage') + '?' + self.request.GET.urlencode()
     
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
