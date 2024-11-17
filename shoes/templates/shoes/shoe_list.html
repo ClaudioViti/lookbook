@@ -423,7 +423,7 @@
     .flip img:nth-of-type(2) {
       display: none;
     }
-    @media (hover: hover) {
+    @media (hover: hover) and (pointer: fine) {
       .flip:hover img:nth-of-type(1) {
         display: none;
       }
@@ -741,7 +741,7 @@ ul.pagination {
             {% endif %}
           
         </div>
-        {% elif shoeimages.0|length == 0 %}
+        {% elif shoeimages|length == 0 %}
         {% if shoe|getUserState:user  == "in service" %}    
         <div class="in_service" style="position: relative;">
         <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;">

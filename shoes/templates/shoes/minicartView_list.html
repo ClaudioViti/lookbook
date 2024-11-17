@@ -1,4 +1,4 @@
-<html> {% load shoes_extras %}
+<html> {% load shoes_extras %} {% load static %}
 <meta name="viewport" content="width=500, initial-scale=1" />
 <style>
 
@@ -247,7 +247,19 @@ body {
         <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
       </td>
       <td>
+
+
+
+
+        
+      {% if shoe.shoeimage_set.first.image|length == 0 %}
+
+
+      <img src="{% static 'ph.png' %}" style="width:100px;height:100px;">
+      {% else %}  
+
         <img src="{{ shoe.shoeimage_set.first.image.url }}" style="width:100px;height:100px;">
+        {% endif %}  
       </td>
       
       <td>
@@ -314,7 +326,7 @@ body {
       </tr>
 
     {% endif %}
-  
+
 
     {% for shoe in object_list %}
 
@@ -325,6 +337,29 @@ body {
       <span style=" display: inline-block;"> Id: {{ shoe.pk }} </span>
     </td>
     <td>
+
+      {% with shoeimages=shoe.shoeimage_set.all|slice:":1" %}
+
+      {% if shoeimages|length == 0 %}
+      {% if shoe|getUserState:user  == "in service" %}    
+      <div class="in_service" style="position: relative; display: inline-block;">
+      <img src="{% static 'ph.png' %}" style="width:100px;height:100px; filter: grayscale(100%);">
+      </div>
+    {% endif %}  
+    {% if shoe|getUserState:user  == "ordered" %}
+      <div class="ordered" style="position: relative; display: inline-block;">
+      <img src="{% static 'ph.png' %}" style="width:100px;height:100px;">
+      </div>
+    {% endif %}
+    {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
+      <div style="position: relative;">
+      <img src="{% static 'ph.png' %}" style="width:100px;height:100px;">
+      </div>
+    {% endif %}
+
+    {% else %}
+
+
       
       
       {% if shoe|getUserState:user  == "in service" %}
@@ -334,19 +369,20 @@ body {
       {% endfor %}
       {% endif %}
     </div>
-    {% if shoe|getUserState:user  == "just finished" %}
+    {% if shoe|getUserState:user  == "ordered" %}
     <div class="ordered" style="position: relative; display: inline-block;">
       {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
       <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
       {% endfor %}
       {% endif %}
-      {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "just finished" %}
+      {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
       
         {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
         <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
         {% endfor %}
         {% endif %}
-   
+   {% endif %}
+   {% endwith %}
     </td>
     {% if user.is_staff %}
       <td>
