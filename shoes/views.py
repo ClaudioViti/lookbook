@@ -423,6 +423,8 @@ def edit_shoe(request, pk):
     return render(request, "shoes/manage/shoe_form.html", {
         'form': form,
         'formset': formset,
+        'shoeimages': shoe.shoeimage_set.all(),
+    
     })
 
 @login_required
