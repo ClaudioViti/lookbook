@@ -135,7 +135,7 @@ class Shoe(models.Model):
     ordered_user = models.ManyToManyField('auth.User', related_name='ordered_items', blank=True)
     delivered_user = models.ManyToManyField('auth.User', related_name='delivered_items', blank=True)
     terminated_user = models.ManyToManyField('auth.User', related_name='terminated_items', blank=True)
-    model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
+    model = models.ManyToManyField('ShoeModel', blank=True)
     platform = models.BooleanField(default=False)
     slingback = models.BooleanField(default=False)
     toe = models.CharField(max_length=20, choices=TOE_CHOICES, blank=True, null=True)
@@ -153,7 +153,7 @@ class Shoe(models.Model):
     lining_material = models.CharField(max_length=30, choices=MATERIAL_CHOICES, blank=True, null=True)
     upper_material = models.CharField(max_length=30, choices=MATERIAL_CHOICES, blank=True, null=True)
     season = models.CharField(max_length=20, choices=SEAS_CHOICES, blank=True, null=True)
-    year = models.IntegerField(default=0)
+    year = models.IntegerField(default=2025)
     comfort = models.IntegerField(choices=COMFORT_CHOICES, blank=True, null=True)
     plant_fit = models.CharField(max_length=30, choices=PLANT_FIT_CHOICES, blank=True, null=True)
     state = models.CharField(max_length=30, choices=STATE_CHOICES, blank=True, null=True)
@@ -192,6 +192,12 @@ class Shoe(models.Model):
 class ShoeImage(models.Model):
     shoe = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
     image = models.ImageField()
+
+class ShoeModel(models.Model):
+    shoeModel = models.CharField(max_length=200, blank=True, null=False)
+
+    def __str__(self):
+        return self.shoeModel
 
 class ShoeBrand(models.Model):
     brand = models.CharField(max_length=200, blank=True, null=False)

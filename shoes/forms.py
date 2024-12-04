@@ -17,11 +17,14 @@ class ShoeAdminForm(ModelForm):
     class Meta:
          model = Shoe
          fields = '__all__'
+         widgets = {'user': forms.CheckboxSelectMultiple(),'cart_user': forms.CheckboxSelectMultiple(),'favourite_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),'ordered_user': forms.CheckboxSelectMultiple(),'delivered_user': forms.CheckboxSelectMultiple(),'terminated_user': forms.CheckboxSelectMultiple(),'model': forms.CheckboxSelectMultiple(),'info':  forms.Textarea(attrs={"rows": 2, "cols": 80}),}
 
 class ShoeForm(ModelForm):
     class Meta:
          model = Shoe
          exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']
+         widgets = {'info': forms.Textarea(attrs={"rows": 2, "cols": 80}),'model': forms.CheckboxSelectMultiple(),}
+         
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
@@ -35,7 +38,7 @@ class ShoeBrandForm(ModelForm):
          fields = '__all__'
 
 class BrandForm(forms.Form):
-    brand = forms.ModelChoiceField(queryset = ShoeBrand.objects.all() )
+    brand = forms.ModelChoiceField(queryset = ShoeBrand.objects.all(), widget=forms.CheckboxSelectMultiple() )
     
 class CartAddForm(ModelForm):
     class Meta:
@@ -61,7 +64,7 @@ class ShoeCartsForm(ModelForm):
     class Meta:
         model = Shoe
         fields = ['cart_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user', 'id']
-        widgets = {'id': forms.HiddenInput()}
+        widgets = {'id': forms.HiddenInput(),'cart_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -109,7 +112,7 @@ class ShoeFavouriteForm(ModelForm):
     class Meta:
         model = Shoe
         fields = ['favourite_user', 'id']
-        widgets = {'id': forms.HiddenInput()}
+        widgets = {'id': forms.HiddenInput(),'favourite_user': forms.CheckboxSelectMultiple(),}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
