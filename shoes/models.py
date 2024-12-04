@@ -135,7 +135,7 @@ class Shoe(models.Model):
     ordered_user = models.ManyToManyField('auth.User', related_name='ordered_items', blank=True)
     delivered_user = models.ManyToManyField('auth.User', related_name='delivered_items', blank=True)
     terminated_user = models.ManyToManyField('auth.User', related_name='terminated_items', blank=True)
-    model = models.ManyToManyField('ShoeModel', blank=True)
+    model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
     platform = models.BooleanField(default=False)
     slingback = models.BooleanField(default=False)
     toe = models.CharField(max_length=20, choices=TOE_CHOICES, blank=True, null=True)
@@ -192,12 +192,6 @@ class Shoe(models.Model):
 class ShoeImage(models.Model):
     shoe = models.ForeignKey('Shoe', on_delete=models.CASCADE, null=True)
     image = models.ImageField()
-
-class ShoeModel(models.Model):
-    shoeModel = models.CharField(max_length=200, blank=True, null=False)
-
-    def __str__(self):
-        return self.shoeModel
 
 class ShoeBrand(models.Model):
     brand = models.CharField(max_length=200, blank=True, null=False)

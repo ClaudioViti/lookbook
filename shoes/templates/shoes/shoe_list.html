@@ -802,7 +802,7 @@ ul.pagination {
           
           <div class="modal">
             <dl>
-              <dt style="margin-top: 5px;"> <b>Model:</b>{% for i in shoe.model.all %} {{ i }}, {% endfor %}  </dt>
+              <dt style="margin-top: 5px;"> <b>Model:</b> {{ shoe.model }} </dt>
               <dt> <b>SKU:</b> {{ shoe.sku }} </dt>
               <dt> <b>Toe:</b> {{ shoe.toe }} </dt>
               <dt> <b>Slingback:</b> {{ shoe.slingback }} </dt>
