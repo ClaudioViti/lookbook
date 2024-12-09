@@ -524,9 +524,13 @@ margin-top: 50%;
   }
 }
 
-@media  (min-width: 600px) {
 .lookbook {
 margin-right: 200px; margin-left: 200px;
+}
+
+@media  (max-width: 1000px) {
+.lookbook {
+margin-right: 50px; margin-left: 50px;
 }
 }
 
@@ -638,7 +642,8 @@ ul.pagination {
       <a><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
 
 
-
+      <a onclick="compressItems()">+</a>
+      <a onclick="uncompressItems()">-</a>
 
 
 
@@ -737,7 +742,7 @@ ul.pagination {
           {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
           <div class="flip">
             {% for shoeimage in shoeimages %}
-          <img src="{{ shoeimage.image.url }}">
+          <img src="{{ shoeimage.image.url }}" class="reduce">
             {% endfor %}
             {% endif %}
           
@@ -914,6 +919,47 @@ ul.pagination {
 
     
   </script>
+
+<style>
+
+:root {
+  --the-thing: 300px; /* Default value */
+}
+@media (max-width: 1000px) {
+:root {
+  --the-thing: 100px; /* Default value */
+}
+}
+
+img.reduce {  
+  width: var(--the-thing);
+}
+
+/* Default values for screens > 1000px */
+.small .reduce { width: 200px; }
+.large .reduce { width: 300px; }
+
+@media (max-width: 1000px) {
+  /* Screens <= 1000px */
+  .small .reduce { width: 100px; }
+  .large .reduce { width: 250px; }  
+}
+
+</style>
+
+<script>
+
+function compressItems() {
+	document.body.classList.remove('large');
+	document.body.classList.add('small');
+}
+
+function uncompressItems() {
+	document.body.classList.remove('small');
+	document.body.classList.add('large');
+}
+
+</script>
   
   </html>
   
