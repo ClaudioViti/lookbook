@@ -782,10 +782,10 @@ ul.pagination {
     <ul class="pagination justify-content-center" style="text-align: center;">
 
         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-            <a class="page-link" href="?page=1" tabindex="-1">FIRST</a>
+            <a class="page-link" href="?{{ PageQuerystringFirst.urlencode }}" tabindex="-1">FIRST</a>
         </li>
         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %} " tabindex="-1">Previous</a>
+            <a class="page-link" href="{% if page_obj.has_previous %} ?{{ PageQuerystringPrevious.urlencode }} {% endif %}" tabindex="-1">Previous</a>
         </li>
 
         {% if page_obj.number|add:'-4' > 1 %}
@@ -805,10 +805,10 @@ ul.pagination {
         {% endif %}
 
         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }} {% endif %}">Next</a>
+          <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringNext.urlencode }} {% endif %}">Next</a>
         </li>
         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.paginator.num_pages }}  {% endif %}">LAST</a>
+            <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringLast.urlencode }} {% endif %}">LAST</a>
         </li>
       </ul>
 </nav>  
@@ -852,6 +852,10 @@ ul.pagination {
     document.body.style.webkitTouchCallout='none';
     
   </script>
+
+<script language="javascript">
+  if(screen.width>=1000) {document.write("<style>body{zoom:80%;}</style>");}
+</script>
   
   </html>
   

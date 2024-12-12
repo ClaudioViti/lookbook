@@ -692,20 +692,26 @@ ul.pagination {
         | Welcome <b>{{ user.username }}</b>
         {% endif %}
       </span>
-      <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+      <a href="javascript:void(0);" style="font-size:15px;" class="icon" >&#9776;</a>
     </div>
   </header>
   
   
   <script>
-    function myFunction() {
+    
+      document.querySelector('.icon').addEventListener('click', (e) => { 
+ 			e.stopPropagation();
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
         x.className += " responsive";
       } else {
         x.className = "topnav";
       }
-    }
+    })
+window.addEventListener('click', () => {
+	document.getElementById("myTopnav").classList.remove('responsive');
+})
+    
   </script>
   <main>
     <section class="lookbook">
@@ -795,10 +801,11 @@ ul.pagination {
           <a style="color: rgb(37, 37, 37);">
           {% endif %}
             {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
-            Cart <input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
+            &#128092;<input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
             {% endif %}
-            Favourite <input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">
+            &#9733;<input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">
           </a>
+          <br>
             <button style="display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" class="show">Details</button>
             <button style="display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;"
             onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
@@ -941,7 +948,7 @@ img.reduce {
 
 @media (max-width: 1000px) {
   /* Screens <= 1000px */
-  .small .reduce { width: 100px; }
+  .small .reduce { width: 80px; }
   .large .reduce { width: 250px; }  
 }
 

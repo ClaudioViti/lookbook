@@ -543,10 +543,28 @@ class ShoeListManage(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
          
         # view - get_context_data() method
+        context = super().get_context_data(**kwargs)
         context = super().get_context_data(form=self.filter_form, order_form=self.order_form, **kwargs)
         context['cart_ids'] = self.request.user.cart_items.values_list('pk', flat=True)
         context['favourite_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
+
+        qsToParseNext = self.request.GET.copy()
+        qsToParsePrevious = self.request.GET.copy()
+        qsToParseFirst = self.request.GET.copy()
+        qsToParseLast = self.request.GET.copy()
+        if context['page_obj'].has_next():
+            qsToParseNext['page'] = context['page_obj'].next_page_number()
+            context['PageQuerystringNext'] = qsToParseNext
+        if context['page_obj'].has_previous():
+            qsToParsePrevious['page'] = context['page_obj'].previous_page_number()
+            context['PageQuerystringPrevious'] = qsToParsePrevious
+        qsToParseFirst['page'] = '1'
+        context['PageQuerystringFirst'] = qsToParseFirst
+        if context['page_obj'].has_next():
+            qsToParseLast['page'] = context['page_obj'].paginator.num_pages
+            context['PageQuerystringLast'] = qsToParseLast
+
         return context
         
 
