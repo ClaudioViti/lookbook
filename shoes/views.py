@@ -553,6 +553,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
         qsToParsePrevious = self.request.GET.copy()
         qsToParseFirst = self.request.GET.copy()
         qsToParseLast = self.request.GET.copy()
+        qsToParseMiddle = self.request.GET.copy()
         if context['page_obj'].has_next():
             qsToParseNext['page'] = context['page_obj'].next_page_number()
             context['PageQuerystringNext'] = qsToParseNext
