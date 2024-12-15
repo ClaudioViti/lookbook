@@ -687,9 +687,9 @@ ul.pagination {
 
       
       <span style="font-size:15px; color: rgb(255, 255, 255);">
-        <b style="color: green;">Shoes: {{paginator.count}} </b>
+        <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
         {% if user.is_authenticated %}
-        | <b>{{ user.username }}</b>
+        | <b>&nbsp; {{ user.username }} &nbsp;</b>
         {% endif %}
       </span>
       <a href="javascript:void(0);" style="font-size:15px;" class="icon" >&#9776;</a>
