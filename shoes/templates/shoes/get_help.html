@@ -1,0 +1,6 @@
+<a>Write your message here</a>
+<form method="POST" style="margin-top:6px" action="{% url 'contact' %}">
+    {% csrf_token %}
+    <textarea style="width: 350px; height: 500px;" name="message" placeholder="text:"></textarea>
+    <p><input style="display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit" value="Send message" /> </p>
+  </form>

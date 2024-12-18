@@ -204,7 +204,7 @@
     .lookbook {
       display: flex;
       flex-flow: row wrap;
-      justify-content: center;
+      justify-content: left;
       {% if dark_mode %}
         background-color: rgb(37, 37, 37);
       {% else %}
@@ -525,12 +525,12 @@ margin-top: 50%;
 }
 
 .lookbook {
-margin-right: 200px; margin-left: 200px;
+margin-right: 240px; margin-left: 240px;
 }
 
 @media  (max-width: 1000px) {
 .lookbook {
-margin-right: 50px; margin-left: 50px;
+margin-right: 10px; margin-left: 10px;
 }
 }
 
@@ -638,7 +638,7 @@ ul.pagination {
           
         </div>
       </div>
-      <a href="mailto: {{ admin_mail }}?subject=Help request for user: {{ user.username }}">Help</a>
+      <a onclick="openContactChild()">Contact</a>
       <a><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
 
 
@@ -794,10 +794,10 @@ window.addEventListener('click', () => {
           <figcaption>
             
             {% if dark_mode %}
-            <header style="background-color: rgb(37, 37, 37); color: rgb(255, 255, 255);"> Id: {{ shoe.pk }} </header>
+            <header style="background-color: rgb(37, 37, 37); color: rgb(255, 255, 255); font-family: Georgia, serif;"> Id: {{ shoe.pk }} </header>
             <a style="color: rgb(255, 255, 255);">
           {% else %}
-          <header> Id: {{ shoe.pk }} </header>
+          <header style="font-family: Georgia, serif;"> Id: {{ shoe.pk }} </header>
           <a style="color: rgb(37, 37, 37);">
           {% endif %}
             {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
@@ -908,7 +908,9 @@ window.addEventListener('click', () => {
   }
   function openFavChild() {
     childwin = window.open('/favourite/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=600');
-    
+  }
+  function openContactChild() {
+    childwin = window.open('/contact/', childname, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=300,height=500');
   }
   function refreshPage(){
     

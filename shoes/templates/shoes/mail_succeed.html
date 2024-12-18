@@ -56,21 +56,10 @@ color: white;
 </head>
 
 <body>
-  <p>
-    Order sent successfully.<br>
+  <p style="font-family: Georgia, serif;">
+    Message sent successfully.<br>You will be answered soon, check your mailbox.<br>Thank you.
   </p>
 </body>
-
-{% if messages %}
-<p>
-  The following items cannot be ordered:<br>
-</p>
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 
 <script language="javascript" type="text/javascript">
   function windowClose() {

@@ -11,13 +11,13 @@ from django.db.models import F, Q
 
 # Set the pagination value here.
 
-PAGINATE_CONST = 9
+PAGINATE_CONST = 12
 
 # Create your views here.
 
 from . import models
 
-from django.views.generic import ListView, UpdateView, CreateView, DeleteView, FormView
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView, FormView, TemplateView
 
 class ShoeListView(LoginRequiredMixin, ListView):
     
@@ -645,3 +645,17 @@ class ConfigView(UpdateView):
         return self.request.user.user_config
 
     success_url = reverse_lazy('shoe-list')
+
+@login_required
+def contact(request):
+    if request.method == "POST":
+        composedMessage = 'User: ' + request.user.username + '\n\nMessage: ' + request.POST.get("message", "") 
+        send_mail('Lookbook: Help',
+            composedMessage,
+            settings.EMAIL_HOST_USER,
+            settings.RECIPIENT_LIST,
+            fail_silently=False
+        )
+        return render(request, 'shoes/mail_succeed.html')
+
+    return render(request, 'shoes/get_help.html')
