@@ -628,7 +628,7 @@ ul.pagination {
       <a onclick="openContactChild()">Contact</a>
       <a><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
       <span style="font-size:15px; color: rgb(255, 255, 255);">
-        <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
+        <b style="color: green;">Shoes: {{ object_list.count }} &nbsp;</b>
         {% if user.is_authenticated %}
         | <b>&nbsp; {{ user.username }} &nbsp;</b>
         {% endif %}

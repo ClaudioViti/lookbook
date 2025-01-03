@@ -59,6 +59,25 @@ class ShoeListView(LoginRequiredMixin, ListView):
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['admin_mail'] = settings.DEFAULT_FROM_EMAIL
         context['dark_mode'] = self.request.user.user_config.dark_mode
+
+        qsToParseNext = self.request.GET.copy()
+        qsToParsePrevious = self.request.GET.copy()
+        qsToParseFirst = self.request.GET.copy()
+        qsToParseLast = self.request.GET.copy()
+        qsToParseMiddle = self.request.GET.copy()
+        if context['page_obj']:
+            if context['page_obj'].has_next():
+                qsToParseNext['page'] = context['page_obj'].next_page_number()
+                context['PageQuerystringNext'] = qsToParseNext
+            if context['page_obj'].has_previous():
+                qsToParsePrevious['page'] = context['page_obj'].previous_page_number()
+                context['PageQuerystringPrevious'] = qsToParsePrevious
+            qsToParseFirst['page'] = '1'
+            context['PageQuerystringFirst'] = qsToParseFirst
+            if context['page_obj'].has_next():
+                qsToParseLast['page'] = context['page_obj'].paginator.num_pages
+                context['PageQuerystringLast'] = qsToParseLast
+
         return context
         
 

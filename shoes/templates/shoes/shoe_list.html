@@ -449,16 +449,13 @@
     }
     {% for shoe in object_list %}
     {% if shoe|getUserState:user  == 'in service' %}
-
     .in_service img {
   position: relative;
 	filter: grayscale(60%);
   display: inline-block;
 }
     .in_service::after {
-
   content: '{{ shoe|getUserState:user }}';
-
   text-align: center;
   position: absolute;
   top: 50%;
@@ -467,26 +464,19 @@
   transform: translate(0, -50%);
   margin-top: 50%;
 }
-
 {% endif %}
-
 {% if shoe|getUserState:user  == 'ordered' %}
-
 .ordered img {
 position: relative;
 filter: grayscale(60%);
 display: inline-block;
 }
 .ordered::after {
-
 content: '{{ shoe|getUserState:user }}';
-
 text-align: center;
-
 {% if dark_mode %}
 color: rgb(16, 236, 67);
 {% endif %}
-
 position: absolute;
 top: 50%;
 left: 0;
@@ -494,7 +484,6 @@ width: 100%;
 transform: translate(0, -50%);
 margin-top: 50%;
 }
-
 {% endif %}
 {% endfor %}
 #myTopnav > span {
@@ -687,7 +676,7 @@ ul.pagination {
 
       
       <span style="font-size:15px; color: rgb(255, 255, 255);">
-        <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
+        <b style="color: green;">Shoes: {{ object_list.count }} &nbsp;</b>
         {% if user.is_authenticated %}
         | <b>&nbsp; {{ user.username }} &nbsp;</b>
         {% endif %}
@@ -856,10 +845,10 @@ window.addEventListener('click', () => {
   <ul class="pagination justify-content-center" style="text-align: center;">
 
       <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-          <a class="page-link" href="?page=1" tabindex="-1">FIRST</a>
+          <a class="page-link" href="?{{ PageQuerystringFirst.urlencode }}" tabindex="-1">FIRST</a>
       </li>
       <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %} " tabindex="-1">Previous</a>
+          <a class="page-link" href="{% if page_obj.has_previous %} ?{{ PageQuerystringPrevious.urlencode }} {% endif %} " tabindex="-1">Previous</a>
       </li>
 
       {% if page_obj.number|add:'-4' > 1 %}
@@ -870,7 +859,7 @@ window.addEventListener('click', () => {
           {% if page_obj.number == i %}
         <li>   <a class="page-link" style="color: red" href="?page={{ i }}">{{ i }}</a></li>
           {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
-        <li>   <a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        <li>   <a class="page-link" href="?page={{ i }}&{% querystring page=None %}">{{ i }}</a></li>
           {% endif %}
       {% endfor %}
 
@@ -879,10 +868,10 @@ window.addEventListener('click', () => {
       {% endif %}
 
       <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }} {% endif %}">Next</a>
+          <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringNext.urlencode }} {% endif %}">Next</a>
       </li>
       <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.paginator.num_pages }}  {% endif %}">LAST</a>
+          <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringLast.urlencode }} {% endif %}">LAST</a>
       </li>
     </ul>
 </nav>  

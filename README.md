@@ -8,12 +8,23 @@ First Installation guide:
 
 sudo apt-get install python3 python3-venv python3-pip
 
+move to home user directory and execute the following commands:
+
+to create a virtualenv:
+  
+  python3 -m venv lookbook-venv
+
+to activate a virtualenv:
+  
+  . lookbook-venv/bin/activate      (remember to exectute this command everytime you start the terminal)
+
 pip install -r requirements.txt
 
+clone the lookbook project in a different directory than the virtualenv diretory.
 
 To start the server run the following command: python manage.py runserver 0.0.0.0:8000
 
-when an edit is made, the following commands are needed:
+when an edit to models.py is made, the following commands are needed:
 
   python manage.py makemigrations
   
