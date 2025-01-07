@@ -17,7 +17,7 @@
         {
             "label": "runserver",
             "type": "shell",
-            "command": "python manage.py runserver 0.0.0.0:8000",
+            "command": "../lookbook-venv/bin/python3 manage.py runserver 0.0.0.0:8000",
             "runOptions": { "runOn": "folderOpen" }
         }
     ]

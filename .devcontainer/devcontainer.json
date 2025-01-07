@@ -6,5 +6,5 @@
   //"postStartCommand": "nohup bash -c 'python manage.py runserver 0.0.0.0:9000 &'",
   "forwardPorts": [9000],
   "portsAttributes": {"9000": {"label": "Lookbook"}},
-  "postStartCommand": "nohup bash -c 'python manage.py runserver 0.0.0.0:9000 &' ; /bin/bash ./.devcontainer/change_port_visibility.sh 9000 public"
+  "postStartCommand": "nohup bash -c '../lookbook-venv/bin/python3 manage.py runserver 0.0.0.0:9000 &' ; /bin/bash ./.devcontainer/change_port_visibility.sh 9000 public"
 }
