@@ -628,7 +628,11 @@ ul.pagination {
       <a onclick="openContactChild()">Contact</a>
       <a><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
       <span style="font-size:15px; color: rgb(255, 255, 255);">
+        {% if is_paginated %}
+        <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
+        {% else %}
         <b style="color: green;">Shoes: {{ object_list.count }} &nbsp;</b>
+        {% endif %}
         {% if user.is_authenticated %}
         | <b>&nbsp; {{ user.username }} &nbsp;</b>
         {% endif %}
@@ -786,14 +790,14 @@ ul.pagination {
     <ul class="pagination justify-content-center" style="text-align: center;">
 
         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-            <a class="page-link" href="?{{ PageQuerystringFirst.urlencode }}" tabindex="-1">FIRST</a>
+            <a class="page-link" href="?{{PageQuerystringFirst.urlencode}}" tabindex="-1">FIRST</a>
         </li>
         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_previous %} ?{{ PageQuerystringPrevious.urlencode }} {% endif %}" tabindex="-1">Previous</a>
+            <a class="page-link" href="{% if page_obj.has_previous %}?{{PageQuerystringPrevious.urlencode}}{% endif %}" tabindex="-1">Previous</a>
         </li>
 
         {% if page_obj.number|add:'-4' > 1 %}
-      <li>  <a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+      <li>  <a class="page-link" href="?page={{page_obj.number|add:'-5'}}">&hellip;</a></li>
         {% endif %}
 
         {% for i in page_obj.paginator.page_range %}
@@ -805,14 +809,14 @@ ul.pagination {
         {% endfor %}
 
         {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-      <li>  <a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+      <li>  <a class="page-link" href="?page={{page_obj.number|add:'5'}}">&hellip;</a></li>
         {% endif %}
 
         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringNext.urlencode }} {% endif %}">Next</a>
+          <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringNext.urlencode}}{% endif %}">Next</a>
         </li>
         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringLast.urlencode }} {% endif %}">LAST</a>
+            <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringLast.urlencode}}{% endif %}">LAST</a>
         </li>
       </ul>
 </nav>  

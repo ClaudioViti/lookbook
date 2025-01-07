@@ -676,7 +676,11 @@ ul.pagination {
 
       
       <span style="font-size:15px; color: rgb(255, 255, 255);">
+        {% if is_paginated %}
+        <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
+        {% else %}
         <b style="color: green;">Shoes: {{ object_list.count }} &nbsp;</b>
+        {% endif %}
         {% if user.is_authenticated %}
         | <b>&nbsp; {{ user.username }} &nbsp;</b>
         {% endif %}
@@ -745,17 +749,17 @@ window.addEventListener('click', () => {
         {% elif shoeimages|length == 0 %}
         {% if shoe|getUserState:user  == "in service" %}    
         <div class="in_service" style="position: relative;">
-        <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;">
+        <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
       {% endif %}  
       {% if shoe|getUserState:user  == "ordered" %}
         <div class="ordered" style="position: relative;">
-        <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;">
+        <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
       {% endif %}
       {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
         <div style="position: relative;">
-        <img src="{% static 'ph.png' %}">
+        <img src="{% static 'ph.png' %}" class="reduce">
         </div>
       {% endif %}
       {% else %}
@@ -765,16 +769,16 @@ window.addEventListener('click', () => {
           
           {% if shoe|getUserState:user  == "in service" %}
           <div class="in_service" style="position: relative;">
-          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
             {% endif %}
             {% if shoe|getUserState:user  == "ordered" %}
             <div class="ordered" style="position: relative;">
-            <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+            <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
           </div>
             {% endif %}
             {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
-          <img src="{{ shoeimages.0.image.url }}">
+          <img src="{{ shoeimages.0.image.url }}" class="reduce">
            {% endif %}
           
           {% endif %}
@@ -845,14 +849,14 @@ window.addEventListener('click', () => {
   <ul class="pagination justify-content-center" style="text-align: center;">
 
       <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-          <a class="page-link" href="?{{ PageQuerystringFirst.urlencode }}" tabindex="-1">FIRST</a>
+          <a class="page-link" href="?{{PageQuerystringFirst.urlencode}}" tabindex="-1">FIRST</a>
       </li>
       <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_previous %} ?{{ PageQuerystringPrevious.urlencode }} {% endif %} " tabindex="-1">Previous</a>
+          <a class="page-link" href="{% if page_obj.has_previous %}?{{PageQuerystringPrevious.urlencode}}{% endif %} " tabindex="-1">Previous</a>
       </li>
 
       {% if page_obj.number|add:'-4' > 1 %}
-    <li>  <a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+    <li>  <a class="page-link" href="?page={{page_obj.number|add:'-5'}}">&hellip;</a></li>
       {% endif %}
 
       {% for i in page_obj.paginator.page_range %}
@@ -864,14 +868,14 @@ window.addEventListener('click', () => {
       {% endfor %}
 
       {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-    <li>  <a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+    <li>  <a class="page-link" href="?page={{page_obj.number|add:'5'}}">&hellip;</a></li>
       {% endif %}
 
       <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringNext.urlencode }} {% endif %}">Next</a>
+          <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringNext.urlencode}}{% endif %}">Next</a>
       </li>
       <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_next %} ?{{ PageQuerystringLast.urlencode }} {% endif %}">LAST</a>
+          <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringLast.urlencode}}{% endif %}">LAST</a>
       </li>
     </ul>
 </nav>  
@@ -921,7 +925,7 @@ window.addEventListener('click', () => {
 <style>
 
 :root {
-  --the-thing: 300px; /* Default value */
+  --the-thing: 200px; /* Default value */
 }
 @media (max-width: 1000px) {
 :root {

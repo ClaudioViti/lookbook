@@ -8,6 +8,7 @@ from shoes.models import ShoeImage, Shoe, ShoeBrand
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import F, Q
+from django.core.paginator import Paginator
 
 # Set the pagination value here.
 
@@ -396,8 +397,14 @@ def create_shoe(request):
                 instance.shoe = shoe_instance
                 instance.save()
                 print(instance.shoe)
-            return redirect('manage')
-
+            shoes = Shoe.objects.all()
+            if not request.user.is_staff:
+                shoes = shoes.annotate(user_count=Count('user')).filter(user_count=1) 
+                shoes = shoes.filter(user=request.user)
+            items_per_page = 12
+            paginator = Paginator(shoes, items_per_page)
+            lastPage = paginator.num_pages
+            return redirect( reverse('manage') + f"?page={lastPage}")
     else:
         if request.user.is_staff:
             form = ShoeAdminForm()
