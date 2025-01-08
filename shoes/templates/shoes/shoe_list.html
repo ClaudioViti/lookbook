@@ -1,6 +1,7 @@
 <!DOCTYPE html>{% load static %}
 {% load shoes_extras %}
 {% load page_querystring %}
+{% load thumbnail %}
 <html>
 
 <head>
@@ -722,8 +723,9 @@ window.addEventListener('click', () => {
                   
                 <div class="in_service" style="position: relative;">
                   {% for shoeimage in shoeimages %}
-
-                  <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+                  
+                
+                  <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;">
                 {% endfor %}
               </div>
             {% endif %}
@@ -732,7 +734,7 @@ window.addEventListener('click', () => {
               <div class="ordered" style="position: relative;">
                 {% for shoeimage in shoeimages %}
 
-                <img src="{{ shoeimage.image.url }}" style="filter: grayscale(100%); opacity:0.4;">
+                <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;">
               {% endfor %}
             {% endif %}
 
@@ -741,7 +743,7 @@ window.addEventListener('click', () => {
           {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
           <div class="flip">
             {% for shoeimage in shoeimages %}
-          <img src="{{ shoeimage.image.url }}" class="reduce">
+          <img src="{% thumbnail shoeimage.image 200x200 crop %}" class="reduce">
             {% endfor %}
             {% endif %}
           
@@ -769,16 +771,16 @@ window.addEventListener('click', () => {
           
           {% if shoe|getUserState:user  == "in service" %}
           <div class="in_service" style="position: relative;">
-          <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
+          <img src="{% thumbnail shoeimages.0.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
             {% endif %}
             {% if shoe|getUserState:user  == "ordered" %}
             <div class="ordered" style="position: relative;">
-            <img src="{{ shoeimages.0.image.url }}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
+            <img src="{% thumbnail shoeimages.0.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
           </div>
             {% endif %}
             {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" %}
-          <img src="{{ shoeimages.0.image.url }}" class="reduce">
+          <img src="{% thumbnail shoeimages.0.image 200x200 crop %}" class="reduce">
            {% endif %}
           
           {% endif %}
