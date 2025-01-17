@@ -8,6 +8,9 @@ class Shoe(models.Model):
     ("Winter", "Winter"),
     ("Spring", "Spring"),
     ("Summer", "Summer"),
+    ("AW", "AW"),
+    ("SS", "SS"),
+    ("All Seasons", "All Seasons"),
     )
     MODEL_CHOICES = (
     ("Décolleté", "Décolleté"),
@@ -80,6 +83,7 @@ class Shoe(models.Model):
     ("Purple", "Purple"),
     ("Wheat", "Wheat"),
     ("Glitter", "Glitter"),
+    ("Fantasy", "Fantasy"),
     )
     HEEL_KIND_CHOICES = (
     ("Large", "Large"),

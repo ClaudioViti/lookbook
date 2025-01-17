@@ -515,11 +515,13 @@ margin-top: 50%;
 
 .lookbook {
 margin-right: 240px; margin-left: 240px;
+width: 1200px;
 }
 
 @media  (max-width: 1000px) {
 .lookbook {
 margin-right: 10px; margin-left: 10px;
+width: 320px;
 }
 }
 
@@ -554,6 +556,7 @@ ul.pagination {
   border-bottom-right-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
 }
+main { display: grid; place-content: center; }
 
   </style>
 </head>
@@ -562,19 +565,19 @@ ul.pagination {
   <header>
     <div class="topnav" id="myTopnav">
       <a href="/" class="active">Reset</a>
-      <a id="btn_close">Fold</a>
-      <a id="btn_open">Unfold</a>
+      <a name="closeMenu" id="btn_close">Fold</a>
+      <a name="closeMenu" id="btn_open">Unfold</a>
       {% if user.is_staff %}
-      <a onclick="openAdminCartChild()">Cart</a>
+      <a name="closeMenu" onclick="openAdminCartChild()">Cart</a>
       {% endif %}
       {% if not user.is_staff %}
-      <a onclick="openCartChild()">Cart</a>
+      <a name="closeMenu" onclick="openCartChild()">Cart</a>
       {% endif %}
-      <a onclick="openFavChild()">Favourite</a>
+      <a name="closeMenu" onclick="openFavChild()">Favourite</a>
       <a href="{% url 'add' %}">Add item</a>
-      <a href="/">Normal view</a>
-      <a href="{% static 'guide.html' %}" target="_blank">Guide</a>
-      <a href="{% url 'UserUpdate' %}">Account</a>
+      <a name="closeMenu" href="/">Normal view</a>
+      <a name="closeMenu" href="{% static 'guide.html' %}" target="_blank">Guide</a>
+      <a name="closeMenu" href="{% url 'UserUpdate' %}">Account</a>
       
       <div class="dropdown" tabindex="0">
         <button class="dropbtn">Filter
@@ -626,8 +629,8 @@ ul.pagination {
           
         </div>
       </div>
-      <a onclick="openContactChild()">Contact</a>
-      <a><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
+      <a name="closeMenu" onclick="openContactChild()">Contact</a>
+      <a name="closeMenu"><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
       <span style="font-size:15px; color: rgb(255, 255, 255);">
         {% if is_paginated %}
         <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
@@ -638,20 +641,28 @@ ul.pagination {
         | <b>&nbsp; {{ user.username }} &nbsp;</b>
         {% endif %}
       </span>
-      <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+      <a href="javascript:void(0);" style="font-size:15px;" class="icon" >&#9776;</a>
     </div>
   </header>
   
   
   <script>
-    function myFunction() {
+      document.querySelector('.icon').addEventListener('click', (e) => { 
+ 			e.stopPropagation();
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
         x.className += " responsive";
       } else {
         x.className = "topnav";
       }
-    }
+    })
+    window.addEventListener('click', (event) => {
+  const element_name = event.target.name;
+  console.log(element_name)
+  if(element_name == "closeMenu") {
+    document.getElementById("myTopnav").classList.remove('responsive');
+  } 
+})
   </script>
   <main>
     <section class="lookbook">
@@ -659,7 +670,6 @@ ul.pagination {
       
       
     <article>
-      <figure>
         {% with shoeimages=shoe.shoeimage_set.all|slice:":2" %}
         
         {% if shoeimages|length == 2 %}
@@ -777,7 +787,6 @@ ul.pagination {
             </dl>
           </div>
         </figcaption>
-      </figure>
     </article>
     {% empty %}
     <p>No editable items</p>
@@ -862,9 +871,6 @@ ul.pagination {
 
     document.body.style.webkitTouchCallout='none';
     
-  </script>
-
-<script language="javascript">
   if(screen.width>=1000) {document.write("<style>body{zoom:80%;}</style>");}
 </script>
   
