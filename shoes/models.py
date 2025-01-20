@@ -211,9 +211,9 @@ class AccountConfig(models.Model):
     dark_mode = models.BooleanField(default=False)
 
     PAGINATE_NUM = (
-        (8, "8"),
-        (32, "32"),
-        (128, "128"),
+        (12, "12"),
+        (36, "36"),
+        (132, "132"),
         (0, "all"),
     )
     paginate = models.IntegerField(choices=PAGINATE_NUM, default=8, blank=False, null=False)
