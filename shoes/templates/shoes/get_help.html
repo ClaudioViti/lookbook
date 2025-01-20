@@ -1,3 +1,6 @@
+{% load static %}
+<link rel="icon" type="image/png" href="{% static 'favicon.svg' %}">
+<link rel="apple-touch-icon-precomposed" href="{% static 'non2.png' %}"/>
 <a>Write your message here</a>
 <form method="POST" style="margin-top:6px" action="{% url 'contact' %}">
     {% csrf_token %}
