@@ -264,14 +264,17 @@
       z-index: 2;
     }
     
-    .topnav a {
+    .topnav a,
+    .topnav label[for="menu-toggler-filter"],
+    .topnav label[for="menu-toggler-gear"]{
       float: left;
-      display: block;
       color: #f2f2f2;
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
       font-size: 17px;
+      user-select: none;
+      cursor:pointer;
     }
     
     btn {
@@ -311,7 +314,6 @@
       background-color: inherit;
       font-family: inherit;
       margin: 0;
-      pointer-events: none;
     }
     
     .dropdown-content {
@@ -344,8 +346,31 @@
       color: black;
     }
     
-    .dropdown:focus-within .dropdown-content {
-      display: block;
+    #menu-toggler-filter:checked ~ .dropdown-content{
+        display: block;
+        margin: 48px 0 0;
+    }
+    
+    #menu-toggler-filter:not(:checked) ~ .dropdown-content{
+        display: none;
+    }
+    
+    #menu-toggler-filter:checked ~ label[for="menu-toggler-filter"]{
+        background-color: #555;
+        color: rgb(216, 158, 158);
+    }
+    #menu-toggler-gear:checked ~ .dropdown-content{
+        display: block;
+        margin: 48px 0 0;
+    }
+    
+    #menu-toggler-gear:not(:checked) ~ .dropdown-content{
+        display: none;
+    }
+    
+    #menu-toggler-gear:checked ~ label[for="menu-toggler-gear"]{
+        background-color: #555;
+        color: rgb(216, 158, 158);
     }
     
     @media screen and (max-width: 600px) {
@@ -580,9 +605,11 @@ main { display: grid; place-content: center; }
       <a name="closeMenu" href="{% url 'UserUpdate' %}">Account</a>
       
       <div class="dropdown" tabindex="0">
-        <button class="dropbtn">Filter
-          <i class="fa fa-caret-down"></i>
-        </button>
+      <input type="checkbox" id="menu-toggler-filter" style="display:none">
+      <label class="dropbtn menu-btn" for="menu-toggler-filter">
+         Filter
+         <i class="fa fa-caret-down"></i>
+      </label>
         <div style="background-color: rgb(216, 158, 158);
         opacity: 0.9; border: none; border-radius: 0 0 7px 7px;" class="dropdown-content">
           
