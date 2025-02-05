@@ -731,6 +731,8 @@ main { display: grid; place-content: center; }
     
       document.querySelector('.icon').addEventListener('click', (e) => { 
  			e.stopPropagation();
+      document.getElementById("menu-toggler-filter").checked = false;
+      document.getElementById("menu-toggler-gear").checked = false;
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
         x.className += " responsive";
@@ -744,6 +746,7 @@ main { display: grid; place-content: center; }
   if(element_name == "closeMenu") {
     document.getElementById("myTopnav").classList.remove('responsive');
     document.getElementById("menu-toggler-filter").checked = false;
+    document.getElementById("menu-toggler-gear").checked = false;
   } 
 })
     
