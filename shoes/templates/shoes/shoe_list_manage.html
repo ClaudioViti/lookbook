@@ -265,8 +265,7 @@
     }
     
     .topnav a,
-    .topnav label[for="menu-toggler-filter"],
-    .topnav label[for="menu-toggler-gear"]{
+    .topnav label[for="menu-toggler-filter"]{
       float: left;
       color: #f2f2f2;
       text-align: center;
@@ -356,19 +355,6 @@
     }
     
     #menu-toggler-filter:checked ~ label[for="menu-toggler-filter"]{
-        background-color: #555;
-        color: rgb(216, 158, 158);
-    }
-    #menu-toggler-gear:checked ~ .dropdown-content{
-        display: block;
-        margin: 48px 0 0;
-    }
-    
-    #menu-toggler-gear:not(:checked) ~ .dropdown-content{
-        display: none;
-    }
-    
-    #menu-toggler-gear:checked ~ label[for="menu-toggler-gear"]{
         background-color: #555;
         color: rgb(216, 158, 158);
     }
@@ -685,7 +671,6 @@ main { display: grid; place-content: center; }
       document.querySelector('.icon').addEventListener('click', (e) => { 
  			e.stopPropagation();
       document.getElementById("menu-toggler-filter").checked = false;
-      document.getElementById("menu-toggler-gear").checked = false;
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
         x.className += " responsive";
@@ -699,7 +684,6 @@ main { display: grid; place-content: center; }
   if(element_name == "closeMenu") {
     document.getElementById("myTopnav").classList.remove('responsive');
     document.getElementById("menu-toggler-filter").checked = false;
-    document.getElementById("menu-toggler-gear").checked = false;
   } 
 })
   </script>
