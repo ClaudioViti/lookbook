@@ -11,15 +11,19 @@ from django.contrib.auth.models import User
 class SearchForm(ModelForm):
      class Meta:
          model = Shoe
-         fields = ['color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'favourite']
+         fields = ['season', 'color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'superior', 'favourite']
 
 class ShoeAdminForm(ModelForm):
+    FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
+    season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
     class Meta:
          model = Shoe
          fields = '__all__'
          widgets = {'user': forms.CheckboxSelectMultiple(),'cart_user': forms.CheckboxSelectMultiple(),'favourite_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),'ordered_user': forms.CheckboxSelectMultiple(),'delivered_user': forms.CheckboxSelectMultiple(),'terminated_user': forms.CheckboxSelectMultiple(),'info':  forms.Textarea(attrs={"rows": 2, "cols": 80}),}
 
 class ShoeForm(ModelForm):
+    FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
+    season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
     class Meta:
          model = Shoe
          exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']

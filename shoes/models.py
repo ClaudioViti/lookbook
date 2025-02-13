@@ -5,11 +5,11 @@ from django.db import models
 class Shoe(models.Model):
     SEAS_CHOICES = (
     ("Autumn", "Autumn"),
+    ("AW", "AW"),
     ("Winter", "Winter"),
     ("Spring", "Spring"),
-    ("Summer", "Summer"),
-    ("AW", "AW"),
     ("SS", "SS"),
+    ("Summer", "Summer"),
     ("All Seasons", "All Seasons"),
     )
     MODEL_CHOICES = (
@@ -142,6 +142,7 @@ class Shoe(models.Model):
     model = models.CharField(max_length=200, choices=MODEL_CHOICES, blank=True, null=True)
     platform = models.BooleanField(default=False)
     slingback = models.BooleanField(default=False)
+    superior = models.BooleanField(default=False)
     toe = models.CharField(max_length=20, choices=TOE_CHOICES, blank=True, null=True)
     style = models.CharField(max_length=200, choices=STYLE_CHOICES, blank=True, null=True)
     brand = models.ForeignKey('ShoeBrand', on_delete=models.SET_NULL, blank=True, null=True)

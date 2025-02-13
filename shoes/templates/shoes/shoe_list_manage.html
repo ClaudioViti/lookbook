@@ -620,6 +620,10 @@ main { display: grid; place-content: center; }
               {{ order_form.order }}
             </div>
             <div class="fieldWrapper">
+              <label for="{{ form.season.id_for_label }}">Season</label>
+              {{ form.season }}
+            </div>
+            <div class="fieldWrapper">
               <label for="{{ form.color.id_for_label }}">Color</label>
               {{ form.color }}
             </div>
@@ -646,6 +650,10 @@ main { display: grid; place-content: center; }
             <div class="fieldWrapper">
               <label for="{{ form.platform.id_for_label }}">Platform</label>
               {{ form.platform }}
+            </div>
+            <div class="fieldWrapper">
+              <label for="{{ form.superior.id_for_label }}">Superior</label>
+              {{ form.superior }}
             </div>
             <div class="fieldWrapper">
               <label for="{{ form.favourite.id_for_label }}">Favourite</label>
@@ -820,7 +828,7 @@ main { display: grid; place-content: center; }
         </figcaption>
     </article>
     {% empty %}
-    <p>No editable items</p>
+    <p style="margin-left: auto; margin-right: auto;">No editable items</p>
     {% endfor %}
   </section>
 </main>

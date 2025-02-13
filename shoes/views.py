@@ -32,9 +32,13 @@ class ShoeListView(LoginRequiredMixin, ListView):
         qs = super().get_queryset()
 
         self.filter_form.is_valid()
+        mydict = {"AW": {"Autumn", "Winter", "AW", }, "SS": {"Spring", "Summer", "SS", }, "All Seasons": {"All Seasons"}}
         
         for field, value in self.filter_form.cleaned_data.items():
-            if value:
+            if field == "season":
+                if value:
+                    qs = qs.filter(season__in=mydict[value])
+            elif value:
                 qs = qs.filter(**{field: value})
         if not self.request.user.is_staff:                                                  # multi user enable
             
