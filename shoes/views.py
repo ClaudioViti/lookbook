@@ -559,14 +559,22 @@ class ShoeListManage(LoginRequiredMixin, ListView):
         qs = super().get_queryset()
 
         self.filter_form.is_valid()
-        
-        for field, value in self.filter_form.cleaned_data.items():
-            if value:
-                qs = qs.filter(**{field: value})
+        filter_dict = {"AW": {"Autumn", "Winter", "AW", }, "SS": {"Spring", "Summer", "SS", }, "All Seasons": {"All Seasons"}}
+       
+        if self.filter_form.cleaned_data.get('id'):
+            qs = qs.filter(id__in=self.filter_form.cleaned_data["id"].split())
+            
+        else:
+            for field, value in self.filter_form.cleaned_data.items():
+                if field == "season":
+                    if value:
+                        qs = qs.filter(season__in=filter_dict[value])
+                elif value:
+                        qs = qs.filter(**{field: value})
         if not self.request.user.is_staff:                                                  # multi user enable
-              
+		
             qs = qs.annotate(user_count=Count('user')).filter(user_count=1)                                 # multi user enable
-            qs = qs.filter(user=self.request.user)
+            qs = qs.filter(user=self.request.user)                                    # multi user enable
         return qs
 
     def dispatch(self, request, *args, **kwargs):
