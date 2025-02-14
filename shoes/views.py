@@ -33,16 +33,21 @@ class ShoeListView(LoginRequiredMixin, ListView):
 
         self.filter_form.is_valid()
         filter_dict = {"AW": {"Autumn", "Winter", "AW", }, "SS": {"Spring", "Summer", "SS", }, "All Seasons": {"All Seasons"}}
-        
-        for field, value in self.filter_form.cleaned_data.items():
-            if field == "season":
-                if value:
-                    qs = qs.filter(season__in=filter_dict[value])
-            elif field == "id":
-                if value:
-                    qs = qs.filter(id__in=value.split())
-            elif value:
-                qs = qs.filter(**{field: value})
+        config_dict = {"Winter": {"Autumn", "Winter", "AW", "All Seasons"}, "Summer": {"Spring", "Summer", "SS", "All Seasons"}}
+        seas_conf = self.request.user.user_config.season_conf
+       
+        if self.filter_form.cleaned_data.get('id'):
+            qs = qs.filter(id__in=self.filter_form.cleaned_data["id"].split())
+            
+        else:
+            for field, value in self.filter_form.cleaned_data.items():
+                if field == "season":
+                    if value:
+                        qs = qs.filter(season__in=filter_dict[value])
+                    elif seas_conf != "Unset":
+                        qs = qs.filter(season__in=config_dict[seas_conf])
+                elif value:
+                        qs = qs.filter(**{field: value})
         if not self.request.user.is_staff:                                                  # multi user enable
             
             qs = qs.filter(user=self.request.user)                                       # multi user enable

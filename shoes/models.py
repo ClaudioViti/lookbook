@@ -219,3 +219,5 @@ class AccountConfig(models.Model):
         (0, "all"),
     )
     paginate = models.IntegerField(choices=PAGINATE_NUM, default=8, blank=False, null=False)
+    FILTER_SEAS_CHOICES = (("Unset", "Unset"), ("Winter", "Winter"), ("Summer", "Summer"),)
+    season_conf = models.CharField(choices=FILTER_SEAS_CHOICES, default="Unset", max_length=20)

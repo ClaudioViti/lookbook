@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
-# Create the form class.
+# Unused class.
 class SearchForm(ModelForm):
      class Meta:
          model = Shoe
@@ -16,7 +16,7 @@ class SearchForm(ModelForm):
 class ShoeAdminForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
-    id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Id codes here'}))
+    id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Id codes here'}), required=False)
     class Meta:
          model = Shoe
          fields = '__all__'
@@ -25,7 +25,7 @@ class ShoeAdminForm(ModelForm):
 class ShoeForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
-    id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Id codes here'}))
+    id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Id codes here'}), required=False)
     class Meta:
          model = Shoe
          exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']
@@ -148,4 +148,4 @@ class ShoeOrdersAdminForm(ModelForm):
 class ConfForm(ModelForm):
     class Meta:
          model = AccountConfig
-         fields = ['paginate', 'dark_mode' ]
+         fields = ['paginate', 'season_conf', 'dark_mode' ]
