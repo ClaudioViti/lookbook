@@ -16,7 +16,7 @@ class SearchForm(ModelForm):
 class ShoeAdminForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
-    id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Id codes here'}), required=False)
+    id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'codes eg: 15 21 140'}), required=False)
     class Meta:
          model = Shoe
          fields = '__all__'
