@@ -71,6 +71,7 @@ class Shoe(models.Model):
     ("Brown", "Brown"),
     ("Beige", "Beige"),
     ("Red", "Red"),
+    ("Bordeaux", "Bordeaux"),
     ("Gold", "Gold"),
     ("Yellow", "Yellow"),
     ("Pink", "Pink"),
