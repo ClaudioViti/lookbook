@@ -14,6 +14,22 @@ class SearchForm(ModelForm):
          fields = ['season', 'color', 'size', 'model', 'style', 'toe', 'slingback', 'platform', 'superior', 'favourite']
 
 class ShoeAdminForm(ModelForm):
+
+
+    class Meta:
+         model = Shoe
+         fields = '__all__'
+         widgets = {'user': forms.CheckboxSelectMultiple(),'cart_user': forms.CheckboxSelectMultiple(),'favourite_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),'ordered_user': forms.CheckboxSelectMultiple(),'delivered_user': forms.CheckboxSelectMultiple(),'terminated_user': forms.CheckboxSelectMultiple(),'info':  forms.Textarea(attrs={"rows": 2, "cols": 80}),}
+
+class ShoeForm(ModelForm):
+
+    class Meta:
+         model = Shoe
+         exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']
+         widgets = {'info': forms.Textarea(attrs={"rows": 2, "cols": 80}),}
+         
+
+class ShoeAdminSearchForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
     id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'codes eg: 15 21 140'}), required=False)
@@ -22,7 +38,7 @@ class ShoeAdminForm(ModelForm):
          fields = '__all__'
          widgets = {'user': forms.CheckboxSelectMultiple(),'cart_user': forms.CheckboxSelectMultiple(),'favourite_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),'ordered_user': forms.CheckboxSelectMultiple(),'delivered_user': forms.CheckboxSelectMultiple(),'terminated_user': forms.CheckboxSelectMultiple(),'info':  forms.Textarea(attrs={"rows": 2, "cols": 80}),}
 
-class ShoeForm(ModelForm):
+class ShoeSearchForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
     id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'codes eg: 15 21 140'}), required=False)
@@ -31,6 +47,9 @@ class ShoeForm(ModelForm):
          exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']
          widgets = {'info': forms.Textarea(attrs={"rows": 2, "cols": 80}),}
          
+
+
+
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))

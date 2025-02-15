@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from shoes.forms import ShoeForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeOrdersForm, ShoeOrdersAdminForm, ConfForm
+from shoes.forms import ShoeForm, ShoeSearchForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeAdminSearchForm, ShoeOrdersForm, ShoeOrdersAdminForm, ConfForm
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
@@ -55,9 +55,9 @@ class ShoeListView(LoginRequiredMixin, ListView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_staff:
-            self.filter_form = ShoeAdminForm(request.GET)
+            self.filter_form = ShoeAdminSearchForm(request.GET)
         else:
-            self.filter_form = ShoeForm(request.GET)
+            self.filter_form = ShoeSearchForm(request.GET)
 
         self.order_form = ShoeOrderForm(request.GET)
         
@@ -555,6 +555,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
     template_name = 'shoes/shoe_list_manage.html'
     paginate_by = PAGINATE_CONST
 
+
     def get_queryset(self):
         qs = super().get_queryset()
 
@@ -576,12 +577,13 @@ class ShoeListManage(LoginRequiredMixin, ListView):
             qs = qs.annotate(user_count=Count('user')).filter(user_count=1)                                 # multi user enable
             qs = qs.filter(user=self.request.user)                                    # multi user enable
         return qs
+    
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_staff:
-            self.filter_form = ShoeAdminForm(request.GET)
+            self.filter_form = ShoeAdminSearchForm(request.GET)
         else:
-            self.filter_form = ShoeForm(request.GET)
+            self.filter_form = ShoeSearchForm(request.GET)
 
         self.order_form = ShoeOrderForm(request.GET)
         return super().dispatch(request, *args, **kwargs)
