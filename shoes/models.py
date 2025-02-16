@@ -219,5 +219,7 @@ class AccountConfig(models.Model):
         (0, "all"),
     )
     paginate = models.IntegerField(choices=PAGINATE_NUM, default=8, blank=False, null=False)
-    FILTER_SEAS_CHOICES = (("Unset", "Unset"), ("Winter", "Winter"), ("Summer", "Summer"),)
-    season_conf = models.CharField(choices=FILTER_SEAS_CHOICES, default="Unset", max_length=20)
+    FILTER_SEAS_CHOICES = (("unset", "Unset"), ("Winter", "Winter"), ("Summer", "Summer"),)
+    season_conf = models.CharField(choices=FILTER_SEAS_CHOICES, default="unset", max_length=20)
+    ORDER_CONF_CHOICES = (('pk', 'ID'), ('-year', 'Newer'),('year', 'Older'), ('-heel_height', 'High Heel'), ('heel_height', 'Low Heel'), ('comfort', 'Comfort'), ('ordered', 'Common'))
+    order_conf = models.CharField(choices=ORDER_CONF_CHOICES, default="id", max_length=20)

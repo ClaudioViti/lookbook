@@ -167,4 +167,4 @@ class ShoeOrdersAdminForm(ModelForm):
 class ConfForm(ModelForm):
     class Meta:
          model = AccountConfig
-         fields = ['paginate', 'season_conf', 'dark_mode' ]
+         fields = ['paginate', 'season_conf', 'order_conf', 'dark_mode' ]

@@ -24,6 +24,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoes_list.html'
+    ordering = 'id'
     def get_paginate_by(self, queryset):
         paginate_by = self.request.user.user_config.paginate
         return paginate_by
@@ -44,7 +45,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
                 if field == "season":
                     if value:
                         qs = qs.filter(season__in=filter_dict[value])
-                    elif seas_conf != "Unset":
+                    elif seas_conf != "unset":
                         qs = qs.filter(season__in=config_dict[seas_conf])
                 elif value:
                         qs = qs.filter(**{field: value})
@@ -93,13 +94,16 @@ class ShoeListView(LoginRequiredMixin, ListView):
 
         return context
         
-
     def get_ordering(self):
-        
         if self.order_form.is_valid():
-            return self.order_form.cleaned_data.get('order')
-        else:
-            return self.ordering 
+            if not self.order_form.cleaned_data['order'] == "":
+                ordering = self.order_form.cleaned_data['order']
+            else:
+                ordering = self.request.user.user_config.order_conf
+        if not ordering:
+            ordering = self.ordering
+        return ordering
+
      
 class CartUpdateView(UpdateView):
     model = models.Shoe
@@ -553,6 +557,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoe_list_manage.html'
+    ordering = 'id'
     paginate_by = PAGINATE_CONST
 
 
@@ -576,7 +581,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
 		
             qs = qs.annotate(user_count=Count('user')).filter(user_count=1)                                 # multi user enable
             qs = qs.filter(user=self.request.user)                                    # multi user enable
-        return qs
+        return qs.order_by('id')
     
 
     def dispatch(self, request, *args, **kwargs):
@@ -616,13 +621,15 @@ class ShoeListManage(LoginRequiredMixin, ListView):
 
         return context
         
-
     def get_ordering(self):
-        
         if self.order_form.is_valid():
-            return self.order_form.cleaned_data.get('order')
-        else:
-            return self.ordering 
+            if not self.order_form.cleaned_data['order'] == "":
+                ordering = self.order_form.cleaned_data['order']
+            else:
+                ordering = self.request.user.user_config.order_conf
+        if not ordering:
+            ordering = self.ordering
+        return ordering
      
 
 def terminate_order(request):
