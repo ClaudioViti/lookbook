@@ -557,7 +557,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
     
     model = models.Shoe
     template_name = 'shoes/shoe_list_manage.html'
-    ordering = 'id'
+    ordering = 'pk'
     paginate_by = PAGINATE_CONST
 
 
@@ -581,7 +581,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
 		
             qs = qs.annotate(user_count=Count('user')).filter(user_count=1)                                 # multi user enable
             qs = qs.filter(user=self.request.user)                                    # multi user enable
-        return qs.order_by('id')
+        return qs
     
 
     def dispatch(self, request, *args, **kwargs):
@@ -623,10 +623,7 @@ class ShoeListManage(LoginRequiredMixin, ListView):
         
     def get_ordering(self):
         if self.order_form.is_valid():
-            if not self.order_form.cleaned_data['order'] == "":
                 ordering = self.order_form.cleaned_data['order']
-            else:
-                ordering = self.request.user.user_config.order_conf
         if not ordering:
             ordering = self.ordering
         return ordering
