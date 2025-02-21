@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, contact, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order, terminateOrder, LoginViewCustom, ConfigView
+from shoes.views import ShoeListView, CartUpdateView, FavouriteUpdateView, OrderedUpdateView, minicartView, favouriteView, get_current_brand_onedit, get_current_brand_onadd, create_shoe, edit_shoe, ShoeDeleteView, image_view, order_list, contact, UrgentUpdateView, BrandCreate, BrandUpdate, BrandDelete, BrandManage, ShoeListManage, ordersView, terminate_order, terminateOrder, LoginViewCustom, ConfigView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -43,6 +43,8 @@ urlpatterns = [
     path('brand/<int:pk>/delete/', BrandDelete.as_view(), name='brand-delete'),
     path('admin/', admin.site.urls),
     path('manage/', ShoeListManage.as_view(), name='manage'),
+    path('getcurrentbrand/<int:pk>/', get_current_brand_onedit, name="getcurrentbrandonedit"),
+    path('getcurrentbrand/', get_current_brand_onadd, name="getcurrentbrandonadd"),
     path('manage/add/', create_shoe, name='add'),
     path('manage/<int:pk>/', edit_shoe, name='edit'),
     path('manage/<int:pk>/delete/', ShoeDeleteView.as_view(), name='delete'),

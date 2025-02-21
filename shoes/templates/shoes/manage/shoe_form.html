@@ -173,7 +173,9 @@ input::file-selector-button {
   
   </div>
 
-  <a style="display: inline-block; margin-top: 2px" href="/brand/?{{ request.GET.urlencode }}" target=”_blank” class="active"><button style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Manage Brands</button></a>
+
+
+
 
 <form method="post" enctype="multipart/form-data">
 
@@ -182,7 +184,9 @@ input::file-selector-button {
 
     <div>
       <br>
+      {% if shoeimages %}
       <summary>Images</summary>
+      {% endif %}
       <br><br><br>
     {% for shoeimage in shoeimages %}
 <img src="{% thumbnail shoeimage.image 500x500 crop %}"
@@ -199,7 +203,16 @@ input::file-selector-button {
       <summary>Model help</summary>
       <img src="{% static 'models.png' %}">
     </details>
-    {{ form.as_p }}
+    {% for field in form %}
+    <p>  
+      {{ field.label_tag }} {{ field }}
+    {% if field.name == 'brand' %}
+      <button style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="button" onClick="handleClick()" class=reload>&#x21bb;</button>
+      <a style="display: inline-block; margin-top: 2px" href="/brand/?{{ request.GET.urlencode }}" target=”_blank” class="active"><button style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="button" type="submit">Manage Brands</button>     
+      </a>
+      {% endif %}
+    </p>
+    {% endfor %}
     {{ formset.management_form }}
     <table>
         {% for imageform in formset %}
@@ -209,6 +222,32 @@ input::file-selector-button {
     <input style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit" value="Save">
 </form>
 
-<script>document.body.addEventListener("submit", ev => ev.submitter.disabled = true);</script>
+<script>document.body.addEventListener("submit", ev => ev.submitter.disabled = true);
+
+
+
+
+
+
+const parser = new DOMParser();
+
+function handleClick() {
+	fetch("{% if not form.instance.pk %}{% url 'getcurrentbrandonadd' %}{% else %}{% url 'getcurrentbrandonedit' pk=form.instance.pk %}{% endif %}").then(
+  	resp => {
+ 			if (!resp.ok) {
+    		alert("Request failed!")
+      	return;
+    	}
+    	return resp.text()
+  	}
+  ).then(
+  	content => {
+    	const fragment = parser.parseFromString(content, 'text/html');
+      const field = fragment.querySelector("#id_brand");
+      document.querySelector("#id_brand").replaceWith(field);
+    }
+  )
+}
+</script>
 
 {% endblock %}

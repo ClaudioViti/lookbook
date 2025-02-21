@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from shoes.forms import ShoeForm, ShoeSearchForm, ShoeImageFormSet, ShoeImageInlineFormset, ShoeOrderForm, BrandForm, CartAddForm, UrgentAddForm, ShoeCartsForm, ShoeFavouriteForm, modelformset_factory, ShoeAdminForm, ShoeAdminSearchForm, ShoeOrdersForm, ShoeOrdersAdminForm, ConfForm
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
@@ -711,3 +711,23 @@ def contact(request):
         return render(request, 'shoes/mail_succeed.html')
 
     return render(request, 'shoes/get_help.html')
+
+def get_current_brand_onedit(request, pk):
+
+    queryset = Shoe.objects.filter(user=request.user)
+
+    shoe = get_object_or_404(queryset, pk=pk)
+    form = ShoeForm(instance=shoe)
+    field = form['brand']
+    
+    return HttpResponse(str(field), shoe.brand)
+
+def get_current_brand_onadd(request):
+
+    form = ShoeForm()
+    field = form['brand']
+    
+    return HttpResponse(str(field))
+
+
+  
