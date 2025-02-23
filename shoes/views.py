@@ -712,19 +712,15 @@ def contact(request):
 
     return render(request, 'shoes/get_help.html')
 
-def get_current_brand_onedit(request, pk):
+def get_current_brand(request):
 
-    queryset = Shoe.objects.filter(user=request.user)
+    pk = request.GET.get("pk", "")
+    if pk:
+        shoe = get_object_or_404(Shoe, user=request.user, pk=pk)
+    else:
+        shoe = None
 
-    shoe = get_object_or_404(queryset, pk=pk)
     form = ShoeForm(instance=shoe)
-    field = form['brand']
-    
-    return HttpResponse(str(field), shoe.brand)
-
-def get_current_brand_onadd(request):
-
-    form = ShoeForm()
     field = form['brand']
     
     return HttpResponse(str(field))
