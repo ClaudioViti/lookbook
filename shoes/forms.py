@@ -5,6 +5,7 @@ from django.forms.models import modelformset_factory
 from django.forms import inlineformset_factory
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.core.files.images import get_image_dimensions
 
 
 # Unused class.
@@ -48,11 +49,24 @@ class ShoeSearchForm(ModelForm):
          widgets = {'info': forms.Textarea(attrs={"rows": 2, "cols": 80}),}
          
 
+class ImageParseForm(forms.ModelForm):
+   class Meta:
+       model = ShoeImage
+       fields = ['image']
+   def clean_image(self):
+       picture = self.cleaned_data.get("image")
+       if not picture:
+           raise forms.ValidationError("no picture")
+       else:
+           w, h = get_image_dimensions(picture)
+           if w != h:
+               raise forms.ValidationError("this is not a squared image")
+           if picture.size > 8*1024*1024:
+               raise ValidationError("Image file too large ( > 8mb )")
+       return picture
 
-
-
-ShoeImageFormSet = modelformset_factory(ShoeImage, fields=('image',), extra=3)
-ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, fields=('image',))
+ShoeImageFormSet = modelformset_factory(ShoeImage, form=ImageParseForm, extra=3)
+ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, form=ImageParseForm,)
 
 class ShoeOrderForm(forms.Form):
     order = forms.ChoiceField(choices=(('', '---------'), ('pk', 'ID'), ('-year', 'Newer'),('year', 'Older'), ('-heel_height', 'High Heel'), ('heel_height', 'Low Heel'), ('comfort', 'Comfort'), ('ordered', 'Common')), required=False)
