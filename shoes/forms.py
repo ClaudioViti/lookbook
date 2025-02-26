@@ -6,6 +6,7 @@ from django.forms import inlineformset_factory
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
+from PIL import Image
 
 
 # Unused class.
@@ -50,20 +51,24 @@ class ShoeSearchForm(ModelForm):
          
 
 class ImageParseForm(forms.ModelForm):
-   class Meta:
-       model = ShoeImage
-       fields = ['image']
-   def clean_image(self):
-       picture = self.cleaned_data.get("image")
-       if not picture:
-           raise forms.ValidationError("no picture")
-       else:
-           w, h = get_image_dimensions(picture)
-           if w != h:
-               raise forms.ValidationError("this is not a squared image")
-           if picture.size > 8*1024*1024:
-               raise ValidationError("Image file too large ( > 8mb )")
-       return picture
+    class Meta:
+        model = ShoeImage
+        fields = ['image']
+    def clean_image(self):
+        picture = self.cleaned_data.get("image")
+        with Image.open(picture) as im:
+            print(im.format)
+        if not picture:
+            raise forms.ValidationError("no picture")
+        else:
+            if im.format != "PNG":
+                raise ValidationError("format not supported")
+            w, h = get_image_dimensions(picture)
+            if w != h:
+                raise forms.ValidationError("this is not a squared image")
+            if picture.size > 8*1024*1024:
+                raise ValidationError("Image file too large ( > 8mb )")
+        return picture
 
 ShoeImageFormSet = modelformset_factory(ShoeImage, form=ImageParseForm, extra=3)
 ShoeImageInlineFormset = inlineformset_factory(Shoe, ShoeImage, form=ImageParseForm,)
