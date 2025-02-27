@@ -56,11 +56,10 @@ class ImageParseForm(forms.ModelForm):
         fields = ['image']
     def clean_image(self):
         picture = self.cleaned_data.get("image")
-        with Image.open(picture) as im:
-            print(im.format)
         if not picture:
             raise forms.ValidationError("no picture")
         else:
+            im = Image.open(picture)
             if im.format != "PNG":
                 raise ValidationError("format not supported")
             w, h = get_image_dimensions(picture)
