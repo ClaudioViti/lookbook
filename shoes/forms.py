@@ -54,6 +54,7 @@ class ImageParseForm(forms.ModelForm):
     class Meta:
         model = ShoeImage
         fields = ['image']
+        widgets = {'image': forms.FileInput(attrs={"accept": "image/png"})}
     def clean_image(self):
         picture = self.cleaned_data.get("image")
         if not picture:
