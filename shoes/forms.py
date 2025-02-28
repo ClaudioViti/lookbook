@@ -81,7 +81,7 @@ class ShoeBrandForm(ModelForm):
          fields = '__all__'
 
 class BrandForm(forms.Form):
-    brand = forms.ModelChoiceField(queryset = ShoeBrand.objects.all(), widget=forms.CheckboxSelectMultiple() )
+    brand = forms.ModelChoiceField(queryset = ShoeBrand.objects.all(), widget=forms.RadioSelect )
     
 class CartAddForm(ModelForm):
     class Meta:
