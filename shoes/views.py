@@ -494,32 +494,47 @@ def order_list(request):
         ids = []
         itm_remove = []
         itm_not_ordered = []
-        for itm in queryset:
-            if not itm.ordered_user.exists() and itm.available == True:
-                ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {request.user.username}; \n Urgent: {itm.urgent}")
-                itm.ordered = F('ordered') + 1
-                itm.save()
-                itm_remove.append(itm)
-                request.user.ordered_items.add(* request.user.cart_items.all())    
-            else:
-                itm_not_ordered.append(itm.pk)
-            
-            
-                       
-        request.user.cart_items.remove(*itm_remove)
-        messages.add_message(request, messages.INFO, itm_not_ordered)
-        
-        print(itm.ordered)
-        #queryset.update(cart=False, urgent=False)
-        message = request.POST['message']
-        for id in ids: message += str(id)
-        if len(itm_remove):
-            send_mail('Lookbook: Order List',
-            message, 
-            settings.EMAIL_HOST_USER,
-            settings.RECIPIENT_LIST, 
-            fail_silently=False)
-    return render(request, 'shoes/order_succeed.html')
+        total_orders = Shoe.objects.filter(cart_user__in = User.objects.all()).distinct().count()
+        print('current orders:', total_orders)
+        total_orders += Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct().count()
+        print('ordered:', total_orders)
+        total_orders += Shoe.objects.filter(delivered_user__in = User.objects.all()).distinct().count()
+        print('delivered:', total_orders)
+        total_orders += Shoe.objects.filter(terminated_user__in = User.objects.all()).distinct().count()
+        print('terminated:', total_orders)
+        if request.user.user_config.order_limit > total_orders:
+            for itm in queryset:
+                if not itm.ordered_user.exists() and itm.available == True:
+                    ids.append(f" \n \n Style: {itm.style}; \n ID: {itm.pk}; \n User: {request.user.username}; \n Urgent: {itm.urgent}")
+                    itm.ordered = F('ordered') + 1
+                    itm.save()
+                    itm_remove.append(itm)
+                    request.user.ordered_items.add(* request.user.cart_items.all())    
+                else:
+                    itm_not_ordered.append(itm.pk)
+
+            request.user.cart_items.remove(*itm_remove)
+            messages.add_message(request, messages.INFO, itm_not_ordered)
+                        #queryset.update(cart=False, urgent=False)
+            message = request.POST['message']
+            for id in ids: message += str(id)
+            if len(itm_remove):
+                send_mail('Lookbook: Order List',
+                message, 
+                settings.EMAIL_HOST_USER,
+                settings.RECIPIENT_LIST, 
+                fail_silently=False)
+            return render(request, 'shoes/order_succeed.html')
+
+        else:
+            messages.add_message(request, messages.INFO, f"your total active orders is {total_orders} items, but the limit is {request.user.user_config.order_limit}, you'll be contacted by the staff")
+            message = request.POST['message']
+            send_mail('Lookbook: Failed Order',
+                message, 
+                settings.EMAIL_HOST_USER,
+                settings.RECIPIENT_LIST, 
+                fail_silently=False)
+            return render(request, 'shoes/order_failed.html')
 
 class BrandCreate(LoginRequiredMixin, CreateView):
     template_name = 'shoes/manage/brand_manage.html'
