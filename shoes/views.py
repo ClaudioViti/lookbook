@@ -529,6 +529,7 @@ def order_list(request):
         else:
             messages.add_message(request, messages.INFO, f"your total active orders is {total_orders} items, but the limit is {request.user.user_config.order_limit}, you'll be contacted by the staff")
             message = request.POST['message']
+            message += str(f"Order limit exceeded for {request.user}")
             send_mail('Lookbook: Failed Order',
                 message, 
                 settings.EMAIL_HOST_USER,
