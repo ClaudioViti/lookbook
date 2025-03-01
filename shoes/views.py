@@ -494,14 +494,14 @@ def order_list(request):
         ids = []
         itm_remove = []
         itm_not_ordered = []
-        total_orders = Shoe.objects.filter(cart_user__in = User.objects.all()).distinct().count()
-        print('current orders:', total_orders)
         total_orders += Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct().count()
         print('ordered:', total_orders)
         total_orders += Shoe.objects.filter(delivered_user__in = User.objects.all()).distinct().count()
         print('delivered:', total_orders)
         total_orders += Shoe.objects.filter(terminated_user__in = User.objects.all()).distinct().count()
         print('terminated:', total_orders)
+        total_orders = Shoe.objects.filter(cart_user__in = User.objects.all()).distinct().count()
+        print('current cart:', total_orders)
         if request.user.user_config.order_limit > total_orders:
             for itm in queryset:
                 if not itm.ordered_user.exists() and itm.available == True:
