@@ -494,6 +494,7 @@ def order_list(request):
         ids = []
         itm_remove = []
         itm_not_ordered = []
+        total_orders = 0
         total_orders += Shoe.objects.filter(ordered_user__in = User.objects.all()).distinct().count()
         print('ordered:', total_orders)
         total_orders += Shoe.objects.filter(delivered_user__in = User.objects.all()).distinct().count()
