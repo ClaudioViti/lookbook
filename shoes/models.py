@@ -181,25 +181,18 @@ class Shoe(models.Model):
         state = ''
         if not self.available:
             state = 'in service'
-            print('in service')
         elif self.terminated_user.filter(pk=user.pk).exists():
             state = 'terminated'
-            print('terminated')
         elif self.delivered_user.filter(pk=user.pk).exists():
             state = 'delivered'
-            print('delivered')
         elif self.ordered_user.filter(pk=user.pk).exists():
             state = 'ordered'
-            print('ordered')
         elif self.terminated_user.all():
             state = 'busy'
-            print('busy')
         elif self.delivered_user.all():
             state = 'busy'
-            print('busy')
         elif self.ordered_user.all():
             state = 'busy'
-            print('busy')
 
         return state
 
