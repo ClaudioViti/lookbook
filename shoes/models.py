@@ -165,6 +165,7 @@ class Shoe(models.Model):
     state = models.CharField(max_length=30, choices=STATE_CHOICES, blank=True, null=True)
     available = models.BooleanField(default=True)
     info = models.CharField(max_length=200, blank=True, null=True)
+    url = models.CharField(max_length=200, blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
     favourite = models.BooleanField(default=False)
     cart = models.BooleanField(default=False)
@@ -180,18 +181,25 @@ class Shoe(models.Model):
         state = ''
         if not self.available:
             state = 'in service'
+            print('in service')
         elif self.terminated_user.filter(pk=user.pk).exists():
             state = 'terminated'
+            print('terminated')
         elif self.delivered_user.filter(pk=user.pk).exists():
             state = 'delivered'
+            print('delivered')
         elif self.ordered_user.filter(pk=user.pk).exists():
             state = 'ordered'
+            print('ordered')
         elif self.terminated_user.all():
-            state = 'others have this'
+            state = 'busy'
+            print('busy')
         elif self.delivered_user.all():
-            state = 'others have this'
+            state = 'busy'
+            print('busy')
         elif self.ordered_user.all():
-            state = 'ordered by others'
+            state = 'busy'
+            print('busy')
 
         return state
 
@@ -210,7 +218,7 @@ from django.contrib.auth.models import User
 class AccountConfig(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_config')
-    order_limit = models.IntegerField(default=2, blank=False, null=False)
+    order_limit = models.IntegerField(default=5, blank=False, null=False)
     dark_mode = models.BooleanField(default=False)
 
     PAGINATE_NUM = (

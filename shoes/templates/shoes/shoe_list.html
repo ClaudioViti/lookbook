@@ -498,7 +498,7 @@
   margin-top: 50%;
 }
 {% endif %}
-{% if shoe|getUserState:user  == 'ordered' or shoe|getUserState:user  == 'delivered' or shoe|getUserState:user  == 'terminated' %}
+{% if shoe|getUserState:user == 'ordered' or shoe|getUserState:user == 'delivered' or shoe|getUserState:user == 'terminated' or shoe|getUserState:user == 'busy' %}
 .ordered img {
 position: relative;
 filter: grayscale(60%);
@@ -794,22 +794,22 @@ main { display: grid; place-content: center; }
                   {% for shoeimage in shoeimages %}
                   
                 
-                  <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;">
+                  <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
                 {% endfor %}
               </div>
             {% endif %}
             
-            {% if shoe|getUserState:user  == "ordered" or shoe|getUserState:user  == 'delivered' or shoe|getUserState:user  == "terminated" %}
+            {% if shoe|getUserState:user == "ordered" or shoe|getUserState:user == 'delivered' or shoe|getUserState:user == "terminated" or shoe|getUserState:user == 'busy' %}
               <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative;">
                 {% for shoeimage in shoeimages %}
 
-                <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;">
+                <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
               {% endfor %}
             {% endif %}
 
           </div>
         
-          {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" and not shoe|getUserState:user  == "delivered" and not shoe|getUserState:user  == "terminated" %}
+          {% if not shoe|getUserState:user == "in service" and not shoe|getUserState:user == "ordered" and not shoe|getUserState:user == "delivered" and not shoe|getUserState:user == "terminated" and not shoe|getUserState:user == 'busy' %}
           <div class="flip">
             {% for shoeimage in shoeimages %}
           <img src="{% thumbnail shoeimage.image 200x200 crop %}" class="reduce">
@@ -823,12 +823,12 @@ main { display: grid; place-content: center; }
         <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
       {% endif %}  
-      {% if shoe|getUserState:user  == "ordered" or shoe|getUserState:user  == "delivered" or shoe|getUserState:user  == "terminated" %}
+      {% if shoe|getUserState:user == "ordered" or shoe|getUserState:user == "delivered" or shoe|getUserState:user == "terminated" or shoe|getUserState:user == 'busy' %}
         <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative;">
         <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
       {% endif %}
-      {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" and not shoe|getUserState:user  == "delivered" and not shoe|getUserState:user  == "terminated" %}
+      {% if not shoe|getUserState:user == "in service" and not shoe|getUserState:user == "ordered" and not shoe|getUserState:user == "delivered" and not shoe|getUserState:user == "terminated" and not shoe|getUserState:user == 'busy' %}
         <div style="position: relative;">
         <img src="{% static 'ph.png' %}" class="reduce">
         </div>
@@ -843,12 +843,12 @@ main { display: grid; place-content: center; }
           <img src="{% thumbnail shoeimages.0.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
         </div>
             {% endif %}
-            {% if shoe|getUserState:user  == "ordered" or shoe|getUserState:user  == "delivered" or shoe|getUserState:user  == "terminated" %}
+            {% if shoe|getUserState:user == "ordered" or shoe|getUserState:user == "delivered" or shoe|getUserState:user == "terminated" or shoe|getUserState:user == 'busy' %}
             <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative;">
             <img src="{% thumbnail shoeimages.0.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
           </div>
             {% endif %}
-            {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" and not shoe|getUserState:user  == "delivered" and not shoe|getUserState:user  == "terminated" %}
+            {% if not shoe|getUserState:user == "in service" and not shoe|getUserState:user == "ordered" and not shoe|getUserState:user == "delivered" and not shoe|getUserState:user == "terminated" and not shoe|getUserState:user == 'busy' %}
           <img src="{% thumbnail shoeimages.0.image 200x200 crop %}" class="reduce">
            {% endif %}
           
@@ -864,7 +864,7 @@ main { display: grid; place-content: center; }
           <header style="font-family: Georgia, serif;"> Id: {{ shoe.pk }} </header>
           <a style="color: rgb(37, 37, 37);">
           {% endif %}
-          {% if not shoe|getUserState:user  == "in service" and not shoe|getUserState:user  == "ordered" and not shoe|getUserState:user  == "delivered" and not shoe|getUserState:user  == "terminated" %}
+          {% if not shoe|getUserState:user == "in service" and not shoe|getUserState:user == "ordered" and not shoe|getUserState:user == "delivered" and not shoe|getUserState:user == "terminated" and not shoe|getUserState:user == 'busy' %}
             &#128092;<input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
             {% endif %}
             &#9733;<input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">
