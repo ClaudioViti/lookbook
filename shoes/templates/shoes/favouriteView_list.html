@@ -223,16 +223,17 @@
 
 {% endif %}
 
-{% if shoe|getUserState:user  == 'just finished' %}
+{% if shoe|getUserState:user == 'ordered' or shoe|getUserState:user == 'delivered' or shoe|getUserState:user == 'terminated' or shoe|getUserState:user == 'busy' %}
 
 .ordered img {
+
 position: relative;
 filter: grayscale(60%);
 display: inline-block;
 }
 .ordered::after {
 
-content: '{{ shoe|getUserState:user }}';
+  content: attr(attribute);
 color: rgb(187, 0, 0);
   text-align: center;
   position: absolute;
@@ -285,8 +286,8 @@ color: rgb(187, 0, 0);
           
           {% endif %}
         </div>
-        {% if shoe|getUserState:user  == "ordered" %}
-        <div class="ordered" style="position: relative; display: inline-block;">
+        {% if shoe|getUserState:user == "ordered" or shoe|getUserState:user == 'delivered' or shoe|getUserState:user == "terminated" or shoe|getUserState:user == 'busy' %}
+        <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative; display: inline-block;">
        
           <img src="{% static 'ph.png' %}" style="width:100px;height:100px;">
        
@@ -312,8 +313,8 @@ color: rgb(187, 0, 0);
           {% endfor %}
           {% endif %}
         </div>
-        {% if shoe|getUserState:user  == "ordered" %}
-        <div class="ordered" style="position: relative; display: inline-block;">
+        {% if shoe|getUserState:user == "ordered" or shoe|getUserState:user == 'delivered' or shoe|getUserState:user == "terminated" or shoe|getUserState:user == 'busy' %}
+        <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative; display: inline-block;">
           {% for shoeimage in shoe.shoeimage_set.all|slice:":1" %}
           <img src="{{ shoeimage.image.url }}" style="width:100px;height:100px;">
           {% endfor %}
