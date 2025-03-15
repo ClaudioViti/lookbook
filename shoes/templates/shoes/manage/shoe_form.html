@@ -232,7 +232,7 @@ input::file-selector-button {
 const parser = new DOMParser();
 
 function handleClick() {
-  fetch("{% url 'getcurrentbrand' %}?pk={{ form.instance.pk }}").then(
+  fetch("{% url 'getcurrentbrand' %}?pk={{ form.instance.pk|default_if_none:'' }}").then(
   	resp => {
  			if (!resp.ok) {
     		alert("Request failed!")
