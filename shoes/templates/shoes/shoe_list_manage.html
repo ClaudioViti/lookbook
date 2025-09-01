@@ -850,7 +850,7 @@ main { display: grid; place-content: center; }
             {% if page_obj.number == i %}
           <li>   <a class="page-link" style="color: red" href="?page={{ i }}">{{ i }}</a></li>
             {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
-          <li>   <a class="page-link" href="?page={{ i }}&{% querystring page=None %}">{{ i }}</a></li>
+          <li>   <a class="page-link" href="{% querystring page=i %}">{{ i }}</a></li>
             {% endif %}
         {% endfor %}
 
