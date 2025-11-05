@@ -647,6 +647,10 @@ main { display: grid; place-content: center; }
               {{ form.platform }}
             </div>
             <div class="fieldWrapper">
+              <label for="{{ form.plateauFilter.id_for_label }}">Plateau</label>
+              {{ form.plateauFilter }}
+            </div>
+            <div class="fieldWrapper">
               <label for="{{ form.superior.id_for_label }}">Superior</label>
               {{ form.superior }}
             </div>

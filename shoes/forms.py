@@ -35,6 +35,7 @@ class ShoeAdminSearchForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
     id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'codes eg: 15 21 140'}), required=False)
+    plateauFilter = forms.BooleanField(required=False, label="plateauFilter")
     class Meta:
          model = Shoe
          fields = '__all__'
@@ -44,6 +45,7 @@ class ShoeSearchForm(ModelForm):
     FILTER_SEAS_CHOICES = (('', '---------'), ("AW", "AW"), ("SS", "SS"), ("All Seasons", "All Seasons"),)
     season = forms.ChoiceField(choices=FILTER_SEAS_CHOICES, required=False)
     id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'codes eg: 15 21 140'}), required=False)
+    plateauFilter = forms.BooleanField(required=False, label="plateauFilter")
     class Meta:
          model = Shoe
          exclude = ['user', 'available', 'cart_user', 'favourite_user', 'urgent_user', 'ordered_user', 'delivered_user', 'terminated_user']

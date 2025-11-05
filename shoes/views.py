@@ -48,7 +48,11 @@ class ShoeListView(LoginRequiredMixin, ListView):
                     elif seas_conf != "unset":
                         qs = qs.filter(season__in=config_dict[seas_conf])
                 elif value:
+                    if field == "plateauFilter":
+                        qs = qs.filter(plateau_height__gte=20).exclude(heel_kind__icontains="wedge")
+                    else:
                         qs = qs.filter(**{field: value})
+
         if not self.request.user.is_staff:                                                  # multi user enable
             
             qs = qs.filter(user=self.request.user)                                       # multi user enable
@@ -593,7 +597,11 @@ class ShoeListManage(LoginRequiredMixin, ListView):
                     if value:
                         qs = qs.filter(season__in=filter_dict[value])
                 elif value:
+                    if field == "plateauFilter":
+                        qs = qs.filter(plateau_height__gte=20).exclude(heel_kind__icontains="wedge")
+                    else:
                         qs = qs.filter(**{field: value})
+
         if not self.request.user.is_staff:                                                  # multi user enable
 		
             qs = qs.annotate(user_count=Count('user')).filter(user_count=1)                                 # multi user enable
