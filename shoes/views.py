@@ -41,6 +41,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
             qs = qs.filter(id__in=self.filter_form.cleaned_data["id"].split())
             
         else:
+            heel_value = self.filter_form.cleaned_data.get('heel')
             for field, value in self.filter_form.cleaned_data.items():
                 if field == "season":
                     if value:
@@ -48,8 +49,10 @@ class ShoeListView(LoginRequiredMixin, ListView):
                     elif seas_conf != "unset":
                         qs = qs.filter(season__in=config_dict[seas_conf])
                 elif value:
-                    if field == "plateauFilter":
+                    if field == "plateauFilter" and heel_value == "wedge":
                         qs = qs.filter(plateau_height__gte=20).exclude(heel_kind__icontains="wedge")
+                    elif field == "plateauFilter" and heel_value != "wedge":
+                        qs = qs.filter(plateau_height__gte=20)
                     else:
                         qs = qs.filter(**{field: value})
 
@@ -592,13 +595,16 @@ class ShoeListManage(LoginRequiredMixin, ListView):
             qs = qs.filter(id__in=self.filter_form.cleaned_data["id"].split())
             
         else:
+            heel_value = self.filter_form.cleaned_data.get('heel')
             for field, value in self.filter_form.cleaned_data.items():
                 if field == "season":
                     if value:
                         qs = qs.filter(season__in=filter_dict[value])
                 elif value:
-                    if field == "plateauFilter":
+                    if field == "plateauFilter" and heel_value == "wedge":
                         qs = qs.filter(plateau_height__gte=20).exclude(heel_kind__icontains="wedge")
+                    elif field == "plateauFilter" and heel_value != "wedge":
+                        qs = qs.filter(plateau_height__gte=20)
                     else:
                         qs = qs.filter(**{field: value})
 
