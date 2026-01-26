@@ -586,7 +586,7 @@ main { display: grid; place-content: center; }
       <a name="closeMenu" onclick="openCartChild()">Cart</a>
       {% endif %}
       <a name="closeMenu" onclick="openFavChild()">Favourite</a>
-      <a href="{% url 'add' %}">Add item</a>
+      <a href="{% url 'add' %}?{{ request.GET.urlencode }}">Add item</a>
       <a name="closeMenu" href="/">Normal view</a>
       <a name="closeMenu" href="{% static 'guide.html' %}" target="_blank">Guide</a>
       <a name="closeMenu" href="{% url 'UserUpdate' %}">Account</a>
