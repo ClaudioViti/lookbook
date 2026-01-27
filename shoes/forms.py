@@ -21,7 +21,7 @@ class ShoeAdminForm(ModelForm):
     class Meta:
          model = Shoe
          fields = '__all__'
-         widgets = {'user': forms.CheckboxSelectMultiple(),'cart_user': forms.CheckboxSelectMultiple(),'favourite_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),'ordered_user': forms.CheckboxSelectMultiple(),'delivered_user': forms.CheckboxSelectMultiple(),'terminated_user': forms.CheckboxSelectMultiple(),'info':  forms.Textarea(attrs={"rows": 2, "cols": 80}),}
+         widgets = {'user': forms.CheckboxSelectMultiple(),'cart_user': forms.CheckboxSelectMultiple(),'favourite_user': forms.CheckboxSelectMultiple(),'urgent_user': forms.CheckboxSelectMultiple(),'ordered_user': forms.CheckboxSelectMultiple(),'delivered_user': forms.CheckboxSelectMultiple(),'terminated_user': forms.CheckboxSelectMultiple(),'info':  forms.Textarea(attrs={"rows": 2, "cols": 80}),'url':  forms.Textarea(attrs={"rows": 2, "cols": 80}),}
 
 class ShoeForm(ModelForm):
 
