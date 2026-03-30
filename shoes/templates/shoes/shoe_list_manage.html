@@ -743,7 +743,7 @@ main { display: grid; place-content: center; }
           {% endif %}
         
       </div>
-      {% elif shoeimages.0|length == 0 %}
+      {% elif shoeimages|length == 0 %}
       {% if shoe|getUserState:user  == "in service" %}    
       <div class="in_service" style="position: relative;">
       <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;">
