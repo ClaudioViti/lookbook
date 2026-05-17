@@ -684,7 +684,8 @@ main { display: grid; place-content: center; }
               {{ form.id }}
             </div>
             <input style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 15px; font-size: 12px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit" value="Submit">
-            <input style="float: right; margin-bottom: 4px; margin-right: 4px; margin-top:10px; display: inline-block; padding: 10px 15px; font-size: 12px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="reset" value="Clear">
+            <input style="float: right; margin-bottom: 4px; margin-right: 4px; margin-top:10px; display: inline-block; padding: 10px 15px; font-size: 12px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="reset" value="Reset">
+            <button style="float: right; margin-bottom: 4px; margin-right: 4px; margin-top:10px; display: inline-block; padding: 10px 15px; font-size: 12px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="button" id="btnReset">Clear</button>
           </form>
           
         </div>
@@ -999,16 +1000,37 @@ main { display: grid; place-content: center; }
       window.location.reload();;
     }
 
-    function compressItems() {
-	document.body.classList.remove('large');
-	document.body.classList.add('small');
-}
+  function compressItems() {
+	  document.body.classList.remove('large');
+	  document.body.classList.add('small');
+  }
 
-function uncompressItems() {
-	document.body.classList.remove('small');
-	document.body.classList.add('large');
-}
-    
+  function uncompressItems() {
+	  document.body.classList.remove('small');
+	  document.body.classList.add('large');
+  }
+
+
+  document.getElementById("btnReset").addEventListener("click", function() {
+  
+    document.getElementById("id_order").selectedIndex = 0;
+    document.getElementById("id_season").selectedIndex = 0;
+    document.getElementById("id_color").selectedIndex = 0;
+    document.getElementById("id_size").selectedIndex = 0;
+    document.getElementById("id_model").selectedIndex = 0;
+    document.getElementById("id_style").selectedIndex = 0;
+    document.getElementById("id_toe").selectedIndex = 0;
+    document.getElementById("id_heel_kind").selectedIndex = 0;
+    document.getElementById("id_brand").selectedIndex = 0;
+    document.getElementById("id_slingback").checked = false;
+    document.getElementById("id_platform").checked = false;
+    document.getElementById("id_plateauFilter").checked = false;
+    document.getElementById("id_superior").checked = false;
+    document.getElementById("id_favourite").checked = false;
+    document.getElementById("id_id").value = "";
+    document.getElementById("id_id").placeholder = "codes eg: 15 21 140";
+  });
+  
   </script>
 
 <style>
