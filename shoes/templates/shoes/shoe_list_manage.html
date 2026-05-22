@@ -542,7 +542,7 @@ width: 320px;
   text-decoration: none;
   background-color: lightblue;
   color: green;
-  padding: 0.5rem;
+  padding: 0.3rem;
 }
 
 
@@ -557,7 +557,7 @@ ul.pagination {
 
 .pagination li {
   padding: 0.5rem;
-  border: solid grey 1px;
+  /* border: solid grey 1px; */
 }
 
 .pagination li:first-child {
@@ -842,10 +842,10 @@ main { display: grid; place-content: center; }
     <ul class="pagination justify-content-center" style="text-align: center;">
 
         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-            <a class="page-link" href="?{{PageQuerystringFirst.urlencode}}" tabindex="-1">FIRST</a>
+            <a class="page-link" href="?{{PageQuerystringFirst.urlencode}}" tabindex="-1"><<</a>
         </li>
         <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_previous %}?{{PageQuerystringPrevious.urlencode}}{% endif %}" tabindex="-1">Previous</a>
+            <a class="page-link" href="{% if page_obj.has_previous %}?{{PageQuerystringPrevious.urlencode}}{% endif %}" tabindex="-1"><</a>
         </li>
 
         {% if page_obj.number|add:'-4' > 1 %}
@@ -865,10 +865,10 @@ main { display: grid; place-content: center; }
         {% endif %}
 
         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-          <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringNext.urlencode}}{% endif %}">Next</a>
+          <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringNext.urlencode}}{% endif %}">></a>
         </li>
         <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-            <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringLast.urlencode}}{% endif %}">LAST</a>
+            <a class="page-link" href="{% if page_obj.has_next %}?{{PageQuerystringLast.urlencode}}{% endif %}">>></a>
         </li>
       </ul>
 </nav>  
