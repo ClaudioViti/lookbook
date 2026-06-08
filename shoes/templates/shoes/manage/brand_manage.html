@@ -35,13 +35,21 @@
   background-color: #04AA6D;
   color: white;
   }
-    </style>  
+</style>  
   
-    <div class="topnav">
-  
-  </div>
+<div class="topnav">
+  <a style="cursor: pointer;" onclick="windowClose();">Close</a>
+</div>
+<br>
 
 <form method="post">{% csrf_token %}
     {{ form }}
     <input style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 14px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit" value="OK">
 </form>
+
+<script language="javascript" type="text/javascript">
+  function windowClose() {
+  window.open('','_parent','');
+  window.close();
+  }
+</script>
