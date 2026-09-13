@@ -527,7 +527,7 @@ margin-top: 50%;
 
 .lookbook {
 margin-right: 240px; margin-left: 240px;
-width: 1300px;
+width: 1200px;
 }
 
 @media  (max-width: 1000px) {
@@ -671,6 +671,10 @@ main { display: grid; place-content: center; }
       </div>
       <a name="closeMenu" onclick="openContactChild()">Contact</a>
       <a name="closeMenu"><form method="POST" action="{% url 'logout' %}"><button style="display: inline-block; font-size: 14px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit">Logout</button>{% csrf_token %}</form></a>
+      
+      <a name="closeMenu" onclick="compressItems()">+</a>
+      <a name="closeMenu" onclick="uncompressItems()">-</a>
+
       <span style="font-size:15px; color: rgb(255, 255, 255);">
         {% if is_paginated %}
         <b style="color: green;">Shoes: {{paginator.count}} &nbsp;</b>
@@ -722,7 +726,7 @@ main { display: grid; place-content: center; }
               <div class="in_service" style="position: relative;">
                 {% for shoeimage in shoeimages %}
 
-                <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;">
+                <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4; " class="reduce">
               {% endfor %}
             </div>
           {% endif %}
@@ -731,7 +735,7 @@ main { display: grid; place-content: center; }
             <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative;">
               {% for shoeimage in shoeimages %}
 
-              <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;">
+              <img src="{% thumbnail shoeimage.image 200x200 crop %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
             {% endfor %}
           {% endif %}
 
@@ -740,7 +744,7 @@ main { display: grid; place-content: center; }
         {% if not shoe|getUserState:user == "in service" and not shoe|getUserState:user == "ordered" and not shoe|getUserState:user == 'delivered' and not shoe|getUserState:user == 'terminated' and not shoe|getUserState:user == 'busy' %}
         <div class="flip">
           {% for shoeimage in shoeimages %}
-        <img src="{% thumbnail shoeimage.image 200x200 crop %}">
+        <img src="{% thumbnail shoeimage.image 200x200 crop %}" class="reduce">
           {% endfor %}
           {% endif %}
         
@@ -748,12 +752,12 @@ main { display: grid; place-content: center; }
       {% elif shoeimages|length == 0 %}
       {% if shoe|getUserState:user  == "in service" %}    
       <div class="in_service" style="position: relative;">
-      <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;">
+      <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
       </div>
     {% endif %}  
     {% if shoe|getUserState:user == "ordered" or shoe|getUserState:user == 'delivered' or shoe|getUserState:user == 'terminated' or shoe|getUserState:user == 'busy' %}
       <div attribute="{{ shoe|getUserState:user }}" class="ordered" style="position: relative;">
-      <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;">
+      <img src="{% static 'ph.png' %}" style="filter: grayscale(100%); opacity:0.4;" class="reduce">
       </div>
     {% endif %}
     {% if not shoe|getUserState:user == "in service" and not shoe|getUserState:user == "ordered" and not shoe|getUserState:user == 'delivered' and not shoe|getUserState:user == 'terminated' and not shoe|getUserState:user == 'busy' %}
@@ -787,6 +791,7 @@ main { display: grid; place-content: center; }
             <header style="font-family: Georgia, serif;"> Id: {{ shoe.pk }} </header>
             &#128092;<input name="cart" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in cart_ids %}checked{% endif %} onchange="refreshPage()">
             &#9733;<input name="favourite" type="checkbox" value="{{ shoe.id }}" {% if shoe.pk in favourite_ids %}checked{% endif %} onchange="refreshPage()">
+            <br>
             <button style="display: inline-block; padding: 10px 15px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" class="show">Details</button>
             <button style="display: inline-block; padding: 10px 15px; font-size: 11px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;"
             onclick="window.open(href='{% url 'shoe-image' pk=shoe.pk %}','targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); type='submit'">Images
@@ -911,11 +916,17 @@ main { display: grid; place-content: center; }
       window.location.reload();;
     }
 
-    document.body.style.webkitTouchCallout='none';
-    
-  if(screen.width>=1000) {document.write("<style>body{zoom:80%;}</style>");}
+  function compressItems() {
+	  document.body.classList.remove('large');
+	  document.body.classList.add('small');
+  }
 
+  function uncompressItems() {
+    document.body.classList.remove('small');
+    document.body.classList.add('large');
+  }
 
+  
   document.getElementById("btnReset").addEventListener("click", function() {
   
     document.getElementById("id_order").selectedIndex = 0;
@@ -936,6 +947,33 @@ main { display: grid; place-content: center; }
   });
 
 </script>
+
+<style>
+
+:root {
+  --the-thing: 180px; /* Default value */
+}
+@media (max-width: 1000px) {
+:root {
+  --the-thing: 140px; /* Default value */
+}
+}
+
+img.reduce {  
+  width: var(--the-thing);
+}
+
+/* Default values for screens > 1000px */
+.small .reduce { width: 180px; }
+.large .reduce { width: 280px; }
+
+@media (max-width: 1000px) {
+  /* Screens <= 1000px */
+  .small .reduce { width: 140px; }
+  .large .reduce { width: 300px; }  
+}
+
+</style>
   
   </html>
   
