@@ -214,9 +214,10 @@ class AccountConfig(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_config')
     order_limit = models.IntegerField(default=5, blank=False, null=False)
     dark_mode = models.BooleanField(default=False)
+    infinite_scroll = models.BooleanField(default=False)
 
     PAGINATE_NUM = (
-        (12, "12"),
+        (24, "24"),
         (36, "36"),
         (132, "132"),
         (0, "all"),

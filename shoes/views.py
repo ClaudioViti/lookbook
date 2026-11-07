@@ -80,6 +80,7 @@ class ShoeListView(LoginRequiredMixin, ListView):
         context['urgent_ids'] = self.request.user.favourite_items.values_list('pk', flat=True)
         context['admin_mail'] = settings.DEFAULT_FROM_EMAIL
         context['dark_mode'] = self.request.user.user_config.dark_mode
+        context['infinite_scroll'] = self.request.user.user_config.infinite_scroll
 
         qsToParseNext = self.request.GET.copy()
         qsToParsePrevious = self.request.GET.copy()
