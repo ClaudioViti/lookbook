@@ -603,6 +603,11 @@ width: 320px;
   color: green;
   padding: 1rem 0 2rem;
 }
+/* "Loading", "No more shoes" e il messaggio d'errore devono occupare la stessa altezza:
+   i <p> avevano i margini predefiniti del browser, il <div> di "Loading" no. */
+.page-load-status > * {
+  margin: 0;
+}
 {% else %}
 .pagination a {
   text-decoration: none;
@@ -778,10 +783,6 @@ main { display: grid; place-content: center; }
             <div class="fieldWrapper">
               <label>Dark mode</label>
               {{ config_form_.dark_mode }}
-            </div>
-            <div class="fieldWrapper">
-              <label>Infinite scroll</label>
-              {{ config_form_.infinite_scroll }}
             </div>
             <input style="margin-bottom: 4px; margin-left: 4px; margin-top:10px; display: inline-block; padding: 10px 15px; font-size: 12px; text-align: center; cursor: pointer; outline: none; color: #fff; background-color: #153b3b; border: none; border-radius: 7px; text-decoration: none;" type="submit" value="Apply">
           </form>
